@@ -43,10 +43,9 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')
  */
 Auth::routes();
 
-Route::post('/register-admin', 'App\Http\Controllers\Auth\RegisterController@AdminRegister')
-    ->name('admin.register')
-    ->middleware(['guest']);
-
+// Route::post('/register-admin', 'App\Http\Controllers\Auth\RegisterController@AdminRegister')
+//     ->name('admin.register')
+//     ->middleware(['guest']);
 
 Route::get('/choose', 'App\Http\Controllers\Auth\ChooseRoleController@chooseRole')
     ->name('choose.role');
