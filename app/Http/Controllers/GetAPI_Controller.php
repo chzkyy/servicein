@@ -21,17 +21,17 @@ class GetAPI_Controller extends Controller
     public function getLocation(Request $request)
     {
         $geometry  = $request->input('geo');
-        $geometry  = explode(",", $geometry);
-        // hitung panjang karakter dari titik
-        $pGeometry = strlen($geometry[0]) - strlen(substr($geometry[0], 0, -7));
+        $pGeometry = explode(",", $geometry);
 
-        if ( $pGeometry != 6 )
+        // hitung panjang karakter dari titik
+        $pGeoOrigin = substr($pGeometry[0], 0, -7) . "," . substr($pGeometry[1], 0, -7);
+        if ( $pGeoOrigin != 6 )
         {
             // membatasi panjang karakter di belakang titik (6 karakter)
-            $geometry = substr($geometry[0], 0, -7) . "," . substr($geometry[1], 0, -7);
+            $pGeometry = substr($pGeometry[0], 0, -7) . "," . substr($pGeometry[1], 0, -7);
         }
 
-        $data = GetAPI::reverseGeocode($geometry);
+        $data = GetAPI::reverseGeocode($pGeoOrigin);
         $data = json_decode($data, true);
 
         $address = $data['results'][0]['formatted_address'];
@@ -71,7 +71,7 @@ class GetAPI_Controller extends Controller
             // membatasi panjang karakter di belakang titik (6 karakter)
             $origin = substr($origin[0], 0, -7) . "," . substr($origin[1], 0, -7);
         }
-        
+
 
         // print_r($origin);
 
