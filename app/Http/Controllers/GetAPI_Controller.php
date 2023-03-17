@@ -21,17 +21,7 @@ class GetAPI_Controller extends Controller
     public function getLocation(Request $request)
     {
         $geometry  = $request->input('geo');
-        $pGeometry = explode(",", $geometry);
-
-        // hitung panjang karakter dari titik
-        $pGeoOrigin = substr($pGeometry[0], 0, -7) . "," . substr($pGeometry[1], 0, -7);
-        if ( $pGeoOrigin != 6 )
-        {
-            // membatasi panjang karakter di belakang titik (6 karakter)
-            $pGeometry = substr($pGeometry[0], 0, -7) . "," . substr($pGeometry[1], 0, -7);
-        }
-
-        $data = GetAPI::reverseGeocode($pGeoOrigin);
+        $data = GetAPI::reverseGeocode($geometry);
         $data = json_decode($data, true);
 
         $address = $data['results'][0]['formatted_address'];
@@ -46,7 +36,7 @@ class GetAPI_Controller extends Controller
         }else{
             $response = [
                 'message'   => 'Failed',
-                'data'      => null
+                'data'      => null,
             ];
             return response()->json($response, 404);
         }
