@@ -76,7 +76,7 @@ class GetAPI extends Model
 
     public static function getMatrix($destination, $origin)
     {
-        $url        = 'https://maps.googleapis.com/maps/api/distancematrix/json?destinations='.$destination.'&origins='.$origin.'&units=km&key='.env('GOOGLE_MAP_KEY');
+        $url        = env('url_GoogleApi').'/distancematrix/json?destinations='.$destination.'&origins='.$origin.'&units=km&key='.env('GOOGLE_MAP_KEY');
         $curl        = curl_init();
 
         curl_setopt_array($curl, array(
@@ -101,7 +101,7 @@ class GetAPI extends Model
 
     public static function searchPlace($keyword, $origin)
     {
-        $url        = 'https://maps.googleapis.com/maps/api/place/textsearch/json?location='.$origin.'&query='.$keyword.'&radius=50000&key='.env('GOOGLE_MAP_KEY');
+        $url        = env('url_GoogleApi').'/place/textsearch/json?location='.$origin.'&query='.$keyword.'&radius=50000&key='.env('GOOGLE_MAP_KEY');
         $curl        = curl_init();
 
         curl_setopt_array($curl, array(
@@ -126,7 +126,7 @@ class GetAPI extends Model
 
     public static function reverseGeocode($geo)
     {
-        $url        = 'https://maps.googleapis.com/maps/api/geocode/json?location_type=ROOFTOP&result_type=street_address&latlng='.$geo.'&key='.env('GOOGLE_MAP_KEY');
+        $url        = env('url_GoogleApi').'/geocode/json?location_type=ROOFTOP&result_type=street_address&latlng='.$geo.'&key='.env('GOOGLE_MAP_KEY');
         $curl        = curl_init();
 
         curl_setopt_array($curl, array(
@@ -158,7 +158,7 @@ class GetAPI extends Model
 
     public static function checkEmail($email)
     {
-        $url    = 'https://emailverification.whoisxmlapi.com/api/v2?apiKey=at_3k2JSgvKmy4yWVwk4MmhNaS0UiL0b&emailAddress='.$email;
+        $url    = 'https://emailverification.whoisxmlapi.com/api/v2?apiKey='.env('emailValidationAPI').'&emailAddress='.$email;
         $curl   = curl_init();
 
         curl_setopt_array($curl, array(
