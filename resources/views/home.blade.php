@@ -16,6 +16,20 @@
 
                     {{ __('Welcome!') }}
                     <br>
+                    {{--  check auth  --}}
+                    @if (Auth::check())
+                        {{ __('You are logged in!') }}
+                        <br>
+                        {{ __('Your role is : ') }}
+                        @if( Auth::user()->role == 'Admin' )
+                            {{ __('admin') }}
+                        @elseif ( Auth::user()->role == 'User' )
+                            {{ __('user') }}
+                        @else ( Auth::user()->role == NULL )
+                            {{ __('NULL') }}
+                        @endif
+                    @endif
+                    <br>
                     {{ __('Get Location : ') }}
                     <p id="demo"></p>
                     <p id="alamat"></p>

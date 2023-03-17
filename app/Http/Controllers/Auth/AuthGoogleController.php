@@ -64,11 +64,21 @@ class AuthGoogleController extends Controller
 
             // login user
             auth('web')->login($existEmail);
-            return redirect()->to('/');
+            if ($existEmail->role == null) {
+                return redirect()->to('/choose');
+            }
+            else {
+                return redirect()->to('/');
+            }
         }
         else {
             auth('web')->login($existingUser);
-            return redirect()->to('/');
+            if ($existingUser->role == null) {
+                return redirect()->to('/choose');
+            }
+            else {
+                return redirect()->to('/');
+            }
         }
     }
 }
