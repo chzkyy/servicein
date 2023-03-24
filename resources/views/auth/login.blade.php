@@ -1,5 +1,9 @@
 @extends('layouts.auth')
 
+@section('title')
+    {{ __('Login') }}
+@endsection
+
 @section('content')
     <section class="vh-100">
         <div class="container-fluid">
@@ -39,7 +43,7 @@
                     </div>
 
                     <div class="d-flex align-items-center px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
-                        <div class="col-md-12">
+                        <div class="col-md-8">
                             <form action="{{ route('login') }}" method="post">
                                 @csrf
                                 <div class="form-group">
@@ -91,7 +95,7 @@
                                     </a>
 
                                     <!-- forgot password -->
-                                    <div class="forgot-password mt-4">
+                                    <div class="forgot-password mt-3">
                                         @if (Route::has('password.request'))
                                             <a class="btn btn-link text-center d-block forgot-password-link"
                                                 href="{{ route('password.request') }}">

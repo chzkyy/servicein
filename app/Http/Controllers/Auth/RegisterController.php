@@ -66,7 +66,10 @@ class RegisterController extends Controller
             $data  = json_decode($data, true);
 
             if($data == false){
-                $validator->errors()->add('email', 'Email tidak valid, silahkan cek kembali email anda');
+                // message error for email not valid in english
+                $validator->errors()->add('email', 'The email is not valid, please use another email!');
+
+
             }
         });
     }

@@ -29,6 +29,10 @@ body {
     color: var(--primary-color);
 }
 
+.txt-secondary {
+    color: var(--gray);
+}
+
 .btn-custome {
     background: var(--primary-color);
     border-radius: 4px;
@@ -70,6 +74,10 @@ body {
 }
 
 .btn-with-google:hover {
+    background: var(--secondary-white);
+}
+
+.btn-with-google:focus {
     background: var(--secondary-white);
 }
 

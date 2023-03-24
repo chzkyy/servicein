@@ -66,7 +66,7 @@ class LoginController extends Controller
     protected function sendFailedLoginResponse(Request $request)
     {
         throw ValidationException::withMessages([
-            'email' => 'Email atau password salah!',
+            'email' => 'Email or password is incorrect!'
         ]);
     }
 }
