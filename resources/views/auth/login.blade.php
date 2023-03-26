@@ -14,7 +14,7 @@
                         <div class="col-12">
                             <div class="d-flex justify-content-start">
                                 <div class="logo">
-                                    <img src="{{ url('Assets/img/Logo.png') }}" alt="logo" class="logo-img mx-5 mt-4">
+                                    <img src="{{ url('assets/img/Logo.png') }}" alt="logo" class="logo-img mx-5 mt-4">
                                 </div>
                             </div>
                         </div>
@@ -31,8 +31,8 @@
                                 <div class="text">
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
                                 </div>
-                                <div class="creator mt-4">
-                                    <p>- Vincent Obi</p>
+                                <div class="creator blockquote-footer  mt-4">
+                                    Vincent Obi
                                 </div>
                                 <div class="vector"></div>
                             </div>
@@ -46,7 +46,7 @@
                             <div class="d-flex justify-content-end">
                                 <div class="create-account">
                                     <span class="text-create-account txt-secondary"> {{ __('New to Service.in?') }}</span>
-                                    <a href="{{ route('register') }}" class="text-create-account-link txt-secondary fw-semibold">Sign Up</a>
+                                    <a href="{{ route('register') }}" class="text-create-account-link txt-primary fw-semibold">Sign Up</a>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                                 <div class="form-group mt-4">
                                     <a href="{{ route('redirect') }}"
                                         class="col-12 btn btn-with-google btn-lg btn-block btn-google">
-                                        <img src="{{ url('Assets/img/icons_google.png') }}" alt="google"
+                                        <img src="{{ url('assets/img/icons_google.png') }}" alt="google"
                                             class="google-icon">
                                         Login with Google
                                     </a>

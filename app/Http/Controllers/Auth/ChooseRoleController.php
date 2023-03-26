@@ -10,20 +10,22 @@ use Illuminate\Support\Facades\Auth;
 
 class ChooseRoleController extends Controller
 {
-    // // logout
-    // public function logout(Request $request)
-    // {
-    //     auth('web')->logout();
-    //     $request->session()->invalidate();
-    //     $request->session()->regenerateToken();
-
-    //     return redirect('/');
-    // }
-
-
     public function chooseRole()
     {
-        return view('auth.choose-role');
+        $user = Auth::user();
+        // check user login
+        if ($user) {
+            // check user role
+            if ($user->role == 'Admin') {
+                return redirect()->to('/admin');
+            } elseif ($user->role == 'User') {
+                return redirect()->to('/');
+            } else {
+                return view('auth.choose-role');
+            }
+        } else {
+            return redirect()->to('/login');
+        }
     }
 
     public function storeRole(Request $request)
