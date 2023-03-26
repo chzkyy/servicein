@@ -25,18 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //  check guest
-        $guest = Auth::guest();
-        if ($guest) {
+        $user = Auth::user();
+        if( $user->role == NULL ) {
+            return redirect()->to('/choose');
+        }
+        else {
             return view('home');
-        } else {
-            // get user role
-            $role = Auth::user()->role;
-            if ($role == NULL) {
-                return redirect()->to('/choose-role');
-            } else {
-                return view('home');
-            }
         }
     }
 }
