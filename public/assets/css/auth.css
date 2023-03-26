@@ -197,3 +197,17 @@ body {
     background-repeat: no-repeat;
     background-position: right center;
 }
+
+.text-role {
+    font-size: 16px;
+    font-weight: 500 !important;
+}
+.desc-login {
+    font-size: 14px;
+    font-weight: 400 !important;
+}
+.card-choose-role:hover {
+    border: 2px solid var(--primary-color);
+    /* change pointer */
+    cursor: pointer;
+}

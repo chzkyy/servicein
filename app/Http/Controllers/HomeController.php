@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -31,7 +33,7 @@ class HomeController extends Controller
             // get user role
             $role = Auth::user()->role;
             if ($role == NULL) {
-                return redirect()->to('/choose-role');
+                return redirect()->to('/choose');
             } else {
                 return view('home');
             }
