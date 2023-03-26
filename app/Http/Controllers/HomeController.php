@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,19 +25,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // get data session
-        // $data = session()->all();
-        // // $data = 'dsadad';
-        // $data = json_encode($data);
-        // // get data auth
-        // $dataUser = auth()->user();
-        // $dataUser = json_encode($dataUser);
-
-
-
-        return view('home', 
-            //compact('data', 'dataUser')
-        );
-
+        //  check guest
+        $guest = Auth::guest();
+        if ($guest) {
+            return view('home');
+        } else {
+            // get user role
+            $role = Auth::user()->role;
+            if ($role == NULL) {
+                return redirect()->to('/choose-role');
+            } else {
+                return view('home');
+            }
+        }
     }
 }

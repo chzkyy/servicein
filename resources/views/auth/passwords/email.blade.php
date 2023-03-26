@@ -10,7 +10,7 @@
                         <div class="col-12">
                             <div class="d-flex justify-content-start">
                                 <div class="logo">
-                                    <img src="{{ url('Assets/img/Logo.png') }}" alt="logo" class="logo-img mx-5 mt-4" />
+                                    <img src="{{ url('assets/img/Logo.png') }}" alt="logo" class="logo-img mx-5 mt-4" />
                                 </div>
                             </div>
                         </div>
@@ -27,8 +27,8 @@
                                 <div class="text">
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
                                 </div>
-                                <div class="creator mt-4">
-                                    <p>- Vincent Obi</p>
+                                <div class="creator blockquote-footer  mt-4">
+                                    Vincent Obi
                                 </div>
                                 <div class="vector"></div>
                             </div>
