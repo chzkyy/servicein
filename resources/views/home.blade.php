@@ -25,7 +25,8 @@
                                 {{ __('admin') }}
                             @elseif (Auth::user()->role == 'User')
                                 {{ __('user') }}
-                            @elseif( Auth::user()->role == NULL )
+                            @else
+                                ( Auth::user()->role == NULL )
                                 {{ __('NULL') }}
                             @endif
                         @endif

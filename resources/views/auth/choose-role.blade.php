@@ -1,118 +1,37 @@
-@extends('layouts.auth')
-
-@section('title', 'Choose Role')
+@extends('layouts.app')
 
 @section('content')
-<section class="vh-100">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-5 px-0 d-none d-sm-block">
-                {{--  logo  --}}
-                <div class="d-flex align-item-center">
-                    <div class="col-12">
-                        <div class="d-flex justify-content-start">
-                            <div class="logo">
-                                <img src="{{ url('assets/img/Logo.png') }}" alt="logo" class="logo-img mx-5 mt-4">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Anda akan melanjutkan sebagai?') }}</div>
 
-                {{--  image  --}}
-                <div class="w-100 vh-100 c-img-login"></div>
+                <div class="card-body">
+                    <form method="POST" id="formRole" action="{{ route('store.role') }}">
+                        @csrf
 
-                {{--  text  --}}
-                <div class="d-flex align-item-center">
-                    <div class="col-12">
-                        <div class="d-flex justify-content-center">
-                            <div class="qoute"></div>
-                            <div class="text">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-                            </div>
-                            <div class="creator blockquote-footer  mt-4">
-                                Vincent Obi
-                            </div>
-                            <div class="vector"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-7 text-black">
-                <div class="d-flex align-item-center px-5 mt-2 pt-4 mb-3 pb-3">
-                    <div class="col-12">
-                        <div class="d-flex justify-content-end">
-                            <div class="create-account">
-                                <span class="text-create-account txt-secondary"> {{ __('Already have an account?') }}</span>
-                                <a href="{{ route('login') }}" class="text-create-account-link txt-primary fw-semibold">Sign In</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="d-flex align-items-center px-5 ms-xl-3 mt-4 pt-3">
-                    <div class="row">
-                        <span class="text-login">{{ __('Join Us!') }}</span>
-                        <span class="desc-login text-wrap col-md-6">{{ __('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor!') }}</span>
-                    </div>
-                </div>
-
-                <div class="d-flex align-items-center px-5 ms-xl-4 mt-4 pt-4 pt-xl-0 mt-xl-n5">
-                    <div class="col-md-8">
-                        <form method="POST" id="formRole" action="{{ route('store.role') }}">
-                            @csrf
-
-                            <a class="text-decoration-none" onclick="chooseRole('User')">
-                                <div class="card card-choose-role">
-                                    <div class="card-body shadow-lg">
-                                        <div class="col-md-10">
-                                            <div class="row">
-                                                <div class="col-md-3 align-content-center justify-content-center d-flex">
-                                                    <img src="{{ url('assets/img/individual.png') }}" class="img-fluid" alt="individual">
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="row">
-                                                        <span class="text-role text-black text-center text-md-start">{{ __('Individual') }}</span>
-                                                        <span class="desc-role txt-secondary">{{ __('Personal account to manage all you activities.') }}</span>
-                                                    </div>
-                                                </div>
-                                                {{--  <div class="col-md-1 d-none icon-choose">
-                                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                                                </div>  --}}
-                                            </div>
-                                        </div>
+                        <div class="container">
+                            <div class="col-md-12 d-flex justify-content-center">
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn btn-primary" onclick="chooseRole('Admin')">
+                                            {{ __('Admin Toko') }}
+                                        </button>
+                                        <button type="button" class="btn btn-primary" onclick="chooseRole('User')">
+                                            {{ __('Customer') }}
+                                        </button>
+                                        <input type="hidden" id="role" name="role">
                                     </div>
                                 </div>
-                            </a>
-
-                            <a class="text-decoration-none" onclick="chooseRole('Admin')">
-                                <div class="card card-choose-role mt-4">
-                                    <div class="card-body shadow-lg">
-                                        <div class="col-md-10">
-                                            <div class="row">
-                                                <div class="col-md-3 align-content-center justify-content-center d-flex">
-                                                    <img src="{{ url('assets/img/seller.png') }}" class="img-fluid" alt="seller">
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <div class="row">
-                                                        <span class="text-role text-black text-center text-md-start">{{ __('Seller') }}</span>
-                                                        <span class="desc-role txt-secondary">{{ __('Own or belong to a company, this is for you..') }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            <input type="hidden" name="role" id="role">
-                        </form>
-                    </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
 
 <script>
     function chooseRole(role) {

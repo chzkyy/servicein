@@ -86,7 +86,7 @@ body {
     border: 1px solid var(--secondary-color) !important;
 }
 
-/* auth page */
+/* login page */
 .c-img-login {
     object-fit: cover;
     object-position: left;
@@ -111,7 +111,7 @@ body {
     color: var(--gray);
 }
 
-/* checkbox */
+/* checkbox remember me */
 .checkbox {
     width: 18px;
     height: 18px;
@@ -197,22 +197,3 @@ body {
     background-repeat: no-repeat;
     background-position: right center;
 }
-
-
-.text-role {
-    font-size: 16px;
-    font-weight: 500 !important;
-}
-
-.desc-login {
-    font-size: 14px;
-    font-weight: 400 !important;
-}
-
-
-.card-choose-role:hover {
-    border: 2px solid var(--primary-color);
-    /* change pointer */
-    cursor: pointer;
-}
-
