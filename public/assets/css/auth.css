@@ -1,0 +1,199 @@
+/* var color */
+:root {
+    --primary-color: #e3c10fe5;
+    --secondary-color: #ffa500;
+    --white: #ffffff;
+    --secondary-white: #e4eaf3;
+    --black: #000000;
+    --gray: #8692a6;
+}
+
+/* base root */
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+body {
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    scroll-behavior: smooth;
+}
+
+/* base color */
+.txt-primary {
+    color: var(--primary-color);
+}
+
+.txt-secondary {
+    color: var(--gray);
+}
+
+.btn-custome {
+    background: var(--primary-color);
+    border-radius: 4px;
+    color: var(--white);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    padding: 10px 20px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.btn-custome:hover {
+    color: var(--secondary-white);
+    background: var(--secondary-color);
+}
+
+.btn-custome:focus {
+    color: var(--secondary-white);
+    background: var(--secondary-color);
+}
+
+.btn-custome:active {
+    color: var(--primary-color) !important;
+    border: 1px solid var(--primary-color) !important;
+}
+
+.btn-with-google {
+    background: var(--white);
+    box-sizing: border-box;
+    border-radius: 4px;
+    color: var(--black);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    padding: 10px 20px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.btn-with-google:hover {
+    background: var(--secondary-white);
+}
+
+.btn-with-google:focus {
+    background: var(--secondary-white);
+}
+
+.btn-with-google:active {
+    color: var(--primary-color) !important;
+    border: 1px solid var(--secondary-color) !important;
+}
+
+/* login page */
+.c-img-login {
+    object-fit: cover;
+    object-position: left;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: auto 100%;
+    background-image: linear-gradient(0deg, rgba(227, 193, 15, 0.8), rgba(227, 193, 15, 0.8)), url(../img/img-login.jpg);
+}
+
+.text-login {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 36px;
+}
+
+.desc-login {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 28px;
+    color: var(--gray);
+}
+
+/* checkbox remember me */
+.checkbox {
+    width: 18px;
+    height: 18px;
+    background: var(--white);
+    border: 1px solid var(--primary-color);
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.checkbox-label {
+    font-family: "Open Sans", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.checkbox:checked {
+    background: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.logo-img {
+    z-index: 99;
+    position: absolute;
+}
+
+.text {
+    position: absolute;
+    width: 470px;
+    word-wrap: break-word;
+    height: 200px;
+    left: 40px;
+    top: 200px;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+
+    display: flex;
+    align-items: center;
+    color: var(--white);
+}
+
+.creator {
+    position: absolute;
+    width: 325px;
+    word-wrap: break-word;
+    height: 190px;
+    left: 40px;
+    top: 280px;
+
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+
+    display: flex;
+    align-items: center;
+    color: var(--white);
+}
+
+.qoute {
+    position: absolute;
+    width: 325px;
+    height: 190px;
+    left: 40px;
+    top: 100px;
+
+    background-image: url(../img/quote.png);
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+.vector {
+    position: absolute;
+    width: 400px;
+    height: 190px;
+    left: 90px;
+    top: 340px;
+
+
+    background-image: url(../img/vector.png);
+    background-repeat: no-repeat;
+    background-position: right center;
+}
