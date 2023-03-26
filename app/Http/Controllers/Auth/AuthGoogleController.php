@@ -38,7 +38,7 @@ class AuthGoogleController extends Controller
         $existingUser = User::where('google_id', $user->id)->first();
         $existEmail   = User::where('email', $user->email)->first();
 
-        // generate username berdasarkan email
+        // generate nickname berdasarkan email
         $username = explode('@', $user->email);
         $username = $username[0];
 
@@ -48,9 +48,17 @@ class AuthGoogleController extends Controller
                 'google_id' => $user->id,
                 'fullname'  => $user->name,
                 'username'  => $username,
+                'avatar'    => $user->avatar,
                 'email'     => $user->email,
                 // 'password'  => bcrypt('P@ssw0rd'),
             ]);
+
+            // save avatar
+            $avatar = file_get_contents($user->avatar);
+            $filename = $user->username . '.jpg';
+            $path = public_path('storage/avatars/' . $filename);
+            file_put_contents($path, $avatar);
+
             // kirim email notifikasi
             event(new Registered($user));
             // login user

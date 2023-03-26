@@ -16,7 +16,24 @@
                         </div>
                     </div>
 
-                    <img src="{{ url('Assets/img/img-login.png') }}" alt="Login image" class="w-100 vh-100 c-img-login" />
+                    {{--  image  --}}
+                    <div class="w-100 vh-100 c-img-login"></div>
+
+                    {{--  text  --}}
+                    <div class="d-flex align-item-center">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-center">
+                                <div class="qoute"></div>
+                                <div class="text">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+                                </div>
+                                <div class="creator mt-4">
+                                    <p>- Vincent Obi</p>
+                                </div>
+                                <div class="vector"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-sm-7 text-black">
@@ -24,11 +41,11 @@
                         <div class="col-12">
                             <div class="d-flex justify-content-between">
                                 <div class="back">
-                                    <a href="{{ route('login') }}" class="text-back"><i class="fa fa-chevron-left fa-xs" aria-hidden="true"></i> {{ __('Back') }}</a>
+                                    <a href="{{ route('login') }}" class="txt-secondary fw-semibold"><i class="fa fa-chevron-left fa-xs" aria-hidden="true"></i> {{ __('Back') }}</a>
                                 </div>
 
                                 <div class="email-verification">
-                                    <span class="text-verification">{{ __('Email Verification') }}</span>
+                                    <span class="txt-secondary fw-semibold">{{ __('Forgot Password') }}</span>
                                 </div>
                             </div>
 
@@ -67,8 +84,8 @@
                                             <div class="d-block text-center text-secondary">
                                                 {{ __('Password Reset Requested!') }}
                                                 <br>
-                                                {{ __('If you didn’t receive an email!') }},
-                                                <a class="text-danger" href="{{ route('password.request') }}">{{ __('Resend') }}</a>.
+                                                {{ __('Please check your email for password reset link') }}
+
                                             </div>
                                         </div>
                                     @endif

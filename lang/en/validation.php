@@ -166,33 +166,57 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
-                        
-        // Custom message validation in bahasa
-        'fullname' => [
-            'required' => 'Nama Lengkap tidak boleh kosong',
-            'string' => 'Nama Lengkap harus berupa string',
-            'max' => 'Nama Lengkap maksimal :max karakter',
-        ],
-        'username' => [
-            'required' => 'Username tidak boleh kosong',
-            'string' => 'Username harus berupa string',
-            'max' => 'Username maksimal :max karakter',
-            'unique' => 'Username sudah terdaftar',
-        ],
-        'email' => [
-            'required' => 'Email tidak boleh kosong',
-            'string' => 'Email harus berupa string',
-            'email' => 'Email harus berupa email',
-            'max' => 'Email maksimal :max karakter',
-            'unique' => 'Email sudah terdaftar',
+        'tnc' => [
+            'required' => 'Please accept our terms and conditions',
+            'accepted' => 'Please accept our terms and conditions',
         ],
         'password' => [
-            'required' => 'Password tidak boleh kosong',
-            'string' => 'Password harus berupa string',
-            'min' => 'Password minimal 8 karakter',
-            'confirmed' => 'Password tidak sama dengan konfirmasi password',
-            'regex' => 'Password harus mengandung huruf besar, huruf kecil, dan angka',
+            'required' => 'Password is required',
+            'min' => 'Password must be at least :min characters',
+            'regex' => 'Password must contain at least one uppercase, one lowercase, one number, and one special character',
+            'confirmed' => 'Password confirmation does not match',
         ],
+        'username' => [
+            'required' => 'Username is required',
+            'string' => 'Username must be a string',
+            'min' => 'Username must be at least :min characters',
+            'max' => 'Username must be at most :max characters',
+            'unique' => 'Username is already taken',
+        ],
+        'email' => [
+            'required' => 'Email is required',
+            'string' => 'Email must be a string',
+            'email' => 'Email must be a valid email address',
+            'max' => 'Email must be at most :max characters',
+            'unique' => 'Email is already taken',
+        ],
+
+        // Custom message validation in bahasa
+        // 'fullname' => [
+        //     'required' => 'Nama Lengkap tidak boleh kosong',
+        //     'string' => 'Nama Lengkap harus berupa string',
+        //     'max' => 'Nama Lengkap maksimal :max karakter',
+        // ],
+        // 'username' => [
+        //     'required' => 'Username tidak boleh kosong',
+        //     'string' => 'Username harus berupa string',
+        //     'max' => 'Username maksimal :max karakter',
+        //     'unique' => 'Username sudah terdaftar',
+        // ],
+        // 'email' => [
+        //     'required' => 'Email tidak boleh kosong',
+        //     'string' => 'Email harus berupa string',
+        //     'email' => 'Email harus berupa email',
+        //     'max' => 'Email maksimal :max karakter',
+        //     'unique' => 'Email sudah terdaftar',
+        // ],
+        // 'password' => [
+        //     'required' => 'Password tidak boleh kosong',
+        //     'string' => 'Password harus berupa string',
+        //     'min' => 'Password minimal 8 karakter',
+        //     'confirmed' => 'Password tidak sama dengan konfirmasi password',
+        //     'regex' => 'Password harus mengandung huruf besar, huruf kecil, dan angka',
+        // ],
     ],
 
     /*

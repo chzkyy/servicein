@@ -60,13 +60,30 @@ class LoginController extends Controller
     }
 
     /**
+     * Membuat function untuk login dengan username
+     *
+     */
+
+    public function username()
+    {
+        $loginValue = request('username');
+        // Cek apakah inputan berupa email atau username
+        $this->username = filter_var($loginValue, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        // Merge inputan ke dalam request
+        request()->merge([$this->username => $loginValue]);
+        // Return login type
+        return property_exists($this, 'username') ? $this->username : 'email';
+    }
+
+
+    /**
      *  Membuat custome error untuk login
      *
      */
     protected function sendFailedLoginResponse(Request $request)
     {
         throw ValidationException::withMessages([
-            'email' => 'Email or password is incorrect!'
+            'email' => 'Email/Username or password is incorrect!'
         ]);
     }
 }

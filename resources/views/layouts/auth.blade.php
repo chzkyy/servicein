@@ -12,6 +12,8 @@
 
 <body>
     @yield('content')
+
+    @include('includes.auth.script')
 </body>
 
 </html>

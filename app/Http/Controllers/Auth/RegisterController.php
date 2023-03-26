@@ -56,10 +56,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data,[
-            'fullname'  => ['required', 'string', 'max:255'],
-            'username'  => ['required', 'string', 'max:255', 'unique:users'],
-            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password'  => ['required', 'string', 'min:8', 'confirmed', 'regex:[^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$]'],
+            'username'      => ['required', 'string', 'max:255', 'unique:users'],
+            'email'         => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'      => ['required', 'string', 'min:8', 'confirmed', 'regex:[^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$]'],
+            'tnc'           => ['accepted'],
         ])->after(function ($validator) use ($data) { // validasi email dengan api untuk mengecek apakah email valid atau tidak
             $email = $data['email'];
             $data  = GetAPI::checkEmail($email);
@@ -83,10 +83,9 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'fullname'  => $data['fullname'],
-            'username'  => $data['username'],
-            'email'     => $data['email'],
-            'password'  => Hash::make($data['password']),
+            'username'      => $data['username'],
+            'email'         => $data['email'],
+            'password'      => Hash::make($data['password']),
         ]);
     }
 
