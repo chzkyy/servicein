@@ -33,23 +33,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-7 text-black">
-                <div class="d-flex align-item-center px-5 mt-2 pt-4 mb-3 pb-3">
-                    <div class="col-12">
-                        <div class="d-flex justify-content-end">
-                            <div class="create-account">
-                                <span class="text-create-account txt-secondary"> {{ __('Already have an account?') }}</span>
-                                <a href="{{ route('login') }}" class="text-create-account-link txt-primary fw-semibold">Sign In</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center px-5 ms-xl-3 mt-4 pt-3">
+            <div class="col-md-7 mt-5 pt-4">
+                <div class="d-block align-items-center px-5 ms-xl-3 mt-4 pt-3 mb-5">
                     <div class="row">
-                        <span class="text-login">{{ __('Join Us!') }}</span>
-                        <span class="desc-login text-wrap col-md-6">{{ __('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor!') }}</span>
+                        <span class="title-choose-role">{{ __('Choose Your Account Type!') }}</span>
+                        <span class="desc-choose-role text-wrap col-md-8">{{ __('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor!') }}</span>
                     </div>
                 </div>
+
                 <div class="d-flex align-items-center px-5 ms-xl-4 mt-4 pt-4 pt-xl-0 mt-xl-n5">
                     <div class="col-md-8">
                         <form method="POST" id="formRole" action="{{ route('store.role') }}">

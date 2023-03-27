@@ -47,6 +47,12 @@ Auth::routes();
 //     ->name('admin.register')
 //     ->middleware(['guest']);
 
+Route::get('/reset-password/success', 'App\Http\Controllers\Auth\ForgotPasswordController@success')
+    ->name('reset-success');
+
+Route::get('/verify/success', 'App\Http\Controllers\Auth\VerificationController@success')
+    ->name('verify-success');
+
 Route::get('/choose', 'App\Http\Controllers\Auth\ChooseRoleController@chooseRole')
     ->name('choose.role');
 
@@ -81,7 +87,7 @@ Route::group(['prefix' => 'email'], function() {
 
     Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
             $request->fulfill();
-            return redirect('/');
+            return redirect('/verify/success');
     })->middleware(['auth', 'signed'])->name('verification.verify');
 
     Route::get('/verify', function () {

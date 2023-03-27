@@ -4,8 +4,8 @@
     --secondary-color: #ffa500;
     --white: #ffffff;
     --secondary-white: #e4eaf3;
-    --black: #000000;
-    --gray: #8692a6;
+    --black: #313131;
+    --gray: #828282;
 }
 
 /* base root */
@@ -210,4 +210,34 @@ body {
     border: 2px solid var(--primary-color);
     /* change pointer */
     cursor: pointer;
+}
+
+
+/* choose role */
+
+.desc-choose-role {
+    font-size: 20px;
+    font-weight: 400 !important;
+    color: var(--gray);
+}
+
+.title-choose-role {
+    font-size: 30px;
+    font-weight: 700 !important;
+    color: var(--black);
+}
+
+/* success page */
+
+.title-success {
+    font-size: 30px;
+    font-weight: 700 !important;
+    color: var(--black);
+}
+
+
+.desc-success {
+    font-size: 16px;
+    font-weight: 400 !important;
+    color: var(--gray);
 }

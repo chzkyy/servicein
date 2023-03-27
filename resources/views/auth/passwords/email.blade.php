@@ -67,7 +67,7 @@
                             <form method="POST" action="{{ route('password.email') }}">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="email">{{ __('Email address') }}</label>
+                                    <label for="email" class="form-label">{{ __('Email address') }}</label>
                                     <input type="email"
                                         class="form-control @error('email') is-invalid @enderror form-control-lg"
                                         id="email" name="email" value="{{ old('email') }}"
@@ -95,7 +95,8 @@
                                     </div>
 
                                     <span class="text-center text-secondary d-block mt-5"><i class="fa-solid fa-lock"></i>
-                                        {{ __('Your Info is safely secured') }}</span>
+                                        {{ __('Your Info is safely secured') }}
+                                    </span>
                                 </div>
                             </form>
                         </div>

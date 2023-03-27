@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Foundation\Auth\RedirectsUsers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VerificationController extends Controller
 {
@@ -26,7 +31,7 @@ class VerificationController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::VerifySuccess;
 
     /**
      * Create a new controller instance.
@@ -48,4 +53,14 @@ class VerificationController extends Controller
             ]);
     }
 
+    public function success()
+    {
+        $auth = Auth::user();
+        // auth logout
+        Auth::logout();
+
+        // redirect to login
+        // dd($auth);
+        return view('confirmation.verify-account-success')->with('auth', $auth);
+    }
 }

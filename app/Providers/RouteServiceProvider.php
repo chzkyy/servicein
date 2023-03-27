@@ -19,6 +19,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/';
     public const ChooseRole = '/choose';
+    public const ResetPassSuccess = '/reset-password/success';
+    public const VerifySuccess = '/verify/success';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
