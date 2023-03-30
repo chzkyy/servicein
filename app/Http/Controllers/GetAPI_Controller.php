@@ -123,4 +123,10 @@ class GetAPI_Controller extends Controller
         print_r(json_encode($data));
     }
 
+    public function MapsJs()
+    {
+        $data = GetAPI::Maps();
+        print_r($data);
+    }
+
 }
