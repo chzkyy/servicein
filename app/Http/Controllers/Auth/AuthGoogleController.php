@@ -53,12 +53,6 @@ class AuthGoogleController extends Controller
                 // 'password'  => bcrypt('P@ssw0rd'),
             ]);
 
-            // save avatar
-            $avatar = file_get_contents($user->avatar);
-            $filename = $user->username . '.jpg';
-            $path = public_path('storage/avatars/' . $filename);
-            file_put_contents($path, $avatar);
-
             // kirim email notifikasi
             event(new Registered($user));
             // login user
