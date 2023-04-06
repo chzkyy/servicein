@@ -1,6 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
+    <style type="text/css">
+        #alamat-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 1em;
+        }
+
+        .ui-autocomplete {
+            width: 50%;
+        }
+
+    </style>
+
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -19,9 +33,14 @@
                         <p id="alamat"></p>
                         <br>
                         <div class="col-md-12">
-                            <select class="col-md-12 js-data-example-ajax form-control">
+                            {{--  <select class="col-md-12 js-data-example-ajax form-control">
                                 <option></option>
-                            </select>
+                            </select>  --}}
+
+                            <div class="form-group">
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <input type="text" class=" form-control" placeholder="Alamat" id="alamat" name="alamat">
+                            </div>
                         </div>
 
                         <br>
@@ -43,11 +62,17 @@
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+
     <script src="{{ url('api/maps') }}" async defer></script>
 
     <script type='text/javascript'>
         var x = document.getElementById("demo");
         const geo = '';
+        var urlSearchAddress = "{{ url('api/searchPlace') }}";
 
         $(document).ready(function() {
             function getLocation() {
@@ -95,69 +120,60 @@
                 }
             });
 
-            $('.js-data-example-ajax').select2({
-                ajax: {
-                    url: "{{ url('api/searchPlace') }}",
-                    data: function(params) {
-                        var query = {
-                            origin: position.coords.latitude + ',' + position.coords.longitude,
-                            place: params.term,
-                        }
-                        // Query parameters will be ?origin=[key]&place=[input]
-                        return query;
-                    },
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data, params) {
-                        return {
-                            results: $.map(data.results, function(item) {
+            $('input#alamat').autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url: urlSearchAddress,
+                        type: 'GET',
+                        dataType: "json",
+                        data: {
+                            geo: position.coords.latitude + ',' + position.coords.longitude,
+                            q: request.term,
+                        },
+                        success: function( res ) {
+                            // loop for get data
+                            var array = [];
+                            $.each(res, function (index, value) {
+                                // get data from value
+                                array.push(value.data.address);
+
+                            });
+                            // response(array);
+                            // set label
+                            response($.map(res, function (item) {
                                 return {
-                                    text: formatResult(item),
-                                    title: item.name,
-                                    id: item.name + ' - ' + item.formatted_address,
-                                    name: item.name,
-                                    formatted_address: item.formatted_address,
-                                    geo: item.geometry.location.lat + ',' + item.geometry
-                                        .location.lng
+                                    label: item.data.place,
+                                    value: item.data.address,
+                                    geo: item.data.lat + ',' + item.data.lng
                                 }
-                            })
-                        };
-                    },
+                            }));
+                        }
+                    });
                 },
-                placeholder: "Masukkan alamat toko anda.",
-                templateSelection: formatSelection,
-                minimumInputLength: 1,
-            });
+                focus: function (event, ui) {
+                    $('input#alamat').val(ui.item.label); // display the selected text
+                    return false;
+                },
+                select: function (event, ui) {
+                    console.log(ui.item);
+                    console.log(ui.item.label); // display the selected text
+                    console.log(ui.item.value); // save selected id to input
+                    // Set selection
+                    $('input#alamat').val(ui.item.value); // display the selected text
+                    $('#link').html('<a href="https://www.google.com/maps/dir/?api=1&origin=' + position
+                        .coords.latitude + ',' + position.coords.longitude + '&destination=' + ui
+                        .item.geo + '&travelmode=driving" target="_blank">Buka Google Maps</a>');
 
-            function formatResult(data) {
-                if (data.loading) {
-                    return data.text;
+                    // send data geo
+                    setGeo(ui.item.geo);
+                    return false;
                 }
-
-                var $container = $(
-                    "<div class='select2-result'>" +
-                    "<b>" + data.name + "</b><br>" +
-                    "<span>" + data.formatted_address + "</span>" +
-                    "</div>"
-                );
-
-                return $container;
-            }
-
-            function formatSelection(data) {
-                return data.id || data.text;
-            }
-
-            $('.js-data-example-ajax').on('select2:select', function(e) {
-                var data = e.params.data;
-                // console.log(data);
-                $('#link').html('<a href="https://www.google.com/maps/dir/?api=1&origin=' + position
-                    .coords.latitude + ',' + position.coords.longitude + '&destination=' + data
-                    .geo + '&travelmode=driving" target="_blank">Buka Google Maps</a>');
-
-                // send data geo
-                setGeo(data.geo);
-            });
+            })
+            .autocomplete("instance")._renderItem = function(ui, item) {
+                return $("<li>")
+                    .append('<div class="text-truncate">' + item.label + "<br>" + item.value + '</div>')
+                    .appendTo(ui);
+            };
         }
 
         // variabel global marker
@@ -199,14 +215,25 @@
             setGeo = (geo) => {
                 this.geo = geo;
                 var latlng = new google.maps.LatLng(geo.split(',')[0], geo.split(',')[1]);
+                // atur zoom peta
+                peta.setZoom(16);
+                // pindahkan center peta
+                peta.setCenter(latlng);
+                // map type
+                peta.setMapTypeId(google.maps.MapTypeId.ROADMAP);
                 buatMarker(peta, latlng);
             }
 
             // even listner ketika peta diklik
             google.maps.event.addListener(peta, 'click', function (event) {
                 console.log(peta);
+                // atur zoom peta
+                peta.setZoom(16);
+                // pindahkan center peta
+                peta.setCenter(event.latLng);
+                // map type
+                peta.setMapTypeId(google.maps.MapTypeId.ROADMAP);
                 buatMarker(this, event.latLng);
-
             });
 
         }

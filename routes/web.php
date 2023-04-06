@@ -21,7 +21,7 @@ Route::get('/home', function () {
     return view('index');
 })->name('index');
 
-Route::get('/test', 'App\Http\Controllers\DataTokoController@index');
+Route::get('/', 'App\Http\Controllers\DataTokoController@index');
 
 /**
  * /------------------------------------------------------------------
@@ -32,7 +32,7 @@ Route::get('/test', 'App\Http\Controllers\DataTokoController@index');
  * |
  */
 
-Route::get('/', 'App\Http\Controllers\HomeController@index')
+Route::get('/test', 'App\Http\Controllers\HomeController@index')
     ->name('home');
 
 /**

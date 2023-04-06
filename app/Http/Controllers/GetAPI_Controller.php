@@ -112,15 +112,42 @@ class GetAPI_Controller extends Controller
     // create controller for api searchPlace?origin={input}&place={iput}
     public function searchPlace(Request $request)
     {
-        $origin     = $request->query('origin');
-        $keyword    = $request->query('place');
+        $origin     = $request->query('geo');
+        $keyword    = $request->query('q');
 
         $keyword    = urlencode($keyword);
 
         $data = GetAPI::searchPlace($keyword, $origin);
         $data = json_decode($data, true);
 
-        print_r(json_encode($data));
+        // print_r($data);
+
+        $arrHasil = [];
+        // create response for lat and lng
+        foreach($data['results'] as $key){
+            $lat = $key['geometry']['location']['lat'];
+            $lng = $key['geometry']['location']['lng'];
+            $place = $key['name'];
+            $address = $key['formatted_address'];
+
+            $response = [
+                'message'   => 'Success',
+                'data'      => [
+                    'lat'       => $lat,
+                    'lng'       => $lng,
+                    'place'     => $place,
+                    'address'   => $address
+                ]
+            ];
+
+            $arrHasil[] = $response;
+        }
+
+        // datatype json
+        // $arrHasil = json_encode($arrHasil, JSON_PRETTY_PRINT);
+        return response()->json($arrHasil, 200);
+
+        // print_r(json_encode($data));
     }
 
     public function MapsJs()
