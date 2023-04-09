@@ -1,28 +1,79 @@
-@extends('layouts.app')
-
+@extends('layouts.auth')
+@section('title', 'Verify Account')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
-
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
+<section class="vh-100">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5 px-0 d-none d-sm-block">
+                {{--  logo  --}}
+                <div class="d-flex align-item-center">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-start">
+                            <div class="logo">
+                                <img src="{{ url('assets/img/Logo.png') }}" alt="logo" class="logo-img mx-5 mt-4">
+                            </div>
                         </div>
-                    @endif
+                    </div>
+                </div>
+                {{--  image  --}}
+                <div class="w-100 vh-100 c-img-login"></div>
+                {{--  text  --}}
+                <div class="d-flex align-item-center">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-center">
+                            <div class="qoute"></div>
+                            <div class="text">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+                            </div>
+                            <div class="creator blockquote-footer mt-4">
+                                Vincent Obi
+                            </div>
+                            <div class="vector"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7 text-black">
+                <div class="d-flex align-item-center px-5 mt-2 pt-4 mb-3 pb-3">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-end">
+                            <div class="create-account">
+                                <span class="text-create-account txt-secondary"> {{ __('Verify Email Address') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="col-md-12">
+                        <div class="d-flex text-center justify-content-center align-content-center">
+                            <div class="col-md-6 col-md-offset-3">
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-                    </form>
+                                <div class="icon-verify mb-5 mt-5">
+                                    <img src="{{ url('assets/img/newsletter.png') }}" class="img-fluid img-eVerify" alt="icon-newsletter">
+                                </div>
+
+                                @if (session('resent'))
+                                    <div class="alert alert-success" role="alert">
+                                        {{ __('A fresh verification link has been sent to your email address.') }}
+                                    </div>
+                                @endif
+
+                                <span class="txt-secondary text-center">{{ __('Before proceeding, please check your email for a verification link. If you didn’t receive the email.') }}</span>
+
+                                <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-link fw-semibold p-0 m-0 align-baseline">{{ __('Click here to request another') }}</button>.
+                                </form>
+                            </div>
+
+                            {{--  <div class="back-login mt-5">
+                                <a href="{{ route('login') }}" class="btn btn-custome btn-lg btn-block col-md-6">{{ __('Back to Login') }}</a>
+                            </div>  --}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 @endsection

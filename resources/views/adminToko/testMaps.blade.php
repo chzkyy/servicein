@@ -39,7 +39,8 @@
 
                             <div class="form-group">
                                 <label for="alamat" class="form-label">Alamat</label>
-                                <input type="text" class=" form-control" placeholder="Alamat" id="alamat" name="alamat">
+                                {{--  <input type="text" class=" form-control" placeholder="Alamat" id="alamat" name="alamat">  --}}
+                                <textarea name="alamat" id="alamat" class="form-control" cols="30" rows="2"></textarea>
                             </div>
                         </div>
 
@@ -120,60 +121,63 @@
                 }
             });
 
-            $('input#alamat').autocomplete({
-                source: function( request, response ) {
-                    $.ajax({
-                        url: urlSearchAddress,
-                        type: 'GET',
-                        dataType: "json",
-                        data: {
-                            geo: position.coords.latitude + ',' + position.coords.longitude,
-                            q: request.term,
-                        },
-                        success: function( res ) {
-                            // loop for get data
-                            var array = [];
-                            $.each(res, function (index, value) {
-                                // get data from value
-                                array.push(value.data.address);
+            // text area autocomplete
 
-                            });
-                            // response(array);
-                            // set label
-                            response($.map(res, function (item) {
-                                return {
-                                    label: item.data.place,
-                                    value: item.data.address,
-                                    geo: item.data.lat + ',' + item.data.lng
-                                }
-                            }));
-                        }
-                    });
-                },
-                focus: function (event, ui) {
-                    $('input#alamat').val(ui.item.label); // display the selected text
-                    return false;
-                },
-                select: function (event, ui) {
-                    console.log(ui.item);
-                    console.log(ui.item.label); // display the selected text
-                    console.log(ui.item.value); // save selected id to input
-                    // Set selection
-                    $('input#alamat').val(ui.item.value); // display the selected text
-                    $('#link').html('<a href="https://www.google.com/maps/dir/?api=1&origin=' + position
-                        .coords.latitude + ',' + position.coords.longitude + '&destination=' + ui
-                        .item.geo + '&travelmode=driving" target="_blank">Buka Google Maps</a>');
+            $('textarea#alamat').on('focus', function() {
+                $(this).autocomplete({
+                    source: function( request, response ) {
+                        $.ajax({
+                            url: urlSearchAddress,
+                            type: 'GET',
+                            dataType: "json",
+                            data: {
+                                geo: position.coords.latitude + ',' + position.coords.longitude,
+                                q: request.term,
+                            },
+                            success: function( res ) {
+                                // loop for get data
+                                var array = [];
+                                $.each(res, function (index, value) {
+                                    // get data from value
+                                    array.push(value.data.address);
 
-                    // send data geo
-                    setGeo(ui.item.geo);
-                    return false;
-                }
-            })
-            .autocomplete("instance")._renderItem = function(ui, item) {
-                return $("<li>")
-                    .append('<div class="text-truncate">' + item.label + "<br>" + item.value + '</div>')
-                    .appendTo(ui);
-            };
+                                });
+                                // response(array);
+                                // set label
+                                response($.map(res, function (item) {
+                                    return {
+                                        label: item.data.place,
+                                        value: item.data.address,
+                                        geo: item.data.lat + ',' + item.data.lng
+                                    }
+                                }));
+                            }
+                        });
+                    },
+                    focus: function (event, ui) {
+                        $('textarea#alamat').val(ui.item.label); // display the selected text
+                        return false;
+                    },
+                    select: function (event, ui) {
+                        // Set selection
+                        $('textarea#alamat').val(ui.item.value); // display the selected text
+                        $('#link').html('<a href="https://www.google.com/maps/dir/?api=1&origin=' + position
+                            .coords.latitude + ',' + position.coords.longitude + '&destination=' + ui
+                            .item.geo + '&travelmode=driving" target="_blank">Buka Google Maps</a>');
+
+                        // send data geo
+                        setGeo(ui.item.geo);
+                        return false;
+                    }
+                })
+                .autocomplete("instance")._renderItem = function(ui, item) {
+                    return $("<li>")
+                        .append('<div class="text-truncate">' + item.label + "<br>" + item.value + '</div>')
+                        .appendTo(ui);
+                };
+
+            });
+
         }
 
         // variabel global marker
