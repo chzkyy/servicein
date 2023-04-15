@@ -119,19 +119,26 @@ body {
     border: 1px solid var(--primary-color);
     box-sizing: border-box;
     border-radius: 4px;
+    margin: auto 0 auto 0;
 }
 
 .checkbox-label {
     font-family: "Open Sans", sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 14px !important;
     line-height: 24px;
+    margin: auto 0 auto 6px;
 }
 
 .checkbox:checked {
     background: var(--primary-color);
     border: 1px solid var(--primary-color);
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
 }
 
 .logo-img {
@@ -231,6 +238,7 @@ label {
     width: 100%;
     font-size: 1rem;
 }
+
 .card-input-element+.card {
     height: calc(100% - 2px);
     color: var(--black);

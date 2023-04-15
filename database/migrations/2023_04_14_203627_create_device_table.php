@@ -13,18 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('data_toko', function (Blueprint $table) {
+        Schema::create('device', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->string('toko_name');
-            $table->string('toko_desc');
-            $table->string('toko_address');
-            $table->string('open_hour');
-            $table->string('close_hour');
-            $table->string('gallery');
-            $table->string('geo_location');
+            $table->string('device_name');
+            $table->string('type');
+            $table->string('brand');
+            $table->string('serial_number');
+            $table->string('device_picture');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -35,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('data_toko');
+        Schema::dropIfExists('device');
     }
 };

@@ -1,166 +1,166 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
+
+@section('title')
+    {{ __("Dashboard") }}
+@endsection
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Dashboard') }}</div>
-
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        {{ __('Welcome!') }}
-                        <br>
-                        {{--  check auth  --}}
-                        @if (Auth::check())
-                            {{ __('You are logged in!') }}
-                            <br>
-                            {{ __('Your role is : ') }}
-                            @if (Auth::user()->role == 'Admin')
-                                {{ __('admin') }}
-                            @elseif (Auth::user()->role == 'User')
-                                {{ __('user') }}
-                            @elseif( Auth::user()->role == NULL )
-                                {{ __('NULL') }}
-                            @endif
-                        @endif
-                        <br>
-                        {{ __('Get Location : ') }}
-                        <p id="demo"></p>
-                        <p id="alamat"></p>
-                        <br>
-                        <div class="col-md-12">
-                            <select class="col-md-12 js-data-example-ajax form-control">
-                                <option></option>
-                            </select>
-                        </div>
-
-                        <br>
-                        <p id="link"></p>
+    <section class="vh-100">
+        {{--  Jumbotron   --}}
+        <div class="p-5 text-center bg-image" style="background-image: url('{{ url('assets/img/dashboard.jpg') }}'); height: 400px;">
+            <div class="mask pt-5">
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="text-white pt-5">
+                        <h1 class="mb-3">{{ __("Your solution in service") }}</h1>
+                        <h4 class="mb-3">{{ __("Find a way to repair your device in one website") }}</h4>
+                        <a class="btn btn-custome btn-lg" href="#" role="button">Book Now</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
-        var x = document.getElementById("demo");
+        {{--  content   --}}
+        <div class="container-fluid my-4">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6 d-flex justify-content-center align-content-center">
+                        <img src="{{ url('assets/img/banner.png') }}" class="img-fluid w-75" alt="banner">
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="d-flex justify-content-start align-items-start">
+                            <div class="txt-third mt-5">
+                                <h1 class="mb-2 text-title-dashboard fw-semibold">{{ __('Why Using Service.in ?') }}</h1>
+                                <hr class="border border-cust border-2 opacity-50 TitleLine">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="d-flex justify-content-start align-items-start mt-4">
+                                    <div class="icon mt-2">
+                                        <i class="fa-solid fa-truck-fast fa-2xl txt-primary"></i>
+                                    </div>
+                                    <div class="mx-4 txt-third descText">
+                                        <h6 class="uppercase fw-semibold">{{ __("Nearest Store") }}</h6>
+                                        <p>{{ __("Showing the nearest store available. We prioritize the nearest store for your device repairment service.") }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-start align-items-start mt-4">
+                                    <div class="icon mt-2">
+                                        <i class="fa-solid fa-arrow-rotate-left fa-2xl txt-primary"></i>
+                                    </div>
+                                    <div class="mx-4 txt-third descText">
+                                        <h6 class="uppercase fw-semibold">{{ __("Free Complaint") }}</h6>
+                                        <p>{{ __("Aftersales complaint guarantee. We will help you communicate with the store even after the device was done.") }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-start align-items-start mt-4">
+                                    <div class="icon mt-2">
+                                        <i class="fa-solid fa-fingerprint fa-2xl txt-primary"></i>
+                                    </div>
+                                    <div class="mx-4 txt-third descText">
+                                        <h6 class="uppercase fw-semibold">{{ __("Community Trusted") }}</h6>
+                                        <p>{{ __("Handled by experienced store and technician only. We curated the store that already have a good review and professional Technician.") }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{--  end content  --}}
+
+        <div class="my-5 d-flex justify-content-center align-items-center">
+            <hr class="border border-cust border-1 opacity-50 w-75">
+        </div>
+        {{--  content 2  --}}
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <div class="d-flex justify-content-center align-items-center txt-third mt-5">
+                    <h1 class="mb-2 text-title-dashboard fw-semibold">{{ __('BOOK OUR SERVICE BELOW') }}</h1>
+                </div>
+
+                {{--  product card --}}
+                <div class="container">
+                    <div class="row justify-content-center align-items-center txt-third mt-5">
+
+                        <div class="card txt-third card-merchant mx-4 mt-5">
+                            <img src="{{ url('assets/img/example-img-merchant.png') }}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">{{ __("Toko Service Jaya Abadi") }}</h5>
+                                <p class="card-text">{{ __("Some quick example text to build on the card title and make up the bulk of the card's content.") }}</p>
+                                <div class="text-center">
+                                    <a href="#" class="btn btn-custome">{{ __("Book this Service") }}</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card txt-third card-merchant mx-4 mt-5">
+                            <img src="{{ url('assets/img/example-img-merchant.png') }}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">{{ __("Toko Service Jaya Abadi") }}</h5>
+                                <p class="card-text">{{ __("Some quick example text to build on the card title and make up the bulk of the card's content.") }}</p>
+                                <div class="text-center">
+                                    <a href="#" class="btn btn-custome">{{ __("Book this Service") }}</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card txt-third card-merchant mx-4 mt-5">
+                            <img src="{{ url('assets/img/example-img-merchant.png') }}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">{{ __("Toko Service Jaya Abadi") }}</h5>
+                                <p class="card-text">{{ __("Some quick example text to build on the card title and make up the bulk of the card's content.") }}</p>
+                                <div class="text-center">
+                                    <a href="#" class="btn btn-custome">{{ __("Book this Service") }}</a>
+                                </div>
+                            </div>
+                        </div>
 
 
-        $(document).ready(function() {
-            function getLocation() {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(showPosition);
-                } else {
-                    x.innerHTML = "Geolocation is not supported by this browser.";
-                }
-            }
+                        <div class="card txt-third card-merchant mx-4 mt-5">
+                            <img src="{{ url('assets/img/example-img-merchant.png') }}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">{{ __("Toko Service Jaya Abadi") }}</h5>
+                                <p class="card-text">{{ __("Some quick example text to build on the card title and make up the bulk of the card's content.") }}</p>
+                                <div class="text-center">
+                                    <a href="#" class="btn btn-custome">{{ __("Book this Service") }}</a>
+                                </div>
+                            </div>
+                        </div>
 
-            getLocation();
+                        <div class="card txt-third card-merchant mx-4 mt-5">
+                            <img src="{{ url('assets/img/example-img-merchant.png') }}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">{{ __("Toko Service Jaya Abadi") }}</h5>
+                                <p class="card-text">{{ __("Some quick example text to build on the card title and make up the bulk of the card's content.") }}</p>
+                                <div class="text-center">
+                                    <a href="#" class="btn btn-custome">{{ __("Book this Service") }}</a>
+                                </div>
+                            </div>
+                        </div>
 
-            function showPosition(position) {
-                x.innerHTML = "Latitude: " + position.coords.latitude +
-                    "<br>Longitude: " + position.coords.longitude;
+                        <div class="card txt-third card-merchant mx-4 mt-5">
+                            <img src="{{ url('assets/img/example-img-merchant.png') }}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">{{ __("Toko Service Jaya Abadi") }}</h5>
+                                <p class="card-text">{{ __("Some quick example text to build on the card title and make up the bulk of the card's content.") }}</p>
+                                <div class="text-center">
+                                    <a href="#" class="btn btn-custome">{{ __("Book this Service") }}</a>
+                                </div>
+                            </div>
+                        </div>
 
-                $.ajax({
-                    // call api route
-                    url: "{{ url('api/getLocation') }}",
-                    type: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        geo: position.coords.latitude + ',' + position.coords.longitude
-                    },
-                    dataType: "json",
-                    success: function(data) {
-                        // console.log(data);
-                        $('#alamat').html('Alamat : ' + data.data);
-                    }
-                });
+                    </div>
 
-                $.ajax({
-                    // call api route
-                    url: "{{ url('api/getMatrix') }}",
-                    type: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        destination: '-6.200145399999999,106.7855597',
-                        origin: position.coords.latitude + ',' + position.coords.longitude
-                    },
-                    dataType: "json",
-                    success: function(data) {
-                        console.log(data);
-                    }
-                });
+                </div>
 
-                $('.js-data-example-ajax').select2({
-                    ajax: {
-                        url: "{{ url('api/searchPlace') }}",
-                        data: function(params) {
-                            var query = {
-                                origin: position.coords.latitude + ',' + position.coords.longitude,
-                                place: params.term,
-                            }
-                            // Query parameters will be ?origin=[key]&place=[input]
-                            return query;
-                        },
-                        dataType: 'json',
-                        delay: 250,
-                        processResults: function(data, params) {
-                            return {
-                                results: $.map(data.results, function(item) {
-                                    return {
-                                        text: formatResult(item),
-                                        title: item.name,
-                                        id: item.name + ' - ' + item.formatted_address,
-                                        name: item.name,
-                                        formatted_address: item.formatted_address,
-                                        geo: item.geometry.location.lat + ',' + item.geometry
-                                            .location.lng
-                                    }
-                                })
-                            };
-                        },
-                    },
-                    placeholder: "Masukkan alamat toko anda.",
-                    templateSelection: formatSelection,
-                    minimumInputLength: 1,
-                });
-
-                function formatResult(data) {
-                    if (data.loading) {
-                        return data.text;
-                    }
-
-                    var $container = $(
-                        "<div class='select2-result'>" +
-                        "<b>" + data.name + "</b><br>" +
-                        "<span>" + data.formatted_address + "</span>" +
-                        "</div>"
-                    );
-
-                    return $container;
-                }
-
-                function formatSelection(data) {
-                    return data.id || data.text;
-                }
-
-                $('.js-data-example-ajax').on('select2:select', function(e) {
-                    var data = e.params.data;
-                    // console.log(data);
-                    $('#link').html('<a href="https://www.google.com/maps/dir/?api=1&origin=' + position
-                        .coords.latitude + ',' + position.coords.longitude + '&destination=' + data
-                        .geo + '&travelmode=driving" target="_blank">Buka Google Maps</a>');
-                });
-            }
-        });
-    </script>
+            </div>
+        </div>
+    </section>
 @endsection

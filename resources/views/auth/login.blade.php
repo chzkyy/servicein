@@ -80,10 +80,8 @@
                                 </div>
 
                                 <div class="form-group mt-4 remember-me">
-                                    <input class="form-check-input checkbox" type="checkbox" name="remember" id="remember"
-                                        {{ old('remember') ? 'checked' : '' }}>
-                                    <label for="remember"
-                                        class="checkbox-label txt-primary">{{ __('Remember me on this computer') }}</label>
+                                    <input class="form-check-input checkbox" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <label for="remember" class="checkbox-label txt-primary">{{ __('Remember me on this computer') }}</label>
                                 </div>
 
                                 <div class="form-group mt-5">
