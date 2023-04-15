@@ -13,7 +13,7 @@
                     <div class="text-white pt-5">
                         <h1 class="mb-3">{{ __("Your solution in service") }}</h1>
                         <h4 class="mb-3">{{ __("Find a way to repair your device in one website") }}</h4>
-                        <a class="btn btn-custome btn-lg" href="#" role="button">Book Now</a>
+                        <a class="btn btn-custome btn-lg" href="#book_merchant" role="button">Book Now</a>
                     </div>
                 </div>
             </div>
@@ -81,14 +81,13 @@
         {{--  content 2  --}}
         <div class="container-fluid">
             <div class="col-md-12">
-                <div class="d-flex justify-content-center align-items-center txt-third mt-5">
+                <div class="d-flex justify-content-center align-items-center txt-third mt-5" id="book_merchant">
                     <h1 class="mb-2 text-title-dashboard fw-semibold">{{ __('BOOK OUR SERVICE BELOW') }}</h1>
                 </div>
 
                 {{--  product card --}}
                 <div class="container">
                     <div class="row justify-content-center align-items-center txt-third mt-5">
-
                         <div class="card txt-third card-merchant mx-4 mt-5">
                             <img src="{{ url('assets/img/example-img-merchant.png') }}" class="card-img-top" alt="...">
                             <div class="card-body">
