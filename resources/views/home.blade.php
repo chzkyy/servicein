@@ -7,9 +7,9 @@
 @section('content')
     <section class="vh-100">
         {{--  Jumbotron   --}}
-        <div class="p-5 text-center bg-image" style="background-image: url('{{ url('assets/img/dashboard.jpg') }}'); height: 400px;">
+        <div class="p-5 text-center bg-image">
             <div class="mask pt-5">
-                <div class="d-flex justify-content-center align-items-center">
+                <div class="d-flex justify-content-center align-items-center pt-5 mt-5 jdashboard">
                     <div class="text-white pt-5">
                         <h1 class="mb-3">{{ __("Your solution in service") }}</h1>
                         <h4 class="mb-3">{{ __("Find a way to repair your device in one website") }}</h4>
