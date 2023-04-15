@@ -7,7 +7,7 @@
 @section('content')
     <section class="vh-100">
         {{--  Jumbotron   --}}
-        <div class="p-5 text-center bg-image">
+        <div class="p-5 text-center bg-image jdashboard">
             <div class="mask pt-5">
                 <div class="d-flex justify-content-center align-items-center pt-5 mt-5 jdashboard">
                     <div class="text-white pt-5">
