@@ -1,7 +1,7 @@
-{{--  navbar  --}}]
+{{--  navbar  --}}
 <nav class="navbar navbar-expand-lg navbar-bg">
     <div class="container-fluid">
-        <a class="navbar-brand mx-5" href="#">
+        <a class="navbar-brand mx-2" href="#">
             <img src="{{ url('assets/img/Logo.png') }}" alt="logo">
         </a>
 
@@ -11,7 +11,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav col-md-11">
+            <ul class="navbar-nav col-md-12">
                 <li class="nav-item col-md-8 my-auto mx-auto">
                     <form role="search">
                         <div class="custom-search">
@@ -42,7 +42,7 @@
                     </a>
                 </li>
 
-                <div class="vr mx-1 my-auto"></div>
+                <div class="vr mx-1 my-auto d-none d-md-block"></div>
 
                 @guest
                     <li class="nav-item dropdown">
