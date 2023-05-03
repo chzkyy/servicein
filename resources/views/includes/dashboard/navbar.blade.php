@@ -1,5 +1,5 @@
 {{--  navbar  --}}
-<nav class="navbar navbar-expand-lg navbar-bg">
+<nav class="navbar fixed-top navbar-expand-lg navbar-bg">
     <div class="container-fluid">
         <a class="navbar-brand mx-2" href="#">
             <img src="{{ url('assets/img/Logo.png') }}" alt="logo">
