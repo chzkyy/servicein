@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DataToko extends Model
+class Merchant extends Model
 {
     use HasFactory;
 
-    protected $table = 'data_toko';
+    protected $table = 'merchant';
 
     protected $fillable = [
         'user_id',
-        'toko_name',
-        'toko_desc',
-        'toko_address',
+        'merchant_name',
+        'merchant_desc',
+        'merchant_address',
         'open_hour',
         'close_hour',
-        'gallery',
+        'phone_number',
         'geo_location',
     ];
 
