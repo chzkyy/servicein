@@ -21,7 +21,7 @@ Route::get('/home', function () {
     return view('index');
 })->name('index');
 
-Route::get('/test', 'App\Http\Controllers\DataTokoController@index');
+Route::get('/test', 'App\Http\Controllers\MerchantController@index');
 
 /**
  * /------------------------------------------------------------------
