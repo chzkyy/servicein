@@ -40,7 +40,7 @@
                 <div class="col-md-7 text-black">
                     <div class="d-flex align-item-center px-5 mt-2 pt-4">
                         <div class="col-12">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-none d-sm-flex justify-content-between">
                                 <div class="back">
                                     <a href="{{ route('login') }}" class="txt-secondary fw-semibold"><i class="fa fa-chevron-left fa-xs" aria-hidden="true"></i> {{ __('Back') }}</a>
                                 </div>
@@ -111,6 +111,10 @@
                                             class="google-icon">
                                         Register with Google
                                     </a>
+                                </div>
+
+                                <div class="create-account text-center mt-4 d-block d-md-none text-center">
+                                    <span class="text-create-account"> {{ __('Already have an account?') }} <a href="{{ route('login') }}" class="txt-primary fw-semibold">{{ __('Sign in') }}</a></span>
                                 </div>
                             </form>
                         </div>

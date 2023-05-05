@@ -24,12 +24,14 @@
             <div class="col-md-12 px-5">
                 <div class="row">
                     <div class="col-md-6 d-flex justify-content-center align-content-center">
-                        <img src="{{ url('assets/img/banner.png') }}" class="img-fluid w-75" alt="banner">
+                        <div class="col-md-8 justify-content-center align-content-center">
+                            <img src="{{ url('assets/img/banner.png') }}" class="img-fluid" alt="banner">
+                        </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="d-flex justify-content-start align-items-start">
-                            <div class="txt-third mt-5">
+                            <div class="txt-third mt-2">
                                 <h1 class="mb-2 text-title-dashboard fw-semibold">{{ __('Why Using Service.in ?') }}</h1>
                                 <div class="d-flex justify-content-center align-items-center justify-content-md-start align-items-md-center">
                                     <hr class="border border-cust border-2 opacity-50 TitleLine">

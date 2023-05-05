@@ -1,0 +1,25 @@
+[03-May-2023 14:25:32 UTC] PHP Warning:  require(/home/rizkyfa1/servicein/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/rizkyfa1/servicein/public/index.php on line 34
+[03-May-2023 14:25:32 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/rizkyfa1/servicein/public/../vendor/autoload.php' (include_path='.:/opt/alt/php80/usr/share/pear:/opt/alt/php80/usr/share/php:/usr/share/pear:/usr/share/php') in /home/rizkyfa1/servicein/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/rizkyfa1/servicein/public/index.php on line 34
+[03-May-2023 14:25:36 UTC] PHP Warning:  require(/home/rizkyfa1/servicein/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/rizkyfa1/servicein/public/index.php on line 34
+[03-May-2023 14:25:36 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/rizkyfa1/servicein/public/../vendor/autoload.php' (include_path='.:/opt/alt/php80/usr/share/pear:/opt/alt/php80/usr/share/php:/usr/share/pear:/usr/share/php') in /home/rizkyfa1/servicein/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/rizkyfa1/servicein/public/index.php on line 34
+[03-May-2023 14:25:39 UTC] PHP Warning:  require(/home/rizkyfa1/servicein/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/rizkyfa1/servicein/public/index.php on line 34
+[03-May-2023 14:25:39 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/rizkyfa1/servicein/public/../vendor/autoload.php' (include_path='.:/opt/alt/php80/usr/share/pear:/opt/alt/php80/usr/share/php:/usr/share/pear:/usr/share/php') in /home/rizkyfa1/servicein/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/rizkyfa1/servicein/public/index.php on line 34
+[03-May-2023 14:25:40 UTC] PHP Warning:  require(/home/rizkyfa1/servicein/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/rizkyfa1/servicein/public/index.php on line 34
+[03-May-2023 14:25:40 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/rizkyfa1/servicein/public/../vendor/autoload.php' (include_path='.:/opt/alt/php80/usr/share/pear:/opt/alt/php80/usr/share/php:/usr/share/pear:/usr/share/php') in /home/rizkyfa1/servicein/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/rizkyfa1/servicein/public/index.php on line 34
+[03-May-2023 14:25:42 UTC] PHP Warning:  require(/home/rizkyfa1/servicein/public/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/rizkyfa1/servicein/public/index.php on line 34
+[03-May-2023 14:25:42 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/rizkyfa1/servicein/public/../vendor/autoload.php' (include_path='.:/opt/alt/php80/usr/share/pear:/opt/alt/php80/usr/share/php:/usr/share/pear:/usr/share/php') in /home/rizkyfa1/servicein/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/rizkyfa1/servicein/public/index.php on line 34

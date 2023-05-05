@@ -40,7 +40,7 @@
                 <div class="col-md-7 text-black">
                     <div class="d-flex align-item-center px-5 mt-2 pt-4">
                         <div class="col-12">
-                            <div class="d-flex justify-content-end">
+                            <div class="d-none d-sm-flex justify-content-end">
                                 <div class="create-account">
                                     <span class="text-create-account txt-secondary"> {{ __('New to Service.in?') }}</span>
                                     <a href="{{ route('register') }}" class="text-create-account-link txt-primary fw-semibold">Sign Up</a>
@@ -102,6 +102,12 @@
                                                 {{ __('Forgot Password?') }}
                                             </a>
                                         @endif
+                                    </div>
+
+
+                                    <div class="create-account d-block d-md-none text-center mt-3">
+                                        <span class="text-create-account txt-secondary"> {{ __('New to Service.in?') }}</span>
+                                        <a href="{{ route('register') }}" class="text-create-account-link txt-primary fw-semibold">Sign Up</a>
                                     </div>
                                 </div>
                             </form>
