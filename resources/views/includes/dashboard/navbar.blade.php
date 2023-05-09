@@ -59,7 +59,7 @@
                             <img src="{{ url('assets/img/Avatar.png') }}" alt="Avatar" class="img-fluid">
                             <span class="mx-2 fw-semibold">{{ Auth::user()->username }}</span>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="#">Action</a></li>
                             <li><a class="dropdown-item" href="#">Another action</a></li>
                             <li><a class="dropdown-item" href="#">Something else here</a></li>

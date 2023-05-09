@@ -96,3 +96,17 @@ Route::group(['prefix' => 'email'], function() {
         return view('auth.verify');
     })->middleware('auth')->name('verification.notice');
 });
+
+
+/**
+ * /------------------------------------------------------------------
+ * | Route customer
+ * /------------------------------------------------------------------
+ * |
+ * | Route untuk customer
+ * |
+ */
+
+Route::get('/profile', 'App\Http\Controllers\CustomerController@profile')
+    ->name('profile')
+    ->middleware(['auth', 'verified']);

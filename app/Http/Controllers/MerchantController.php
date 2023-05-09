@@ -16,7 +16,7 @@ class MerchantController extends Controller
 
     protected function createMerchant(array $data)
     {
-        return Merchant::create([
+        return Merchant::update([
             'merchant_name'         => $data['merchant_name'],
             'merchant_desc'         => $data['merchant_desc'],
             'merchant_address'      => $data['merchant_address'],
