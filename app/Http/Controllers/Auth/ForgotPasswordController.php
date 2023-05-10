@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 
 class ForgotPasswordController extends Controller
 {
@@ -39,5 +41,38 @@ class ForgotPasswordController extends Controller
         // redirect to login
         // dd($auth);
         return view('confirmation.password-success')->with('auth', $auth);
+    }
+
+
+    public function ChangePassword()
+    {
+        return view('auth.passwords.change');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        # Validation
+        $request->validate([
+            'old-password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:[^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$]'],
+        ]);
+
+
+        #Match The Old Password
+        if (!Hash::check($request->input('old-password'), auth()->user()->password)) {
+            return back()->withErrors([
+                'old-password' => 'The old password is incorrect.'
+            ])
+            ->withInput();
+        }
+
+
+        #Update the new Password
+        User::whereId(auth()->user()->id)->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+        // redirect to profile with success message
+        return back()->with('success', 'Password has been changed!');
     }
 }

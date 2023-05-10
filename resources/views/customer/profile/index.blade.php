@@ -18,12 +18,12 @@
                                             class="img-fluid img-thumbnail" alt="profile_picture">
 
                                         <div class="d-flex justify-content-center align-items-center">
-                                            <a href="#" class="btn btn-primary btn-sm mt-3"><i
+                                            <a href="{{ route('edit.profile') }}" class="btn btn-primary btn-sm mt-3"><i
                                                     class="fa-solid fa-pen-to-square"></i> Edit Profile</a>
                                         </div>
 
                                         <div class="d-flex justify-content-center align-items-center">
-                                            <a href="#" class="btn btn-primary btn-sm mt-3"><i
+                                            <a href="{{ route('change-password') }}" class="btn btn-primary btn-sm mt-3"><i
                                                     class="fa-solid fa-lock-open"></i> Change Password</a>
                                         </div>
                                     </div>
@@ -99,22 +99,22 @@
                                         <div class="h5 txt-gold my-4">Contact Detail</div>
 
                                         <div class="detail-profile">
-                                            <div class="fullname mb-2">
+                                            <div class="phone-number mb-2">
                                                 <span class="fw-semibold">Phone Number</span>
                                                 <div class="data">
                                                     <span>{{ $customer->phone_number }}</span>
                                                 </div>
                                             </div>
 
-                                            <div class="gender mb-2">
+                                            <div class="email mb-2">
                                                 <span class="fw-semibold">Email</span>
                                                 <div class="data">
                                                     <span>{{ Auth::user()->email }}</span>
                                                 </div>
                                             </div>
 
-                                            <div class="dob mb-2">
-                                                <span class="fw-semibold">Birth Date</span>
+                                            <div class="cust_addrs mb-2">
+                                                <span class="fw-semibold">Address</span>
                                                 <div class="data">
                                                     <span>{{ $customer->cust_address }}</span>
                                                 </div>

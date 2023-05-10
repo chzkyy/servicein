@@ -32,6 +32,17 @@ class CustomerController extends Controller
         );
     }
 
+    public function edit_profile()
+    {
+        $user_id = auth()->user()->id;
+        $customer = Customer::where('user_id', $user_id)->first();
+        return view('customer.profile.edit',
+            [
+                'customer' => $customer,
+            ]
+        );
+    }
+
     // function for show percentage of profile
     public function show_percentage($id)
     {

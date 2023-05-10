@@ -1,7 +1,7 @@
 {{--  navbar  --}}
 <nav class="navbar fixed-top navbar-expand-lg navbar-bg">
     <div class="container-fluid">
-        <a class="navbar-brand mx-2" href="#">
+        <a class="navbar-brand mx-2" href="{{ route('home') }}">
             <img src="{{ url('assets/img/Logo.png') }}" alt="logo">
         </a>
 
@@ -60,9 +60,7 @@
                             <span class="mx-2 fw-semibold">{{ Auth::user()->username }}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
                             <hr>
                             <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}"

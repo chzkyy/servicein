@@ -49,6 +49,12 @@ Auth::routes();
 //     ->name('admin.register')
 //     ->middleware(['guest']);
 
+Route::get('/change-password', 'App\Http\Controllers\Auth\ForgotPasswordController@ChangePassword')
+    ->name('change-password');
+
+Route::post('/change', 'App\Http\Controllers\Auth\ForgotPasswordController@updatePassword')
+    ->name('password.change');
+
 Route::get('/reset-password/success', 'App\Http\Controllers\Auth\ForgotPasswordController@success')
     ->name('reset-success');
 
@@ -109,4 +115,9 @@ Route::group(['prefix' => 'email'], function() {
 
 Route::get('/profile', 'App\Http\Controllers\CustomerController@profile')
     ->name('profile')
+    ->middleware(['auth', 'verified']);
+
+
+Route::get('/edit-profile', 'App\Http\Controllers\CustomerController@edit_profile')
+    ->name('edit.profile')
     ->middleware(['auth', 'verified']);
