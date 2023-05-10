@@ -18,7 +18,7 @@
                                             class="img-fluid img-thumbnail" alt="profile_picture">
 
                                         <div class="d-flex justify-content-center align-items-center">
-                                            <a href="#" class="btn btn-primary btn-sm mt-3"><i
+                                            <a href="{{ route('edit.profile') }}" class="btn btn-primary btn-sm mt-3"><i
                                                     class="fa-solid fa-pen-to-square"></i> Edit Profile</a>
                                         </div>
 
@@ -64,11 +64,11 @@
                                                     <label for="gender" class="form-label fw-semiboldl">{{ __('Gender') }}</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input @error('gender') is-invalid @enderror" type="radio" name="gender" id="gender" value="Male">
+                                                    <input class="form-check-input @error('gender') is-invalid @enderror" type="radio" name="gender" id="gender" value="Male" @checked($customer->gender == "Male")>
                                                     <label class="form-check-label" for="gender">Male</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input @error('gender') is-invalid @enderror" type="radio" name="gender" id="gender" value="Female">
+                                                    <input class="form-check-input @error('gender') is-invalid @enderror" type="radio" name="gender" id="gender" value="Female"  @checked($customer->gender == "Female")>
                                                     <label class="form-check-label" for="gender">Female</label>
                                                 </div>
                                             </div>
