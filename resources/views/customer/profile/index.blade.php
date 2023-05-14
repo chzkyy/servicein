@@ -68,7 +68,7 @@
 
                         </div>
 
-                        <div class="col-md-8 offset-md-1 pt-5 mt-5">
+                        <div class="col-md-8 offset-md-1 pt-md-5 mt-md-5">
                             <div class="card">
                                 <div class="card-body txt-third m-4">
                                     {{--  full name  --}}
