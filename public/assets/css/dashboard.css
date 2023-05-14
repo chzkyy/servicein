@@ -53,6 +53,10 @@ body {
     border-color: var(--bgold) !important;
 }
 
+.bg-custome {
+    background-color: var(--primary-color) !important;
+}
+
 .btn-custome {
     background: var(--primary-color);
     border-radius: 4px;
@@ -161,72 +165,38 @@ body {
 /* profile */
 .b-profile
 {
-	border-top: 1px solid var(--secondary-white);
 	padding-top: 46px;
 	text-align: center;
 }
 
-.b-profile:last-child { margin-bottom: -30px; }
-
-.b-profile h2 { margin-bottom: 50px; font-weight: 900; text-transform: uppercase;}
-
-.p-item
-{
-	position: relative;
-	max-width: 250px;
-	width: 100%;
-	margin-bottom: 15px;
-	color: var(--primary-color);
+.b-profile:last-child {
+    margin-bottom: -30px;
 }
 
-.chart-container
-{
-	position: relative;
-	width: 100%;
-	height: 0;
-	padding-top: 100%;
-	margin-bottom: 14px;
+.b-profile h2 {
+    margin-bottom: 50px;
+    font-weight: 900;
+    text-transform: uppercase;
 }
 
-.p-item .chart,
-.p-item .chart canvas
-{
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100% !important;
-	height: 100% !important;
+.gauge-active {
+	background-color: var(--primary-color) !important;
 }
 
-.p-item .chart:before
-{
-	content: "";
-	width: 0;
-	height: 100%;
-}
-
-.p-item .chart:before,
-.p-item .percent
-{
-	display: inline-block;
-	vertical-align: middle;
-}
-
-.p-item .percent
-{
-	position: relative;
-	line-height: 1;
-	font-size: 40px;
-	font-weight: 900;
-	z-index: 2;
-}
-
-.p-item  .percent:after
-{
-	content: attr(data-after);
-	font-size: 20px;
+.gauge-active-before {
+    display: none;
 }
 
 .text-bar {
     font-size: 16px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
 }

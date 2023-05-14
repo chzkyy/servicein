@@ -45,24 +45,24 @@ class ChooseRoleController extends Controller
             $user = User::find($id);
             Merchant::create([
                 'user_id'               => $user->id,
-                'merchant_name'         => '',
-                'merchant_desc'         => '',
-                'merchant_address'      => '',
-                'open_hour'             => '',
-                'close_hour'            => '',
-                'phone_number'          => '',
-                'geo_location'          => '',
+                'merchant_name'         => '-',
+                'merchant_desc'         => '-',
+                'merchant_address'      => '-',
+                'open_hour'             => '-',
+                'close_hour'            => '-',
+                'phone_number'          => '-',
+                'geo_location'          => '-',
             ]);
 
         } elseif ($request->role == 'User') {
             $user = User::find($id);
             Customer::create([
                 'user_id'       => $user->id,
-                'fullname'      => '',
-                'dob'           => '',
-                'phone_number'  => '',
-                'gender'        => '',
-                'cust_address'  => '',
+                'fullname'      => '-',
+                'dob'           => '-',
+                'phone_number'  => '-',
+                'gender'        => '-',
+                'cust_address'  => '-',
             ]);
         }
 

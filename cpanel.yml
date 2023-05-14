@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/rizkyfa1/servicein/
+    - /bin/cp -R * $DEPLOYPATH
+    

@@ -7,6 +7,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="{{ url('assets/js/jquery.appear.min.js') }}"></script>
 <script src="{{ url('assets/js/jquery.easypiechart.min.js') }}"></script>
+<script src="{{ url('assets/js/simpleGauge.js') }}"></script>
 
 <script>
     @if ($errors->has('username'))
@@ -83,43 +84,45 @@
 </script>
 
 <script>
-    function run()
-    {
-        var fName = arguments[0],
-            aArgs = Array.prototype.slice.call(arguments, 1);
-        try {
-            fName.apply(window, aArgs);
-        } catch(err) {
-
-        }
-    };
-
-    /* chart
-    ================================================== */
-    function _chart ()
-    {
-        $('.b-profile').appear(function() {
-            setTimeout(function() {
-                $('.chart').easyPieChart({
-                    easing: 'easeOutElastic',
-                    delay: 3000,
-                    barColor: '#E3C10F',
-                    trackColor: '#fff',
-                    scaleColor: false,
-                    lineWidth: 21,
-                    trackWidth: 21,
-                    size: 250,
-                    lineCap: 'round',
-                    onStep: function(from, to, percent) {
-                        this.el.children[0].innerHTML = Math.round(percent);
-                    }
-                });
-            }, 150);
-        });
-    };
-
+    $('#btn_saveChanges').click(function(){
+        $('#update_profile').submit();
+    });
 
     $(document).ready(function() {
-        run(_chart);
+
+        $('.gauge-wrap').simpleGauge({
+            width:'120',
+            hueLow:'0',
+            hueHigh:'0',
+            saturation:'0%',
+            lightness:'0%',
+            gaugeBG:'#fff',
+            parentBG:'#fff'
+        });
     });
+
+    $('.img-preview').hide();
+    $('#btn_uploadAvatar').hide();
+
+    function preview_avatar() {
+        const avatar = document.querySelector('#profile_picture');
+        const imgPreview = document.querySelector('.img-preview');
+
+        imgPreview.style.display = 'block';
+        $('.avatar').hide();
+
+        const OFReader = new FileReader();
+        OFReader.readAsDataURL(avatar.files[0]);
+
+        OFReader.onload = function(OFREvent) {
+            imgPreview.src = OFREvent.target.result;
+        }
+
+        $('#btn_uploadAvatar').show();
+    }
+
+    $('#btn_uploadAvatar').click(function(){
+        $('#updt_avatar').submit();
+    });
+
 </script>

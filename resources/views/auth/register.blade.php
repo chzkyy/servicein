@@ -80,17 +80,28 @@
 
                                 <div class="form-group mt-2">
                                     <label for="password" class="form-label">{{ __('Password') }}</label>
-                                    <input type="password"
-                                        class="form-control @error('password') is-invalid @enderror form-control-lg"
-                                        id="password" name="password" required autocomplete="current-password"
-                                        placeholder="Enter your password" />
+                                    <div class="input-group">
+                                        <input type="password" class="form-control @error('password') is-invalid @enderror form-control-lg input-group"
+                                            id="password" name="password" required autocomplete="current-password"
+                                            placeholder="Enter your password" />
+
+                                        <div class="input-group-append input-group-text" onclick="password()">
+                                            <i class="far fa-eye" id="eye"></i>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="form-group mt-2">
                                     <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
-                                    <input type="password" class="form-control form-control-lg" id="password-confirm"
-                                        name="password_confirmation" required autocomplete="new-password"
-                                        placeholder="Enter your password" />
+                                    <div class="input-group">
+                                        <input type="password" class="form-control form-control-lg" id="password_confirmation"
+                                            name="password_confirmation" required autocomplete="new-password"
+                                            placeholder="Enter your password" />
+
+                                        <div class="input-group-append input-group-text" onclick="password_confirmation()">
+                                            <i class="far fa-eye" id="eye_confirmation"></i>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="form-group mt-3 term">

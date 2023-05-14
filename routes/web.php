@@ -121,3 +121,11 @@ Route::get('/profile', 'App\Http\Controllers\CustomerController@profile')
 Route::get('/edit-profile', 'App\Http\Controllers\CustomerController@edit_profile')
     ->name('edit.profile')
     ->middleware(['auth', 'verified']);
+
+Route::post('/update-profile', 'App\Http\Controllers\CustomerController@update_profile')
+    ->name('update.profile')
+    ->middleware(['auth', 'verified']);
+
+Route::post('/update-avatar', 'App\Http\Controllers\CustomerController@update_avatar')
+    ->name('update.avatar')
+    ->middleware(['auth', 'verified']);
