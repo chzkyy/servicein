@@ -13,6 +13,7 @@
                         <div class="col-md-2 offset-md-1 pt-5 mt-5">
                             <div class="card d-flex justify-content-center align-items-center">
                                 <div class="card-body">
+
                                     @if ($avatar == null)
                                         <img src="{{ asset('assets/img/profile_picture.png') }}"
                                             class="img-fluid img-thumbnail avatar" alt="profile_picture">
@@ -20,6 +21,7 @@
                                         <img src="{{ $avatar }}" class="img-fluid img-thumbnail avatar mx-auto"
                                             alt="profile_picture" style="width: 150px; height: 150px;">
                                     @endif
+
                                         <img class="img-fluid img-thumbnail mx-auto img-preview" style="width: 150px; height: 150px;">
                                         {{--  tombol upload  --}}
                                         <div class="d-flex justify-content-center align-items-center my-2">
