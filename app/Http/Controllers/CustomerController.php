@@ -90,7 +90,7 @@ class CustomerController extends Controller
             'profile_picture' => 'required|mimes:png,jpeg,jpg|max:2048',
         ]);
 
-        $fileName = $username.'.'.$request->profile_picture->extension();
+        $fileName = $username.'_'.time().'.'.$request->profile_picture->extension();
         $request->profile_picture->move(public_path('assets/img/profile'), $fileName);
 
         // update data user profile
