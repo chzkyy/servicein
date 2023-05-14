@@ -17,7 +17,7 @@
                                     @if ($avatar == null)
                                         <img src="{{ asset('assets/img/profile_picture.png') }}"
                                             class="img-fluid img-thumbnail avatar" alt="profile_picture">
-                                    @else if ($avatar != null)
+                                    @elseif ($avatar != null)
                                         <img src="{{ $avatar }}" class="img-fluid img-thumbnail avatar mx-auto"
                                             alt="profile_picture" style="width: 150px; height: 150px;">
                                     @endif
