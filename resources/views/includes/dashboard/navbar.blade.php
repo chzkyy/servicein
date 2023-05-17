@@ -60,7 +60,13 @@
                             <span class="mx-2 fw-semibold">{{ Auth::user()->username }}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
+                            <li>
+                                @if ( Auth::user()->role == 'Admin' )
+                                    <a class="dropdown-item" href="{{ route('profile.admin') }}">Profile</a>
+                                @else
+                                    <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
+                                @endif
+                            </li>
                             <hr>
                             <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}"

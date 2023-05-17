@@ -51,6 +51,10 @@
                         </div>
                     </div>
 
+                    <div class="d-flex d-md-none align-items-center justify-content-center py-5 mb-4 pb-4">
+                        <img src="{{ url('assets/img/Logo2.png') }}" alt="logo" class="logo-img">
+                    </div>
+
                     <div class="d-flex align-items-center px-5 ms-xl-3 mt-4 pt-3">
                         <div class="row">
                             <span class="text-login">{{ __('Register Account') }}</span>
@@ -124,7 +128,7 @@
                                     </a>
                                 </div>
 
-                                <div class="create-account text-center mt-4 d-block d-md-none text-center">
+                                <div class="create-account text-center my-4 d-block d-md-none text-center">
                                     <span class="text-create-account"> {{ __('Already have an account?') }} <a href="{{ route('login') }}" class="txt-primary fw-semibold">{{ __('Sign in') }}</a></span>
                                 </div>
                             </form>

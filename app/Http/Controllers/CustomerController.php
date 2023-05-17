@@ -5,8 +5,25 @@ use App\Models\User;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
+
+
+
+
+
 class CustomerController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // hanya role customer yang bisa mengakses
+        $this->middleware(['customer']);
+    }
+
+
     public function update_profile(Request $request)
     {
         // get user id
@@ -28,8 +45,11 @@ class CustomerController extends Controller
     public function profile()
     {
         $user_id    = auth()->user()->id;
+        // get data user profile
         $customer   = Customer::where('user_id', $user_id)->first();
+        // get percentage
         $percentage = $this->show_percentage($user_id);
+        // get avatar
         $ava        = auth()->user()->avatar;
 
         if ( $ava == null )
@@ -56,7 +76,9 @@ class CustomerController extends Controller
     public function edit_profile()
     {
         $user_id    = auth()->user()->id;
+        // get data user profile
         $customer   = Customer::where('user_id', $user_id)->first();
+        // get avatar
         $ava        = auth()->user()->avatar;
 
         if ( $ava == null )
@@ -81,8 +103,11 @@ class CustomerController extends Controller
 
     public function update_avatar(Request $request)
     {
+        // get user id
         $user_id    = auth()->user()->id;
+        // get data user profile
         $customer   = Customer::where('user_id', $user_id)->first();
+        // get username
         $username   = auth()->user()->username;
 
         // Handle File Upload
@@ -90,7 +115,7 @@ class CustomerController extends Controller
             'profile_picture' => 'required|mimes:png,jpeg,jpg|max:2048',
         ]);
 
-        $fileName = $username.'_'.time().'.'.$request->profile_picture->extension();
+        $fileName = $username.'.'.$request->profile_picture->extension();
         $request->profile_picture->move(public_path('assets/img/profile'), $fileName);
 
         // update data user profile

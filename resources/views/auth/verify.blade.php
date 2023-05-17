@@ -30,8 +30,13 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-7 text-black">
-                <div class="d-flex align-item-center px-5 mt-2 pt-4 mb-3 pb-3">
+                <div class="d-flex d-md-none align-items-center justify-content-center py-5 mt-4 pb-5 mb-5">
+                    <img src="{{ url('assets/img/Logo2.png') }}" alt="logo" class="logo-img">
+                </div>
+
+                <div class="d-none d-md-flex align-item-center px-5 mt-2 pt-4 mb-3 pb-3">
                     <div class="col-12">
                         <div class="d-flex justify-content-end">
                             <div class="create-account">

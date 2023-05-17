@@ -9,15 +9,6 @@
 <script src="{{ url('assets/js/jquery.easypiechart.min.js') }}"></script>
 <script src="{{ url('assets/js/simpleGauge.js') }}"></script>
 
-{{--  scroll smooth  --}}
-<script>
-    $('a').click(function (e) {
-        $('html, body').animate({
-            scrollTop: $($(this).attr('href')).offset().top
-        }, 1000);
-    });
-</script>
-
 <script>
     @if ($errors->has('username'))
         toastr.error('{{ $errors->first('username') }}', {
@@ -134,7 +125,4 @@
         $('#updt_avatar').submit();
     });
 
-    $('#fileup').click(function() {
-        $('#profile_picture').click();
-    });
 </script>

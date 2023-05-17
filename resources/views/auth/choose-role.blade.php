@@ -33,10 +33,21 @@
             </div>
 
             <div class="col-md-7">
-                <div class="d-block align-items-center px-5 ms-xl-3 mt-4 pt-4 mb-5">
+
+                <div class="d-flex d-md-none align-items-center justify-content-center py-5 mb-4 mt-2 pb-4">
+                    <img src="{{ url('assets/img/Logo2.png') }}" alt="logo" class="logo-img">
+                </div>
+
+                <div class="d-none d-md-block align-items-center px-5 ms-xl-3 mt-4 pt-4 mb-5">
                     <div class="row">
                         <span class="title-choose-role">{{ __('Choose Your Account Type!') }}</span>
                         <span class="desc-choose-role text-wrap col-md-8">{{ __('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor!') }}</span>
+                    </div>
+                </div>
+
+                <div class="d-block d-md-none align-items-center px-5 ms-xl-3 mt-4 pt-4 mb-5">
+                    <div class="row">
+                        <span class="title-choose-role">{{ __('Choose Your Account Type!') }}</span>
                     </div>
                 </div>
 
