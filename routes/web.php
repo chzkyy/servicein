@@ -127,7 +127,7 @@ Route::post('/update-profile', 'App\Http\Controllers\CustomerController@update_p
     ->middleware(['auth', 'verified']);
 
 Route::post('/update-avatar', 'App\Http\Controllers\CustomerController@update_avatar')
-    ->name('update.avatar')
+    ->name('update-avatar')
     ->middleware(['auth', 'verified']);
 
 

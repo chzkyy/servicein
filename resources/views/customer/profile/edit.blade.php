@@ -30,7 +30,7 @@
 
                                     <div class="d-flex justify-content-center align-items-center">
                                         <label class=" btn btn-link btn-sm custom-file-upload">
-                                            <form action="{{ route('update.avatar') }}" method="post" id="updt_avatar" enctype="multipart/form-data">
+                                            <form action="{{ route('update-avatar') }}" method="post" id="updt_avatar" enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="file" name="profile_picture" id="profile_picture"
                                                     class="custom-file-upload" onchange="preview_avatar()" accept="image/*">
