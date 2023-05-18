@@ -147,13 +147,13 @@ Route::post('/update-avatar', 'App\Http\Controllers\CustomerController@update_av
 
 
 Route::get('admin/edit-profile', 'App\Http\Controllers\MerchantController@edit_profile')
- ->name('edit.profile.admin')
- ->middleware(['auth', 'verified']);
+    ->name('edit.profile.admin')
+    ->middleware(['auth', 'verified']);
 
 Route::post('/update-profile', 'App\Http\Controllers\MerchantController@update_profile')
- ->name('update.profile.admin')
- ->middleware(['auth', 'verified']);
+    ->name('update.profile.admin')
+    ->middleware(['auth', 'verified']);
 
 Route::post('/update-avatar', 'App\Http\Controllers\MerchantController@update_avatar')
- ->name('update.avatar.admin')
- ->middleware(['auth', 'verified']);
+    ->name('update.avatar.admin')
+    ->middleware(['auth', 'verified']);
