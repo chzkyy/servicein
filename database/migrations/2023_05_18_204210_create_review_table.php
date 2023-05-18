@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customer', function (Blueprint $table) {
+        Schema::create('review', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('transaction_id')->constrained('transaction');
             $table->foreignId('user_id')->constrained('users');
-            $table->string('fullname');
-            $table->date('dob');
-            $table->string('phone_number');
-            $table->string('gender');
-            $table->string('cust_address');
+            $table->foreignId('merchant_id')->constrained('merchant');
+            $table->string('rating');
+            $table->string('review');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customer');
+        Schema::dropIfExists('review');
     }
 };

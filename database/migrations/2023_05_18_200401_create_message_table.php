@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customer', function (Blueprint $table) {
+        Schema::create('message', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->string('fullname');
-            $table->date('dob');
-            $table->string('phone_number');
-            $table->string('gender');
-            $table->string('cust_address');
+            $table->foreignId('customer_id')->constrained('customer');
+            $table->foreignId('merchant_id')->constrained('merchant');
+            $table->string('message');
+            $table->string('attachment');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customer');
+        Schema::dropIfExists('message');
     }
 };
