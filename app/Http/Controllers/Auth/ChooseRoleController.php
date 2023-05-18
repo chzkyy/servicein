@@ -59,7 +59,6 @@ class ChooseRoleController extends Controller
             Customer::create([
                 'user_id'       => $user->id,
                 'fullname'      => '-',
-                'dob'           => '-',
                 'phone_number'  => '-',
                 'gender'        => '-',
                 'cust_address'  => '-',
