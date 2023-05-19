@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('merchant_id')->constrained('merchant');
             $table->string('message');
             $table->string('attachment');
+            $table->string('status')->default('unread');
             $table->timestamps();
             $table->softDeletes();
         });

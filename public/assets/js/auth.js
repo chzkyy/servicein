@@ -36,10 +36,11 @@ function password_confirmation()
 
 
 $("#tnc-accept").click(function(){
-    // if clicked, then change the checkbox to checked
+    // if clicked, then change the checkbox to checked value checked
+    // tnc accepted
     $("#tnc").prop("checked", true);
+
 
     // then hide the modal
     $("#terms-and-conditions").modal("hide");
-
 });
