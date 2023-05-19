@@ -33,3 +33,13 @@ function password_confirmation()
         document.getElementById("eye_confirmation").className= "far fa-eye";
     }
 }
+
+
+$("#tnc-accept").click(function(){
+    // if clicked, then change the checkbox to checked
+    $("#tnc").prop("checked", true);
+
+    // then hide the modal
+    $("#terms-and-conditions").modal("hide");
+
+});

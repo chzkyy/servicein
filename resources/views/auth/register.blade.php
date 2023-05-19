@@ -55,7 +55,7 @@
                         <img src="{{ url('assets/img/Logo2.png') }}" alt="logo" class="logo-img">
                     </div>
 
-                    <div class="d-flex align-items-center px-5 ms-xl-3 mt-4 pt-3">
+                    <div class="d-flex align-items-center px-5 ms-xl-3 mt-3 pt-3">
                         <div class="row">
                             <span class="text-login">{{ __('Register Account') }}</span>
                             <span class="desc-login">{{ __('Please fill your account information below') }}</span>
@@ -109,9 +109,10 @@
                                 </div>
 
                                 <div class="form-group mt-3 term">
-                                    <input class="form-check-input checkbox @error('tnc') is-invalid @enderror" type="checkbox" name="tnc" id="tnc" {{ old('tnc') ? 'checked' : '' }}>
-                                    <label for="tnc" class="checkbox-label txt-primary">{{ __('I agree to the') }}
-                                        <a href="#" class="txt-primary fw-semibold">{{ __('Terms and Conditions') }}</a>
+                                    <input class="form-check-input checkbox @error('tnc') is-invalid @enderror" type="checkbox" name="tnc" id="tnc" {{ old('tnc') ? 'checked' : '' }} disabled>
+                                    <label for="tnc" class="checkbox-label txt-primary fw-semibold">{{ __('I agree to the') }}
+                                        {{--  call modal terms and conditions  --}}
+                                        <a data-bs-toggle="modal" data-bs-target="#terms-and-conditions" class="txt-primary fw-bold">{{ __('Terms and Conditions') }}</a>
                                     </label>
                                 </div>
 
@@ -138,4 +139,6 @@
             </div>
         </div>
     </section>
+
+    @include('policy.terms-and-conditions')
 @endsection

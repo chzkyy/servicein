@@ -120,7 +120,7 @@
                                             <span class="fw-semibold">Phone Number</span>
                                             <div class="data">
                                                 <span>
-                                                    {{ preg_replace('/\d{4}/', '$0-', str_replace('.', null, trim($customer->phone_number)), 2) }}
+                                                    {{ preg_replace('/\d{3}/', '($0)', str_replace('.', null, trim($customer->phone_number)), 1) }}
                                                 </span>
                                             </div>
                                         </div>

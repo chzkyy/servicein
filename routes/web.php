@@ -161,3 +161,15 @@ Route::group(['prefix' => 'admin'], function() {
 
 });
 
+
+/**
+ * /------------------------------------------------------------------
+ * | Route customer
+ * /------------------------------------------------------------------
+ * |
+ * | Route untuk privacy policy, terms and conditions dan lain-lain
+ * |
+ */
+
+Route::get('/privacy-policy', 'App\Http\Controllers\PolicyController@PrivacyPolicy')
+    ->name('privacy-policy');
