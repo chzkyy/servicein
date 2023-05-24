@@ -129,9 +129,6 @@ Route::post('/update-profile', 'App\Http\Controllers\CustomerController@update_p
 Route::post('/update-avatar', 'App\Http\Controllers\CustomerController@update_avatar')
     ->name('update-avatar')
     ->middleware(['auth', 'verified']);
-
-
-
 /**
  * /------------------------------------------------------------------
  * | Route customer
@@ -142,21 +139,21 @@ Route::post('/update-avatar', 'App\Http\Controllers\CustomerController@update_av
  */
 
 Route::group(['prefix' => 'admin'], function() {
-    Route::get('/profile', 'App\Http\Controllers\MerchantController@profile')
+    Route::get('/profile', 'App\Http\Controllers\MerchantController@merchant')
         ->name('profile.admin')
         ->middleware(['auth', 'verified']);
 
 
-    Route::get('/edit-profile', 'App\Http\Controllers\MerchantController@edit_profile')
+    Route::get('/edit-profile', 'App\Http\Controllers\MerchantController@edit_merchant')
         ->name('edit.profile.admin')
         ->middleware(['auth', 'verified']);
 
-    Route::post('/update-profile', 'App\Http\Controllers\MerchantController@update_profile')
+    Route::post('/update-profile', 'App\Http\Controllers\MerchantController@update_merchant')
         ->name('update.profile.admin')
         ->middleware(['auth', 'verified']);
 
     Route::post('/update-avatar', 'App\Http\Controllers\MerchantController@update_avatar')
-        ->name('update.avatar.admin')
+        ->name('update-avatar-admin')
         ->middleware(['auth', 'verified']);
 
 });

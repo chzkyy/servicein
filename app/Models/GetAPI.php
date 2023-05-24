@@ -126,7 +126,7 @@ class GetAPI extends Model
 
     public static function searchPlace($keyword, $origin)
     {
-        $url        = env('url_GoogleApi').'/place/textsearch/json?location='.$origin.'&query='.$keyword.'&radius=50000&key='.env('GOOGLE_MAP_KEY');
+        $url        = env('url_GoogleApi').'/place/textsearch/json?location='.$origin.'&query='.$keyword.'&radius=100000&key='.env('GOOGLE_MAP_KEY');
         $curl        = curl_init();
 
         curl_setopt_array($curl, array(

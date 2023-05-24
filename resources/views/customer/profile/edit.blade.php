@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    {{ __('Profile') }}
+    {{ __('Edit Profile') }}
 @endsection
 
 @section('content')
@@ -25,16 +25,15 @@
                                         <img class="img-fluid img-thumbnail mx-auto img-preview" style="width: 150px; height: 150px;">
                                         {{--  tombol upload  --}}
                                         <div class="d-flex justify-content-center align-items-center my-2">
-                                            <button type="submit" class="btn btn-link btn-sm" id="btn_uploadAvatar"><i class="fa-solid fa-pen-to-square"></i> Update Picture</button>
+                                            <button type="submit" class="btn btn-link btn-sm" id="btn_uploadAvatar"><i class="fa-solid fa-pen-to-square"></i> {{ __("Update Picture") }}</button>
                                         </div>
 
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <label class=" btn btn-link btn-sm custom-file-upload">
+                                        <label class="btn btn-link btn-sm custom-file-upload">
                                             <form action="{{ route('update-avatar') }}" method="post" id="updt_avatar" enctype="multipart/form-data">
                                                 @csrf
-                                                <input type="file" name="profile_picture" id="profile_picture"
-                                                    class="custom-file-upload" onchange="preview_avatar()" accept="image/*">
-                                                    <i class="fa-solid fa-upload"></i> Change Picture
+                                                <input type="file" name="profile_picture" id="profile_picture" class="custom-file-upload" onchange="preview_avatar()" accept="image/*">
+                                                    <i class="fa-solid fa-upload"></i> {{ __("Change Picture") }}
                                             </form>
                                         </label>
 
@@ -42,14 +41,14 @@
 
                                     <div class="d-flex justify-content-center align-items-center">
                                         <a href="{{ route('change-password') }}" class="btn btn-link btn-sm"><i
-                                                class="fa-solid fa-lock-open"></i> Change Password</a>
+                                                class="fa-solid fa-lock-open"></i> {{ __("Change Password") }}</a>
                                     </div>
                                 </div>
 
                             </div>
                             {{--  save button for desktop --}}
                             <div class="d-none d-md-block justify-content-center text-center align-items-center mt-5">
-                                <button type="submit" class="btn btn-custome col-md-12 mt-3" id="btn_saveChanges">Save Changes</button>
+                                <button type="submit" class="btn btn-custome col-md-12 mt-3" id="btn_saveChanges">{{ __("Save Changes") }}</button>
                                 <a href="{{ route('profile') }}"
                                     class="btn btn-light shadow txt-primary col-md-12 mt-3">Cancel</a>
                             </div>
@@ -67,7 +66,7 @@
                                         </div>
 
                                         {{--  General Information  --}}
-                                        <div class="h5 txt-gold my-4">General Information</div>
+                                        <div class="h5 txt-gold my-4">{{ __("General Information") }}</div>
 
                                         <div class="detail-profile">
                                             <div class="fullname col-md-6 mb-2">
@@ -119,7 +118,7 @@
                                         <hr class="border border-gold border-1 opacity-50 mx-4">
 
                                         {{--  Contact Information  --}}
-                                        <div class="h5 txt-gold my-4">Contact Detail</div>
+                                        <div class="h5 txt-gold my-4">{{ __("Contact Detail") }}</div>
 
                                         <div class="detail-profile">
                                             <div class="phone_number col-md-6 mb-2">
@@ -130,6 +129,7 @@
                                                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                                         type = "number"
                                                         maxlength = "12"
+                                                        onwheel="this.blur()"
                                                         class="form-control @error('phone_number') is-invalid @enderror form-control-md"
                                                         id="phone_number" name="phone_number" required
                                                         autocomplete="phone_number" value="{{ $customer->phone_number }}"

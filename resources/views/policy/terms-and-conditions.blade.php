@@ -28,63 +28,62 @@
                         meeting the Client's needs in respect of provision of the Company's stated services, in accordance
                         with and subject to, prevailing law of id. Any use of the above terminology or other words in the
                         singular, plural, capitalization and/or he/she or they, are taken as interchangeable and therefore
-                        as referring to same. Our Terms and Conditions were created with the help of the ") }}<a
-                            href="https://www.termsfeed.com/terms-conditions-generator/">{{ __("Terms & Conditions Generator") }}</a>.
+                        as referring to same. ") }}
                     </p>
 
-                    <h3><strong>Cookies</strong></h3>
+                    <h3><strong>{{ __("Cookies") }}</strong></h3>
 
-                    <p>We employ the use of cookies. By accessing Servicein, you agreed to use cookies in agreement with the
-                        Servicein's Privacy Policy.</p>
+                    <p>{{ __("We employ the use of cookies. By accessing Servicein, you agreed to use cookies in agreement with the
+                        Servicein's Privacy Policy.")}}</p>
 
-                    <p>Most interactive websites use cookies to let us retrieve the user's details for each visit. Cookies
+                    <p>{{ __("Most interactive websites use cookies to let us retrieve the user's details for each visit. Cookies
                         are used by our website to enable the functionality of certain areas to make it easier for people
-                        visiting our website. Some of our affiliate/advertising partners may also use cookies.</p>
+                        visiting our website. Some of our affiliate/advertising partners may also use cookies.") }}</p>
 
-                    <h3><strong>License</strong></h3>
+                    <h3><strong>{{ __("License") }}</strong></h3>
 
-                    <p>Unless otherwise stated, Servicein and/or its licensors own the intellectual property rights for all
+                    <p>{{ __("Unless otherwise stated, Servicein and/or its licensors own the intellectual property rights for all
                         material on Servicein. All intellectual property rights are reserved. You may access this from
-                        Servicein for your own personal use subjected to restrictions set in these terms and conditions.</p>
+                        Servicein for your own personal use subjected to restrictions set in these terms and conditions.") }}</p>
 
-                    <p>You must not:</p>
+                    <p>{{ __("You must not:") }}</p>
                     <ul>
-                        <li>Republish material from Servicein</li>
-                        <li>Sell, rent or sub-license material from Servicein</li>
-                        <li>Reproduce, duplicate or copy material from Servicein</li>
-                        <li>Redistribute content from Servicein</li>
+                        <li>{{ __("Republish material from Servicein") }}</li>
+                        <li>{{ __("Sell, rent or sub-license material from Servicein") }}</li>
+                        <li>{{ __("Reproduce, duplicate or copy material from Servicein") }}</li>
+                        <li>{{ __("Redistribute content from Servicein") }}</li>
                     </ul>
 
-                    <p>This Agreement shall begin on the date hereof.</p>
+                    <p>{{ __("This Agreement shall begin on the date hereof.") }}</p>
 
-                    <p>Parts of this website offer an opportunity for users to post and exchange opinions and information in
+                    <p>{{ __("Parts of this website offer an opportunity for users to post and exchange opinions and information in
                         certain areas of the website. Servicein does not filter, edit, publish or review Comments prior to
                         their presence on the website. Comments do not reflect the views and opinions of Servicein,its
                         agents and/or affiliates. Comments reflect the views and opinions of the person who post their views
                         and opinions. To the extent permitted by applicable laws, Servicein shall not be liable for the
                         Comments or for any liability, damages or expenses caused and/or suffered as a result of any use of
-                        and/or posting of and/or appearance of the Comments on this website.</p>
+                        and/or posting of and/or appearance of the Comments on this website.") }}</p>
 
-                    <p>Servicein reserves the right to monitor all Comments and to remove any Comments which can be
-                        considered inappropriate, offensive or causes breach of these Terms and Conditions.</p>
+                    <p>{{ __("Servicein reserves the right to monitor all Comments and to remove any Comments which can be
+                        considered inappropriate, offensive or causes breach of these Terms and Conditions.") }}</p>
 
-                    <p>You warrant and represent that:</p>
+                    <p>{{ __("You warrant and represent that:") }}</p>
 
                     <ul>
-                        <li>You are entitled to post the Comments on our website and have all necessary licenses and
-                            consents to do so;</li>
-                        <li>The Comments do not invade any intellectual property right, including without limitation
-                            copyright, patent or trademark of any third party;</li>
-                        <li>The Comments do not contain any defamatory, libelous, offensive, indecent or otherwise unlawful
-                            material which is an invasion of privacy</li>
-                        <li>The Comments will not be used to solicit or promote business or custom or present commercial
-                            activities or unlawful activity.</li>
+                        <li>{{ __("You are entitled to post the Comments on our website and have all necessary licenses and
+                            consents to do so;") }}</li>
+                        <li>{{ __("The Comments do not invade any intellectual property right, including without limitation
+                            copyright, patent or trademark of any third party;") }}</li>
+                        <li>{{ __("The Comments do not contain any defamatory, libelous, offensive, indecent or otherwise unlawful
+                            material which is an invasion of privacy") }}</li>
+                        <li>{{ __("The Comments will not be used to solicit or promote business or custom or present commercial
+                            activities or unlawful activity.") }}</li>
                     </ul>
 
-                    <p>You hereby grant Servicein a non-exclusive license to use, reproduce, edit and authorize others to
-                        use, reproduce and edit any of your Comments in any and all forms, formats or media.</p>
+                    <p>{{ __("You hereby grant Servicein a non-exclusive license to use, reproduce, edit and authorize others to
+                        use, reproduce and edit any of your Comments in any and all forms, formats or media.") }}</p>
 
-                    <h3><strong>Hyperlinking to our Content</strong></h3>
+                    <h3><strong>{{ ("Hyperlinking to our Content") }}</strong></h3>
 
                     <p>The following organizations may link to our Website without prior written approval:</p>
 

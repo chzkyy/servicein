@@ -120,7 +120,7 @@
                                             <span class="fw-semibold">Phone Number</span>
                                             <div class="data">
                                                 <span>
-                                                    {{ preg_replace('/\d{3}/', '($0)', str_replace('.', null, trim($customer->phone_number)), 1) }}
+                                                    {{ preg_replace('/\d{3}/', '($0) - ', str_replace('.', null, trim($customer->phone_number)), 1) }}
                                                 </span>
                                             </div>
                                         </div>
@@ -151,4 +151,20 @@
 
         </div>
     </section>
+@endsection
+
+@section('additional-script')
+    <script>
+        $(document).ready(function() {
+            $('.gauge-wrap').simpleGauge({
+                width:'120',
+                hueLow:'0',
+                hueHigh:'0',
+                saturation:'0%',
+                lightness:'0%',
+                gaugeBG:'#fff',
+                parentBG:'#fff'
+            });
+        });
+    </script>
 @endsection

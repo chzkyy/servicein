@@ -42,7 +42,7 @@
                         <div class="col-12">
                             <div class="d-none d-sm-flex justify-content-between">
                                 <div class="back">
-                                    <a href="{{ route('profile') }}" class="txt-secondary fw-semibold"><i class="fa fa-chevron-left fa-xs" aria-hidden="true"></i> {{ __('Back') }}</a>
+                                    <a href="{{ url()->previous() }}" class="txt-secondary fw-semibold"><i class="fa fa-chevron-left fa-xs" aria-hidden="true"></i> {{ __('Back') }}</a>
                                 </div>
                                 <div class="create-account">
                                     <span class="text-create-account"> {{ __('Change Password') }} </span>
@@ -104,7 +104,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group mt-2">
+                                <div class="form-group mt-2 mb-2">
                                     <label for="password-confirm" class="form-label">{{ __('Confirm New Password') }}</label>
                                     <div class="input-group">
                                         <input type="password" class="form-control form-control-lg" id="password_confirmation"
@@ -117,7 +117,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group mt-3">
+                                <div class="form-group mt-5">
                                     <button type="submit" class="col-12 btn btn-custome btn-lg btn-block">{{ __('Confirm') }}</button>
                                 </div>
 

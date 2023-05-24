@@ -24,17 +24,22 @@ class MerchantController extends Controller
     }
 
 
-    protected function update_merchant(array $data)
+    protected function update_merchant(Request $request)
     {
-        return Merchant::update([
-            'merchant_name'         => $data['merchant_name'],
-            'merchant_desc'         => $data['merchant_desc'],
-            'merchant_address'      => $data['merchant_address'],
-            'open_hour'             => $data['open_hour'],
-            'close_hour'            => $data['close_hour'],
-            'phone_number'          => $data['phone_number'],
-            'geo_location'          => $data['geo_location'],
+        $user_id = auth()->user()->id;
+
+        Merchant::where('user_id', $user_id)->update([
+            'merchant_name'         => $request->merchant_name,
+            'merchant_desc'         => $request->merchant_desc,
+            'merchant_address'      => $request->merchant_address,
+            'open_hour'             => $request->open_hour,
+            'close_hour'            => $request->close_hour,
+            'phone_number'          => $request->phone_number,
+            'geo_location'          => $request->geo_location,
+
         ]);
+
+        return redirect()->route('profile.admin')->with('success', 'Profile updated successfully');
     }
 
     protected function createMerchantGallery(array $data)
@@ -45,7 +50,7 @@ class MerchantController extends Controller
         ]);
     }
 
-    public function profile()
+    public function merchant()
     {
         $user_id    = auth()->user()->id;
         $merchant   = Merchant::where('user_id', $user_id)->first();
@@ -73,7 +78,7 @@ class MerchantController extends Controller
         );
     }
 
-    public function edit_profile()
+    public function edit_merchant()
     {
         $user_id    = auth()->user()->id;
         $merchant   = Merchant::where('user_id', $user_id)->first();
@@ -98,6 +103,29 @@ class MerchantController extends Controller
                 'avatar'     => $ava,
             ]
         );
+    }
+
+    public function update_avatar(Request $request)
+    {
+        // get user id
+        $user_id    = auth()->user()->id;
+        // get username
+        $username   = auth()->user()->username;
+
+        // Handle File Upload
+        $request->validate([
+            'profile_picture' => 'required|mimes:png,jpeg,jpg|max:2048',
+        ]);
+
+        $fileName = $username.'.'.$request->profile_picture->extension();
+        $request->profile_picture->move(public_path('assets/img/profile'), $fileName);
+
+        // update data user profile
+        User::where('id', $user_id)->update([
+            'avatar' => "assets/img/profile/".$fileName,
+        ]);
+
+        return redirect()->route('profile.admin')->with('success','You have successfully upload file.')->with('file', $fileName);
     }
 
     // function for show percentage of profile

@@ -13,7 +13,8 @@
                     <div class="text-white pt-5">
                         <h1 class="mb-3">{{ __('Your solution in service') }}</h1>
                         <h4 class="mb-3">{{ __('Find a way to repair your device in one website') }}</h4>
-                        <a class="btn btn-custome btn-lg" href="#book_merchant" role="button">Book Now</a>
+                        <a class="btn btn-custome btn-lg" href="#book_merchant" id="btn_bookNow" role="button">Book Now</a>
+                        
                     </div>
                 </div>
             </div>
@@ -123,7 +124,7 @@
                                                                                 style="color: #ffa800;"></i>
                                                                         </div>
                                                                         <div class="star-desc">
-                                                                            <span>4.5 out of 5.0</span>
+                                                                            <span>4/5</span>
                                                                         </div>
                                                                     </div>
 
@@ -179,8 +180,8 @@
                                                                             <i class="fa-solid fa-star"
                                                                                 style="color: #ffa800;"></i>
                                                                         </div>
-                                                                        <div class="star-desc">
-                                                                            <span>4.5 out of 5.0</span>
+                                                                        <div class="star-desc text-center">
+                                                                            <span>4/5</span>
                                                                         </div>
                                                                     </div>
 
@@ -195,7 +196,7 @@
                                                                             <i class="fa-solid fa-map-location-dot"
                                                                                 style="color: #ffa800;"></i>
                                                                         </div>
-                                                                        <div class="star-desc">
+                                                                        <div class="star-desc text-center">
                                                                             <span>4,5 KM</span>
                                                                         </div>
                                                                     </div>

@@ -1,4 +1,4 @@
-@extends('layouts.adminDashboard')
+@extends('layouts.dashboard')
 
 @section('title')
     {{ __('Profile') }}
@@ -105,7 +105,7 @@
                                             <span class="fw-semibold">Phone Number</span>
                                             <div class="data">
                                                 <span>
-                                                    {{ preg_replace('/\d{4}/', '$0-', str_replace('.', null, trim($merchant->phone_number)), 2) }}
+                                                    {{ preg_replace('/\d{3}/', '($0) - ', str_replace('.', null, trim($merchant->phone_number)), 1) }}
                                                 </span>
                                             </div>
                                         </div>
@@ -117,7 +117,7 @@
                                                     @if ( $merchant->open_hour == '-')
                                                         {{ __(NULL) }}
                                                     @else
-                                                        {{ $merchant->open_hour }}
+                                                        {{ date("H:i", strtotime( $merchant->open_hour )) }}
                                                     @endif
                                                 </span>
                                                 <span class="blockquote-footer"></span>
@@ -125,7 +125,7 @@
                                                     @if ( $merchant->close_hour == '-')
                                                         {{ __(NULL) }}
                                                     @else
-                                                        {{ $merchant->close_hour }}
+                                                        {{ date("H:i", strtotime( $merchant->close_hour )) }}
                                                     @endif
                                                 </span>
                                             </div>
@@ -144,30 +144,13 @@
                                             <div class="card mt-2">
                                                 <div class="card-body">
                                                     <div class="row">
-                                                        <div class="col-md-3">
-                                                            <div class="card">
-                                                                <img src="{{ asset('assets/img/example-img-merchant.png') }}"
-                                                                    class="card-img-top" alt="...">
+                                                        <form action="" enctype="multipart/form-data">
+                                                            <div class="input-images"></div>
+
+                                                            <div class="col-md-12 mt-3">
+                                                                <button type="submit" class="btn btn-custome btn-block">Save</button>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="card">
-                                                                <img src="{{ asset('assets/img/example-img-merchant.png') }}"
-                                                                    class="card-img-top" alt="...">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="card">
-                                                                <img src="{{ asset('assets/img/example-img-merchant.png') }}"
-                                                                    class="card-img-top" alt="...">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="card">
-                                                                <img src="{{ asset('assets/img/example-img-merchant.png') }}"
-                                                                    class="card-img-top" alt="...">
-                                                            </div>
-                                                        </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -186,4 +169,37 @@
 
         </div>
     </section>
+@endsection
+
+
+@section('additional-script')
+    <script src="{{ asset('assets/js/image-uploader.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.gauge-wrap').simpleGauge({
+                width:'120',
+                hueLow:'0',
+                hueHigh:'0',
+                saturation:'0%',
+                lightness:'0%',
+                gaugeBG:'#fff',
+                parentBG:'#fff'
+            });
+
+            let preloaded = [
+                {id: 1, src: 'https://picsum.photos/500/500?random=1'},
+                {id: 2, src: 'https://picsum.photos/500/500?random=2'},
+                {id: 3, src: 'https://picsum.photos/500/500?random=3'},
+                {id: 4, src: 'https://picsum.photos/500/500?random=4'},
+                {id: 5, src: 'https://picsum.photos/500/500?random=5'},
+                {id: 6, src: 'https://picsum.photos/500/500?random=6'},
+            ];
+
+            $('.input-images').imageUploader({
+                preloaded: preloaded,
+                imagesInputName: 'photos',
+                preloadedInputName: 'old'
+            });
+        });
+    </script>
 @endsection

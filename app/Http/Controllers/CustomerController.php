@@ -30,7 +30,7 @@ class CustomerController extends Controller
         $user_id = auth()->user()->id;
 
         // update data user profile
-        Customer::where('id', $user_id)->update([
+        Customer::where('user_id', $user_id)->update([
             'fullname'      => $request->fullname,
             'dob'           => $request->dob,
             'phone_number'  => $request->phone_number,
@@ -38,7 +38,7 @@ class CustomerController extends Controller
             'gender'        => $request->gender,
         ]);
 
-        return redirect()->route('profile')->with('success', 'Profile updated successfully');
+        return back()->with('success', 'Profile updated successfully');
     }
 
 
@@ -105,8 +105,6 @@ class CustomerController extends Controller
     {
         // get user id
         $user_id    = auth()->user()->id;
-        // get data user profile
-        $customer   = Customer::where('user_id', $user_id)->first();
         // get username
         $username   = auth()->user()->username;
 
@@ -123,11 +121,8 @@ class CustomerController extends Controller
             'avatar' => "assets/img/profile/".$fileName,
         ]);
 
-        return back()
-            ->with('success','You have successfully upload file.')
-            ->with('file', $fileName);
+        return redirect()->route('profile.admin')->with('success','You have successfully upload file.')->with('file', $fileName);
     }
-
 
     // function for show percentage of profile
     public function show_percentage($id)

@@ -14,6 +14,7 @@
     @include('includes.dashboard.navbar')
     @yield('content')
     @include('includes.dashboard.script')
+    @yield('additional-script')
 </body>
 
 </html>

@@ -9,15 +9,6 @@
 <script src="{{ url('assets/js/jquery.easypiechart.min.js') }}"></script>
 <script src="{{ url('assets/js/simpleGauge.js') }}"></script>
 
-{{--  scroll smooth  --}}
-<script>
-    $('a').click(function (e) {
-        $('html, body').animate({
-            scrollTop: $($(this).attr('href')).offset().top
-        }, 1000);
-    });
-</script>
-
 <script>
     @if ($errors->has('username'))
         toastr.error('{{ $errors->first('username') }}', {
@@ -97,19 +88,6 @@
         $('#update_profile').submit();
     });
 
-    $(document).ready(function() {
-
-        $('.gauge-wrap').simpleGauge({
-            width:'120',
-            hueLow:'0',
-            hueHigh:'0',
-            saturation:'0%',
-            lightness:'0%',
-            gaugeBG:'#fff',
-            parentBG:'#fff'
-        });
-    });
-
     $('.img-preview').hide();
     $('#btn_uploadAvatar').hide();
 
@@ -136,5 +114,12 @@
 
     $('#fileup').click(function() {
         $('#profile_picture').click();
+    });
+
+    // when the user click a button book now smooth scroll to .book_merchant
+    $('#btn_bookNow').click(function() {
+        $('html, body').animate({
+            scrollTop: $($.attr(this, 'href')).offset().top
+        }, 1000);
     });
 </script>
