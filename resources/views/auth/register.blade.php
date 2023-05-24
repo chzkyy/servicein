@@ -109,7 +109,7 @@
                                 </div>
 
                                 <div class="form-group mt-3 term">
-                                    <input class="form-check-input checkbox @error('tnc') is-invalid @enderror" type="checkbox" name="tnc" id="tnc" {{ old('tnc') ? 'checked' : '' }} onclick="return false" />
+                                    <input class="form-check-input checkbox @error('tnc') is-invalid @enderror" type="checkbox" name="tnc" id="tnc" {{ old('tnc') ? 'checked' : '' }} onclick="return true" />
                                     <label for="tnc" class="checkbox-label txt-primary fw-semibold">{{ __('I agree to the') }}
                                         {{--  call modal terms and conditions  --}}
                                         <a data-bs-toggle="modal" data-bs-target="#terms-and-conditions" class="txt-primary fw-bold">{{ __('Terms and Conditions') }}</a>
