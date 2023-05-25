@@ -129,6 +129,7 @@ Route::post('/update-profile', 'App\Http\Controllers\CustomerController@update_p
 Route::post('/update-avatar', 'App\Http\Controllers\CustomerController@update_avatar')
     ->name('update-avatar')
     ->middleware(['auth', 'verified']);
+    
 /**
  * /------------------------------------------------------------------
  * | Route customer
@@ -156,7 +157,13 @@ Route::group(['prefix' => 'admin'], function() {
         ->name('update-avatar-admin')
         ->middleware(['auth', 'verified']);
 
+    Route::post('/merchant_gallery', 'App\Http\Controllers\MerchantController@merchant_gallery')
+        ->name('merchant-gallery')
+        ->middleware(['auth', 'verified']);
+
 });
+
+Route::get('/getimg', 'App\Http\Controllers\MerchantController@show_image_gallery');
 
 
 /**

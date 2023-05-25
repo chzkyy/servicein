@@ -144,21 +144,27 @@
                                             <div class="card mt-2">
                                                 <div class="card-body">
                                                     <div class="row">
-                                                        <form action="" enctype="multipart/form-data">
-                                                            <div class="input-images"></div>
+                                                        {{--  @foreach ($photos as $ph )
 
-                                                            <div class="col-md-12 mt-3">
-                                                                <button type="submit" class="btn btn-custome btn-block">Save</button>
+                                                            {{ $ph }}
+                                                            <div class="col-md-3">
+                                                                <div class="card">
+                                                                    <img src="{{ asset('assets/img/example-img-merchant.png') }}"
+                                                                        class="card-img-top" alt="...">
+                                                                </div>
                                                             </div>
-                                                        </form>
-                                                    </div>
+                                                        @endforeach
+                                                    </div>  --}}
                                                 </div>
+
+
                                             </div>
                                         </div>
 
                                     </div>
 
                                     {{--  <hr class="border border-gold border-1 opacity-50 mx-4">  --}}
+
                                 </div>
                             </div>
                         </div>
@@ -169,11 +175,14 @@
 
         </div>
     </section>
+
 @endsection
 
 
 @section('additional-script')
     <script src="{{ asset('assets/js/image-uploader.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2rint@11"></script>
+
     <script>
         $(document).ready(function() {
             $('.gauge-wrap').simpleGauge({
@@ -186,19 +195,38 @@
                 parentBG:'#fff'
             });
 
-            let preloaded = [
-                {id: 1, src: 'https://picsum.photos/500/500?random=1'},
-                {id: 2, src: 'https://picsum.photos/500/500?random=2'},
-                {id: 3, src: 'https://picsum.photos/500/500?random=3'},
-                {id: 4, src: 'https://picsum.photos/500/500?random=4'},
-                {id: 5, src: 'https://picsum.photos/500/500?random=5'},
-                {id: 6, src: 'https://picsum.photos/500/500?random=6'},
-            ];
-
             $('.input-images').imageUploader({
-                preloaded: preloaded,
                 imagesInputName: 'photos',
                 preloadedInputName: 'old'
+            });
+
+            $('#save_gallery').click(function(e) {
+                e.preventDefault();
+
+                let form = $('#photos')[0];
+                let formData = new FormData(form);
+
+                $.ajax({
+                    url: "{{ route('merchant-gallery') }}",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Success upload images',
+                            showConfirmButton: false,
+                            timer: 20000 // waktu popup 20 detik = 20000 ms
+                        }).then(function() {
+                            location.reload();
+                        });
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
             });
         });
     </script>

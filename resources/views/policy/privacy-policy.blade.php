@@ -33,8 +33,7 @@
                             number of clicks. These are not linked to any information that is personally identifiable. The
                             purpose of the information is for analyzing trends, administering the site, tracking users'
                             movement on the website, and gathering demographic information. Our Privacy Policy was created
-                            with the help of the ") }}<a href="https://www.termsfeed.com/privacy-policy-generator/">{{ __("Privacy Policy
-                                Generator") }}</a>.</p>
+                            with the help of the ") }}</p>
                         <h2>{{ __("Cookies and Web Beacons") }}</h2>
                         <p>{{ __("Like any other website, Servicein uses \"	cookies\" . These cookies are used to store information
                             including visitors' preferences, and the pages on the website that the visitor accessed or
