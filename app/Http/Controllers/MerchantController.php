@@ -59,7 +59,6 @@ class MerchantController extends Controller
         $ava                = auth()->user()->avatar;
         $imageGallery       = $this->show_image_gallery($merchant->id);
 
-
         if ( $ava == null )
         {
             $ava = NULL;
@@ -166,6 +165,14 @@ class MerchantController extends Controller
         print_r("Success");
     }
 
+
+    public function delete_merchant_gallery()
+    {
+         // get user id
+        $user_id    = auth()->user()->id;
+        
+    }
+
     // function for show percentage of profile
     public function show_percentage($id)
     {
@@ -206,7 +213,6 @@ class MerchantController extends Controller
         foreach ($imageGallery as $key => $value) {
             // id: 1, src: 'https://picsum.photos/500/500?random=1'}
             $arr[] = [
-                'id'    =>   1+$key,// id mulai dari 1 terus bertambah 1 setiap loop
                 'src'   => asset($value->images),
             ];
         }

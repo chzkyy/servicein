@@ -144,6 +144,16 @@
                                             <div class="card mt-2">
                                                 <div class="card-body">
                                                     <div class="row">
+                                                        <form action="" method="POST" id="photos" enctype="multipart/form-data">
+                                                            @csrf
+                                                            <input type="hidden" name="merchant_id" value="{{ $merchant->id }}">
+                                                            <div class="input-images"></div>
+
+                                                            <div class="col-md-12 mt-3">
+                                                                <button id="save_gallery" class="btn btn-custome btn-block">Save</button>
+                                                            </div>
+                                                        </form>
+
                                                         {{--  @foreach ($photos as $ph )
 
                                                             {{ $ph }}
@@ -195,9 +205,23 @@
                 parentBG:'#fff'
             });
 
+            let preloaded = [
+                @foreach ($photos as $ph)
+                    {
+                        id: "{{ $loop->iteration }}",
+                        src: "{{ $ph['src'] }}"
+                    },
+                @endforeach
+            ];
+
             $('.input-images').imageUploader({
                 imagesInputName: 'photos',
+                preloaded: preloaded,
                 preloadedInputName: 'old'
+            });
+
+            $(".delete-image").click(function(e){
+                
             });
 
             $('#save_gallery').click(function(e) {

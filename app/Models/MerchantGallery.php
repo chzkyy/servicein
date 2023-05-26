@@ -13,7 +13,6 @@ class MerchantGallery extends Model
     protected $fillable = [
         'merchant_id',
         'images',
-
     ];
 
     public function merchant()
