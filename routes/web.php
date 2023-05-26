@@ -129,7 +129,7 @@ Route::post('/update-profile', 'App\Http\Controllers\CustomerController@update_p
 Route::post('/update-avatar', 'App\Http\Controllers\CustomerController@update_avatar')
     ->name('update-avatar')
     ->middleware(['auth', 'verified']);
-    
+
 /**
  * /------------------------------------------------------------------
  * | Route customer
@@ -161,6 +161,10 @@ Route::group(['prefix' => 'admin'], function() {
         ->name('merchant-gallery')
         ->middleware(['auth', 'verified']);
 
+    Route::POST('/delete_gallery', 'App\Http\Controllers\MerchantController@delete_merchant_gallery')
+        ->name('delete-merchant-gallery')
+        ->middleware(['auth', 'verified']);
+
 });
 
 Route::get('/getimg', 'App\Http\Controllers\MerchantController@show_image_gallery');
@@ -177,3 +181,7 @@ Route::get('/getimg', 'App\Http\Controllers\MerchantController@show_image_galler
 
 Route::get('/privacy-policy', 'App\Http\Controllers\PolicyController@PrivacyPolicy')
     ->name('privacy-policy');
+
+
+
+Route::get('/ce', 'App\Http\Controllers\Auth\ChooseRoleController@storeRole');

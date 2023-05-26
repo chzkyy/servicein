@@ -166,13 +166,23 @@ class MerchantController extends Controller
     }
 
 
-    public function delete_merchant_gallery()
+    // function for deleting merchant gallery
+    public function delete_merchant_gallery(Request $request)
     {
-         // get user id
-        $user_id    = auth()->user()->id;
-        
+        $id = $request->id;
+        $merchantGallery = MerchantGallery::findOrFail($id);
+        $merchantGallery->delete();
+
+        return $merchantGallery;
     }
 
+    public function deleteMerchantGallery($id)
+    {
+        $merchantGallery = MerchantGallery::findOrFail($id);
+        $merchantGallery->delete();
+
+        return $merchantGallery;
+    }
     // function for show percentage of profile
     public function show_percentage($id)
     {

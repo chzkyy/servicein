@@ -107,7 +107,7 @@
                                                     {{--  dob  --}}
                                                     <input type="date"
                                                         class="form-control @error('dob') is-invalid @enderror form-control-md"
-                                                        id="dob" name="dob" required autocomplete="dob"
+                                                        id="dob" name="dob" required autocomplete="dob" max="{{ date('Y-m-d') }}"
                                                         value="{{ date('Y-m-d', strtotime($customer->dob)) }}"
                                                         placeholder="Enter your birth date" />
                                                 </div>

@@ -40,29 +40,44 @@ class ChooseRoleController extends Controller
             'role' => $request->role
         ]);
 
-        //create data user profile based on role
-        if ($request->role == 'Admin') {
-            $user = User::find($id);
-            Merchant::create([
-                'user_id'               => $user->id,
-                'merchant_name'         => '-',
-                'merchant_desc'         => '-',
-                'merchant_address'      => '-',
-                'open_hour'             => '-',
-                'close_hour'            => '-',
-                'phone_number'          => '-',
-                'geo_location'          => '-',
-            ]);
+        // check apakah user sudah memiliki data profile
+        $check_merchant = Merchant::where('user_id', $id)->first();
+        $check_customer = Customer::where('user_id', $id)->first();
 
-        } elseif ($request->role == 'User') {
-            $user = User::find($id);
-            Customer::create([
-                'user_id'       => $user->id,
-                'fullname'      => '-',
-                'phone_number'  => '-',
-                'gender'        => '-',
-                'cust_address'  => '-',
-            ]);
+        //create data user profile based on role
+        switch ($request->role) {
+            case 'Admin':
+                $user = User::find($id);
+                // check apakah user sudah memiliki data profile merchant
+                if (!$check_merchant) {
+                    Merchant::create([
+                        'user_id'               => $user->id,
+                        'merchant_name'         => '-',
+                        'merchant_desc'         => '-',
+                        'merchant_address'      => '-',
+                        'open_hour'             => '-',
+                        'close_hour'            => '-',
+                        'phone_number'          => '-',
+                        'geo_location'          => '-',
+                    ]);
+                }
+                return redirect()->to('/');
+                break;
+            case 'User':
+                $user = User::find($id);
+                if (!$check_customer) {
+                    Customer::create([
+                        'user_id'       => $user->id,
+                        'fullname'      => '-',
+                        'phone_number'  => '-',
+                        'gender'        => '-',
+                        'cust_address'  => '-',
+                    ]);
+                }
+                return redirect()->to('/');
+            default:
+                return redirect()->to('/');
+                break;
         }
 
         // set add role to session

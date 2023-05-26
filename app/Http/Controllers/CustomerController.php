@@ -133,7 +133,7 @@ class CustomerController extends Controller
         if ($customer->fullname != '-') {
             $percentage += 20;
         }
-        if ($customer->dob != '-') {
+        if ($customer->dob != NULL) {
             $percentage += 20;
         }
         if ($customer->phone_number != '-') {

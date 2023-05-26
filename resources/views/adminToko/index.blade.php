@@ -191,7 +191,6 @@
 
 @section('additional-script')
     <script src="{{ asset('assets/js/image-uploader.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2rint@11"></script>
 
     <script>
         $(document).ready(function() {
@@ -221,7 +220,21 @@
             });
 
             $(".delete-image").click(function(e){
-                
+                // mengambil id dari input old dari dalam uploaded-image
+                e.preventDefault();
+                let id = $(this).parent().find('input').val();
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('delete-merchant-gallery') }}",
+                    data: {
+                        _token : "{{ csrf_token() }}",
+                        id  : id
+                    },
+
+                    success: function(response) {
+                        alert(response);
+                    }
+                })
             });
 
             $('#save_gallery').click(function(e) {

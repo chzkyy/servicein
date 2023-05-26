@@ -104,7 +104,11 @@
                                         <div class="dob mb-2">
                                             <span class="fw-semibold">Birth Date</span>
                                             <div class="data">
-                                                <span>{{ date('d/m/Y', strtotime($customer->dob)) }}</span>
+                                                @if ( $customer->dob == null )
+                                                    {{ __('-') }}
+                                                @else
+                                                    <span>{{ date('d/m/Y', strtotime($customer->dob)) }}</span>
+                                                @endif
                                             </div>
                                         </div>
 
