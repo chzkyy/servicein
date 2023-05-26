@@ -187,6 +187,7 @@
 
     <script src="{{ url('api/maps') }}" async defer></script>
     <script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type='text/javascript'>
         const geo = '';
@@ -395,6 +396,22 @@
 
        // on click
         $("#sc").click(function(){
+            var merchant_name = $("#merchant_name").val();
+            var merchant_desc = $("#merchant_desc").val();
+            var merchant_address = $("#merchant_address").val();
+            var phone_number = $("#phone_number").val();
+            var open_hour = $("#open_hour").val();
+            var close_hour = $("#close_hour").val();
+            var merchant_address = $("#merchant_address").val();
+
+            if (merchant_name == '' || merchant_desc == '' || merchant_address == '' || phone_number == '' || open_hour == '' || close_hour == '' || merchant_address == '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please fill all field!',
+                });
+                return false;
+            }
             // sekect value tpSelectbox\
             $("#open_hour").val(tpSelectbox.getHour() + ":" + tpSelectbox.getMinute());
             $("#close_hour").val(tpSelectbox2.getHour() + ":" + tpSelectbox.getMinute());
