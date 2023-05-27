@@ -37,8 +37,9 @@
                                     </div>
 
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <a href="{{ route('change-password') }}" class="btn btn-link btn-sm"><i
-                                                class="fa-solid fa-lock-open"></i> Change Password</a>
+                                        @if (Auth::user()->password != NULL)
+                                            <a href="{{ route('change-password') }}" class="btn btn-link btn-sm"><i class="fa-solid fa-lock-open"></i> {{ __("Change Password") }}</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
