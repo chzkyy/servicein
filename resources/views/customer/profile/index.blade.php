@@ -75,11 +75,7 @@
                                     <div class="fullname mb-4">
                                         <img src="{{ url('assets/img/Avatar.png') }}" alt="Avatar" class="img-fluid">
                                         <span class="mx-2 fw-semibold">
-                                            @if ( $customer->fullname == '-' )
-                                                {{ Auth::user()->username }}
-                                            @else
-                                                {{ $customer->fullname }}
-                                            @endif
+                                            {{ Auth::user()->username }}
                                         </span>
                                     </div>
 

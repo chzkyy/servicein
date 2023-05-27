@@ -41,7 +41,10 @@
 
                                     <div class="d-flex justify-content-center align-items-center">
                                         <a href="{{ route('change-password') }}" class="btn btn-link btn-sm"><i
+
+                                            @if (Auth::user()->password !=)
                                                 class="fa-solid fa-lock-open"></i> {{ __("Change Password") }}</a>
+                                            @endif
                                     </div>
                                 </div>
 
@@ -62,7 +65,7 @@
                                         {{--  full name  --}}
                                         <div class="fullname mb-4">
                                             <img src="{{ url('assets/img/Avatar.png') }}" alt="Avatar" class="img-fluid">
-                                            <span class="mx-2 fw-semibold">{{ $customer->fullname }}</span>
+                                            <span class="mx-2 fw-semibold">{{ Auth::user()->username }}</span>
                                         </div>
 
                                         {{--  General Information  --}}

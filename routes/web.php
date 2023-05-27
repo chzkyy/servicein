@@ -181,7 +181,3 @@ Route::get('/getimg', 'App\Http\Controllers\MerchantController@show_image_galler
 
 Route::get('/privacy-policy', 'App\Http\Controllers\PolicyController@PrivacyPolicy')
     ->name('privacy-policy');
-
-
-
-Route::get('/ce', 'App\Http\Controllers\Auth\ChooseRoleController@storeRole');
