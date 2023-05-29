@@ -61,11 +61,13 @@ class DeviceController extends Controller
         if ($request->hasFile('device_image'))
         {
             $fileName = 'device_'.auth()->user()->username.'_'.time().'.'.$request->edit_device_image->extension();
-            $request->device_image->move(public_path('assets/img/devices'), $fileName);
+            $request->edit_device_image->move(public_path('assets/img/devices'), $fileName);
+
+            $filePath = 'assets/img/devices/'.$fileName;
         }
         else
         {
-            $fileName = NULL;
+            $filePath = NULL;
         }
 
         // insert data user profile
@@ -75,7 +77,7 @@ class DeviceController extends Controller
             'type'           => $request->type,
             'brand'          => $request->brand,
             'serial_number'  => $request->serial_number,
-            'device_picture' => 'assets/img/devices/'.$fileName,
+            'device_picture' => $filePath,
         ]);
 
         return back()->with('success', 'Device added successfully');
@@ -105,7 +107,6 @@ class DeviceController extends Controller
         // jika file upload ada maka simpan
         if ($request->hasFile('edit_device_image'))
         {
-            // timestamp
             $fileName = 'device_'.auth()->user()->username.'_'.time().'.'.$request->edit_device_image->extension();
             $request->edit_device_image->move(public_path('assets/img/devices'), $fileName);
 

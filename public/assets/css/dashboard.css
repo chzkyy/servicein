@@ -221,7 +221,10 @@ input[type="number"] {
     width: 50% !important;
 }
 
-
 .charCount {
     font-size: 12px;
+}
+
+.swal2-icon.swal2-warning {
+    font-size: medium !important;
 }
