@@ -18,12 +18,12 @@ return new class extends Migration
             $table->foreignId('merchant_id')->constrained('merchant');
             $table->string('no_bill'); // nomor tagihan
             $table->string('amount');
-            $table->string('proof_of_payment');
+            $table->string('proof_of_payment')->nullable();
             $table->date('bills_date'); // tanggal pembayaran
-            $table->string('status');
-            $table->string('reason');
-            $table->string('approved_by');
-            $table->string('rejected_by');
+            $table->string('status')->nullable();
+            $table->string('reason')->nullable();
+            $table->string('approved_by')->nullable();
+            $table->string('rejected_by')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

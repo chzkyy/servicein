@@ -130,6 +130,22 @@ Route::post('/update-avatar', 'App\Http\Controllers\CustomerController@update_av
     ->name('update-avatar')
     ->middleware(['auth', 'verified']);
 
+Route::get('/device', 'App\Http\Controllers\DeviceController@show')
+    ->name('list-device')
+    ->middleware(['auth', 'verified']);
+
+Route::post('/device/add', 'App\Http\Controllers\DeviceController@store')
+    ->name('add-device')
+    ->middleware(['auth','verified']);
+
+Route::get('/device/remove/{id}', 'App\Http\Controllers\DeviceController@destroy')
+    ->name('delete-device')
+    ->middleware(['auth','verified']);
+
+Route::post('/device/update', 'App\Http\Controllers\DeviceController@update')
+    ->name('edit-device')
+    ->middleware(['auth','verified']);
+
 /**
  * /------------------------------------------------------------------
  * | Route customer
@@ -143,7 +159,6 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('/profile', 'App\Http\Controllers\MerchantController@merchant')
         ->name('profile.admin')
         ->middleware(['auth', 'verified']);
-
 
     Route::get('/edit-profile', 'App\Http\Controllers\MerchantController@edit_merchant')
         ->name('edit.profile.admin')
@@ -166,8 +181,6 @@ Route::group(['prefix' => 'admin'], function() {
         ->middleware(['auth', 'verified']);
 
 });
-
-Route::get('/getimg', 'App\Http\Controllers\MerchantController@show_image_gallery');
 
 
 /**

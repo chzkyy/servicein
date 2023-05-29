@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('transaction_id')->constrained('transaction');
             $table->string('transaction_desc');
-            $table->string('transaction_price');
+            $table->double('transaction_price');
             $table->timestamps();
             $table->softDeletes();
         });

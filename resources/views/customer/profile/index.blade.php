@@ -46,7 +46,7 @@
                             {{--  my device list  --}}
 
                             <div class="mt-3 d-flex justify-content-center align-items-center">
-                                <a href="#" class="btn btn-custome btn-sm mt-2">My Device List</a>
+                                <a href="{{ route('list-device') }}" class="btn btn-custome btn-sm mt-2">My Device List</a>
                             </div>
 
                             <div class="d-none d-md-flex justify-content-center align-items-center b-profile txt-gold mb-5">

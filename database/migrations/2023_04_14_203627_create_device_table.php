@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('brand');
             $table->string('serial_number');
-            $table->string('device_picture');
+            $table->string('device_picture')->nullable();
             $table->timestamps();
         });
     }

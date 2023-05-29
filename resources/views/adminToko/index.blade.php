@@ -37,15 +37,11 @@
                                     </div>
 
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <a href="{{ route('change-password') }}" class="btn btn-link btn-sm"><i
-                                                class="fa-solid fa-lock-open"></i> Change Password</a>
+                                        @if (Auth::user()->password != NULL)
+                                            <a href="{{ route('change-password') }}" class="btn btn-link btn-sm"><i class="fa-solid fa-lock-open"></i> {{ __("Change Password") }}</a>
+                                        @endif
                                     </div>
                                 </div>
-                            </div>
-                            {{--  my device list  --}}
-
-                            <div class="mt-3 d-flex justify-content-center align-items-center">
-                                <a href="#" class="btn btn-custome btn-sm mt-2">My Device List</a>
                             </div>
 
                             <div class="d-none d-md-flex justify-content-center align-items-center b-profile txt-gold mb-5">

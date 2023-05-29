@@ -20,11 +20,11 @@ return new class extends Migration
             $table->foreignId('merchant_id')->constrained('merchant');
             $table->string('no_transaction');
             $table->string('status');
-            $table->string('user_note');
-            $table->string('merchant_note');
-            $table->string('service_confirmation');
+            $table->string('user_note')->nullable();
+            $table->string('merchant_note')->nullable();
+            $table->string('service_confirmation')->nullable();
             $table->string('waranty');
-            $table->string('picture');
+            $table->string('picture')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

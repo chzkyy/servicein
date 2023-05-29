@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('booking_code');
             $table->date('booking_date');
             $table->time('booking_time');
-            $table->string('picture');
+            $table->string('picture')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -15,8 +15,10 @@
                 <li class="nav-item col-md-8 my-auto mx-auto">
                     <form role="search">
                         <div class="custom-search">
-                            <input type="text" class="custom-search-input" placeholder="Search">
-                            <button class="custom-search-botton" type="submit">Search</button>
+                            <form action="" method="POST" id="search_merchant">
+                                <input type="text" class="custom-search-input" id="search_m" placeholder="Search">
+                                <button class="custom-search-botton" type="submit">Search</button>
+                            </form>
                         </div>
                     </form>
                 </li>
