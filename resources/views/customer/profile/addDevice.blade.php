@@ -80,9 +80,10 @@
                                                         <h5 class="modal-title" id="staticBackdropLabel">{{ __('Add Device') }}</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
-                                                    <form action="{{ route('edit-device') }}" method="POST" id="form_EditDevice" enctype="multipart/form-data">
-                                                        @csrf
-                                                        <div class="modal-body">
+
+                                                    <div class="modal-body">
+                                                        <form action="{{ route('edit-device') }}" method="POST" id="form_EditDevice" enctype="multipart/form-data">
+                                                            @csrf
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <div class="form-group mb-2">
@@ -111,19 +112,22 @@
                                                                 <div class="col-md-12">
                                                                     <div class="form-group">
                                                                         <label class="form-label">{{ __("Device Picture") }}</label>
+                                                                        <img class="img-fluid img-thumbnail img-preview-edit my-4">
                                                                         <input type="file" class="d-block form-control @error('edit_device_picture') is-invalid @enderror" id="edit_device_image" name="edit_device_image" onchange="preview_EditDevice()" accept="image/*">
                                                                         <small class="form-text text-muted">Maximum size 2MB</small>
-                                                                        <img class="img-fluid img-thumbnail img-preview-edit w-25 mt-2">
+                                                                    </div>
+                                                                </div>
+
+                                                                <hr class="mt-5">
+                                                                <div class="col-md-12">
+                                                                    <div class="d-flex justify-content-center align-content-center">
+                                                                        <input type="hidden" name="device" id="device" value="{{ $d->id }}">
+                                                                        <button type="submit" class="btn btn-custome col-md-2 mx-auto" id="submit_EditDevices">Save</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <input type="hidden" name="device" id="device" value="{{ $d->id }}">
-                                                            {{--  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>  --}}
-                                                            <button type="submit" class="btn btn-custome mx-auto" id="submit_EditDevices">Save</button>
-                                                        </div>
-                                                    </form>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -147,7 +151,7 @@
 </section>
 
 
-<div class="modal fade" id="addDevice" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" id="addDevice" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
         <div class="modal-content rounded-1 border-0 text-black">
@@ -155,9 +159,10 @@
                 <h5 class="modal-title" id="staticBackdropLabel">{{ __('Add Device') }}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('add-device') }}" method="POST" id="form_addDevice" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
+
+            <div class="modal-body">
+                <form action="{{ route('add-device') }}" method="POST" id="form_addDevice" enctype="multipart/form-data">
+                    @csrf
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mb-2">
@@ -186,18 +191,21 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="form-label">{{ __("Device Picture") }}</label>
+                                <img class="img-fluid img-thumbnail img-preview my-4">
                                 <input type="file" class="d-block form-control @error('device_picture') is-invalid @enderror" id="device_image" name="device_image" onchange="preview_AddDevice()" accept="image/*">
                                 <small class="form-text text-muted">Maximum size 2MB</small>
-                                <img class="img-fluid img-thumbnail img-preview w-25 mt-2">
+                            </div>
+                        </div>
+
+                        <hr class="mt-5">
+                        <div class="col-md-12">
+                            <div class="d-flex justify-content-center align-content-center">
+                                <button type="submit" class="btn btn-custome col-md-2 mx-auto" id="submit_addDevices">Add Device</button>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    {{--  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>  --}}
-                    <button type="submit" class="btn btn-custome mx-auto" id="submit_addDevices">Add Device</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -269,7 +277,7 @@
         // remove device with sweetalert
         function remove_Device(id) {
             Swal.fire({
-                title: 'Are you sure you want to remove this device?',
+                text: 'Are you sure want to delete this data?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#e3c10fe5',

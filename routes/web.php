@@ -22,6 +22,7 @@ Route::get('/home', function () {
 })->name('index');
 
 Route::get('/test', 'App\Http\Controllers\MerchantController@index');
+Route::get('/persen', 'App\Http\Controllers\HomeController@tst');
 
 /**
  * /------------------------------------------------------------------

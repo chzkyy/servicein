@@ -25,7 +25,7 @@
                                         <img class="img-fluid img-thumbnail mx-auto img-preview" style="width: 150px; height: 150px;">
                                         {{--  tombol upload  --}}
                                         <div class="d-flex justify-content-center align-items-center my-2">
-                                            <button type="submit" class="btn btn-link btn-sm" id="btn_uploadAvatar"><i class="fa-solid fa-pen-to-square"></i> {{ __("Update Picture") }}</button>
+                                            <button type="submit" class="btn btn-custome btn-sm" id="btn_uploadAvatar"><i class="fa-solid fa-pen-to-square"></i> {{ __("Update Picture") }}</button>
                                         </div>
 
                                     <div class="d-flex justify-content-center align-items-center">
@@ -46,12 +46,6 @@
                                     </div>
                                 </div>
 
-                            </div>
-                            {{--  save button for desktop --}}
-                            <div class="d-none d-md-block justify-content-center text-center align-items-center mt-5">
-                                <button type="submit" class="btn btn-custome col-md-12 mt-3" id="btn_saveChanges">{{ __("Save Changes") }}</button>
-                                <a href="{{ route('profile') }}"
-                                    class="btn btn-light shadow txt-primary col-md-12 mt-3">Cancel</a>
                             </div>
                         </div>
 
@@ -159,6 +153,12 @@
                                                 </div>
                                             </div>
 
+                                        </div>
+
+                                        {{--  save button for desktop --}}
+                                        <div class="d-none d-md-block justify-content-center text-end align-items-end mt-5">
+                                            <a href="{{ route('profile') }}" class="btn btn-light col-md-2 shadow txt-primary mx-1 mt-4">Cancel</a>
+                                            <button type="submit" class="btn btn-custome col-md-2 mt-3 mx-1" id="btn_saveChanges">{{ __("Save Changes") }}</button>
                                         </div>
 
                                     </div>

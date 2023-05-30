@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     use HasFactory;
+    protected $table ='review';
 
     protected $fillable = [
         'transaction_id',
@@ -33,5 +34,5 @@ class Review extends Model
         return $this->belongsTo(Merchant::class, 'merchant_id');
     }
 
-    
+
 }
