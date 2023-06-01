@@ -224,8 +224,8 @@
                 error: function(xhr, status, error) {
                     var html = '';
 
-                    html += '<div class="alert alert-heading" role="alert">';
-                    html += '<h4 class="alert-secondary">Data Not Found!</h4>';
+                    html += '<div class="alert alert-secondary" role="alert">';
+                    html += '<h4 class="alert-heading">Data Not Found!</h4>';
                     html += '<p>' + error + '</p>';
                     html += '<hr>';
                     html += '<p class="mb-0">Please try again later.</p>';
