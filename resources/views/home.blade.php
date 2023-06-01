@@ -222,7 +222,15 @@
                 },
                 // error
                 error: function(xhr, status, error) {
-                    console.log(xhr.responseText);
+                    var html = '';
+
+                    html += '<div class="alert alert-danger" role="alert">';
+                    html += '<h4 class="alert-heading">Error!</h4>';
+                    html += '<p>' + error + '</p>';
+                    html += '<hr>';
+                    html += '<p class="mb-0">Please try again later.</p>';
+                    html += '</div>';
+                    $("#card_merchant").html(html);
                 }
             });
         }
