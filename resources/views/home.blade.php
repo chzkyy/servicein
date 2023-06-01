@@ -164,9 +164,10 @@
 
                         return el
                     });
+
                     var i;
                     for (i = 0; i<arr.length; i++) {
-                        console.log(arr[i]);
+                        // console.log(arr[i]);
                         html += '<div class="col-md-3 my-3">'+
                             '<div class="card border-2">'+
                                 '<div class="card-body">'+
@@ -215,7 +216,13 @@
                             '</div>'+
                         '</div>';
                     }
+
+
                     $("#card_merchant").html(html);
+                },
+                // error
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
                 }
             });
         }
