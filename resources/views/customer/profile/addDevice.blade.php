@@ -38,7 +38,7 @@
 
                                 {{--  check device not empty  --}}
                                 @if ( $device->isEmpty() )
-                                    <div class="alert alert-info alert-dismissible text-center fade show" role="alert">
+                                    <div class="alert alert-secondary alert-dismissible text-center fade show" role="alert">
                                         <strong></strong> {{ __('No devices found.') }}
                                     </div>
                                 @else
