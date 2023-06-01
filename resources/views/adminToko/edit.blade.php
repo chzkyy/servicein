@@ -306,7 +306,7 @@
             }
 
             // isi nilai koordinat ke form
-            document.getElementById("geo_location").value = posisiTitik.lat() +"/"+ posisiTitik.lng();
+            document.getElementById("geo_location").value = posisiTitik.lat() +","+ posisiTitik.lng();
 
             // event ketika marker di drag
             google.maps.event.addListener(marker, 'drag', function() {
@@ -350,12 +350,14 @@
                 buatMarker(this, event.latLng);
             });
 
+            {{--  /*
             window.onload = function () {
                 // set marker on load
                 var lat = {{ explode('/', $merchant->geo_location)[0] }};
                 var lng = {{ explode('/', $merchant->geo_location)[1] }};
                 setGeo(lat + ',' + lng);
             }
+            */  --}}
         }
 
         var open_h;
@@ -400,11 +402,8 @@
             var merchant_desc = $("#merchant_desc").val();
             var merchant_address = $("#merchant_address").val();
             var phone_number = $("#phone_number").val();
-            var open_hour = $("#open_hour").val();
-            var close_hour = $("#close_hour").val();
-            var merchant_address = $("#merchant_address").val();
 
-            if (merchant_name == '' || merchant_desc == '' || merchant_address == '' || phone_number == '' || open_hour == '' || close_hour == '' || merchant_address == '') {
+            if (merchant_name == '' || merchant_desc == '' || phone_number == '' || merchant_address == '') {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',

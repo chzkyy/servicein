@@ -21,7 +21,7 @@
                     </div>
 
                     {{--  image  --}}
-                    <div class="w-100 vh-100 c-img-login"></div>
+                    <div class="w-100 min-vh-100 c-img-login"></div>
 
                     {{--  text  --}}
                     <div class="d-flex align-item-center">
@@ -60,7 +60,7 @@
                         </div>
                     </div>
 
-                    <div class="d-flex align-items-center px-5 ms-xl-4 mt-5 pt-md-5 pt-xl-0 mt-xl-n5">
+                    <div class="d-flex align-items-center px-5 ms-xl-4 mt-4 pt-md-4 pt-xl-0 mt-xl-n5">
                         <div class="col-md-8">
                             <form action="{{ route('login') }}" method="post">
                                 @csrf
@@ -72,7 +72,7 @@
                                         placeholder="Enter Email or Username" required autocomplete="username" autofocus />
                                 </div>
 
-                                <div class="form-group mt-3">
+                                <div class="form-group mt-2">
                                     <label class="form-label">{{ __('Password') }}</label>
                                     <div class="input-group">
                                         <input type="password" class="form-control @error('password') is-invalid @enderror form-control-lg input-group"
@@ -84,12 +84,12 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group mt-4 remember-me">
+                                <div class="form-group mt-2 remember-me">
                                     <input class="form-check-input checkbox" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                     <label for="remember" class="checkbox-label txt-primary">{{ __('Remember me on this computer') }}</label>
                                 </div>
 
-                                <div class="form-group mt-5">
+                                <div class="form-group mt-3">
                                     <button type="submit"
                                         class="col-12 btn btn-custome btn-lg btn-block">{{ __('Login') }}</button>
                                 </div>

@@ -58,7 +58,7 @@ class ChooseRoleController extends Controller
                         'open_hour'             => '-',
                         'close_hour'            => '-',
                         'phone_number'          => '-',
-                        'geo_location'          => '-',
+                        'geo_location'          => '-,-',
                     ]);
                 }
                 return redirect()->to('/');

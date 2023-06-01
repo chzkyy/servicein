@@ -13,55 +13,54 @@ class GetAPI extends Model
 {
     use HasFactory;
 
-    protected $table = 'jarak';
+    protected $table = 'merchant';
 
     /**
      * Get Data From Database
      * @return void
      *
      */
-    public static function getJarak()
+    public static function getJarak($data)
     {
-        // create dummy data for testing
-        $data = [
-            [
-                'id' => 1,
-                'nama' => 'Kantor Pusat',
-                'alamat' => 'Jl. Raya Cikarang Barat No. 1, Cikarang Barat, Bekasi, Jawa Barat 17530',
-                'latitude' => '-6.2939',
-                'longitude' => '106.7459',
-            ],
-            [
-                'id' => 2,
-                'nama' => 'Kantor Cabang 1',
-                'alamat' => 'Jl. Raya Cikarang Barat No. 1, Cikarang Barat, Bekasi, Jawa Barat 17530',
-                'latitude' => '-6.2939',
-                'longitude' => '106.7459',
-            ],
-            [
-                'id' => 3,
-                'nama' => 'Kantor Cabang 2',
-                'alamat' => 'Jl. Raya Cikarang Barat No. 1, Cikarang Barat, Bekasi, Jawa Barat 17530',
-                'latitude' => '-6.2939',
-                'longitude' => '106.7459',
-            ],
-            [
-                'id' => 4,
-                'nama' => 'Kantor Cabang 3',
-                'alamat' => 'Jl. Raya Cikarang Barat No. 1, Cikarang Barat, Bekasi, Jawa Barat 17530',
-                'latitude' => '-6.2939',
-                'longitude' => '106.7459',
-            ],
-            [
-                'id' => 5,
-                'nama' => 'Kantor Cabang 4',
-                'alamat' => 'Jl. Raya Cikarang Barat No. 1, Cikarang Barat, Bekasi, Jawa Barat 17530',
-                'latitude' => '-6.2939',
-                'longitude' => '106.7459',
-            ],
-        ];
+        // send data to static function result
+        // $data = GetAPI::result($data);
+        return $data;
+    }
 
-        return json_encode($data);
+    public static function merchant()
+    {
+        $data = DB::table('merchant')
+            ->join('users', 'merchant.user_id', '=', 'users.id')
+            ->select('merchant.*', 'users.email')
+            ->get();
+
+        $dataBersih = [];
+
+        // get geo location
+        foreach ($data as $item) {
+            $geo = $item->geo_location;
+            $geo = explode(',', $geo);
+            $item->geo_location = $geo;
+        }
+
+        // mapping data to array
+        foreach ($data as $item) {
+            $dataBersih[] = [
+                'id'                => $item->id,
+                'user_id'           => $item->user_id,
+                'merchant_name'     => $item->merchant_name,
+                'merchant_desc'     => $item->merchant_desc,
+                'merchant_address'  => $item->merchant_address,
+                'open_hour'         => $item->open_hour,
+                'close_hour'        => $item->close_hour,
+                'phone_number'      => $item->phone_number,
+                'latitude'          => $item->geo_location[0],
+                'longitude'         => $item->geo_location[1],
+                'email'             => $item->email,
+            ];
+        }
+
+        return $dataBersih;
     }
 
     /**
@@ -121,7 +120,7 @@ class GetAPI extends Model
         $response = curl_exec($curl);
 
         curl_close($curl);
-        return $response;
+        return json_decode($response, true);
     }
 
     public static function searchPlace($keyword, $origin)

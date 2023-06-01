@@ -14,7 +14,7 @@
                         <h1 class="mb-3">{{ __('Your solution in service') }}</h1>
                         <h4 class="mb-3">{{ __('Find a way to repair your device in one website') }}</h4>
                         <a class="btn btn-custome btn-lg" href="#book_merchant" id="btn_bookNow" role="button">Book Now</a>
-                        
+
                     </div>
                 </div>
             </div>
@@ -97,122 +97,10 @@
                 {{--  product card --}}
                 <div class="container">
                     <div class="row justify-content-center align-items-center txt-third mt-5">
-                        <div class="card mt-2 mb-4">
+                        <div class="card mt-2 mb-4 border-2">
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-3 my-3">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <img src="{{ asset('assets/img/example-img-merchant.png') }}" class="card-img-top" alt="...">
-                                                {{--  rate  --}}
-                                                <div class="rate">
-                                                    <div class="col-12 container">
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                <div
-                                                                    class="d-flex justify-content-start align-items-center">
-                                                                    <div
-                                                                        class="star d-block justify-content-center align-items-center">
-                                                                        <div class="star text-center">
-                                                                            <i class="fa-solid fa-star"
-                                                                                style="color: #ffa800;"></i>
-                                                                            <i class="fa-solid fa-star"
-                                                                                style="color: #ffa800;"></i>
-                                                                            <i class="fa-solid fa-star"
-                                                                                style="color: #ffa800;"></i>
-                                                                            <i class="fa-solid fa-star"
-                                                                                style="color: #ffa800;"></i>
-                                                                        </div>
-                                                                        <div class="star-desc">
-                                                                            <span>4/5</span>
-                                                                        </div>
-                                                                    </div>
+                                <div class="row d-flex justify-content-center align-items-center" id="card_merchant">
 
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-6">
-                                                                <div class="d-flex justify-content-end align-items-center">
-                                                                    <div
-                                                                        class="distance d-block justify-content-center align-items-center">
-                                                                        <div class="distance text-center">
-                                                                            <i class="fa-solid fa-map-location-dot"
-                                                                                style="color: #ffa800;"></i>
-                                                                        </div>
-                                                                        <div class="star-desc">
-                                                                            <span>4,5 KM</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-center align-items-center my-3">
-                                                    <a href="#" class="btn btn-custome btn-sm">{{ __("Book this Service") }}</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3 my-3">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <img src="{{ asset('assets/img/example-img-merchant.png') }}" class="card-img-top" alt="...">
-                                                {{--  rate  --}}
-                                                <div class="rate">
-                                                    <div class="col-12 container">
-                                                        <div class="row">
-                                                            <div class="col-6">
-                                                                <div
-                                                                    class="d-flex justify-content-start align-items-center">
-                                                                    <div
-                                                                        class="star d-block justify-content-center align-items-center">
-                                                                        <div class="star text-center">
-                                                                            <i class="fa-solid fa-star"
-                                                                                style="color: #ffa800;"></i>
-                                                                            <i class="fa-solid fa-star"
-                                                                                style="color: #ffa800;"></i>
-                                                                            <i class="fa-solid fa-star"
-                                                                                style="color: #ffa800;"></i>
-                                                                            <i class="fa-solid fa-star"
-                                                                                style="color: #ffa800;"></i>
-                                                                        </div>
-                                                                        <div class="star-desc text-center">
-                                                                            <span>4/5</span>
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-6">
-                                                                <div class="d-flex justify-content-end align-items-center">
-                                                                    <div
-                                                                        class="distance d-block justify-content-center align-items-center">
-                                                                        <div class="distance text-center">
-                                                                            <i class="fa-solid fa-map-location-dot"
-                                                                                style="color: #ffa800;"></i>
-                                                                        </div>
-                                                                        <div class="star-desc text-center">
-                                                                            <span>4,5 KM</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex justify-content-center align-items-center my-3">
-                                                    <a href="#" class="btn btn-custome btn-sm">{{ __("Book this Service") }}</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                 </div>
                             </div>
@@ -225,4 +113,114 @@
             </div>
         </div>
     </section>
+@endsection
+
+
+@section('additional-script')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="text/javascript">
+        var urlSearchAddress = "{{ url('api/searchPlace') }}";
+        const geo = '';
+
+        $(document).ready(function() {
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Geolocation is not supported by this browser.',
+                    });
+                }
+            }
+
+            getLocation();
+        });
+
+        function showPosition(position) {
+            //alert("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
+
+            $.ajax({
+                // call api route
+                url: "{{ url('api/getMatrix') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    origin: position.coords.latitude + ',' + position.coords.longitude
+                },
+                dataType: "json",
+                success: function(data) {
+                    // loop through the data
+
+                    var html = '';
+                    // object to array
+                    var arr = $.map(data, function(el) {
+                        // if persentase is <70 then remove the data
+                        if (el['percentage'] < 80) {
+                            return null;
+                        }
+
+                        return el
+                    });
+                    var i;
+                    for (i = 0; i<arr.length; i++) {
+                        console.log(arr[i]);
+                        html += '<div class="col-md-3 my-3">'+
+                            '<div class="card border-2">'+
+                                '<div class="card-body">'+
+                                    '<img src="{{ asset("assets/img/example-img-merchant.png") }}" class="card-img-top img-thumbnail" alt="image_toko">'+
+                                    '<div class="title text-center fw-semibold my-2" id="Merchant_name">'+arr[i]['merchant_name']+'</div>'+
+
+                                    '<div class="rate">'+
+                                        '<div class="container">'+
+                                            '<div class="row">'+
+                                                '<div class="col-md-6">'+
+                                                    '<div class="d-flex justify-content-center align-items-center">'+
+                                                        '<div class="star d-block justify-content-center align-items-center">'+
+                                                            '<div class="star text-center">'+
+                                                                '<i class="fa-solid fa-star" style="color: #ffa800;"></i>'+
+                                                            '</div>'+
+                                                            '<div class="star-desc text-center">'+
+                                                                '<span id="rate">'+arr[i]['rating']+'/5 <sub class="fw-semibold">Reviews</sub></span>'+
+                                                            '</div>'+
+                                                        '</div>'+
+
+                                                    '</div>'+
+                                                '</div>'+
+
+                                                '<div class="col-md-6">'+
+                                                    '<div class="d-flex justify-content-center align-items-center">'+
+                                                        '<div class="distance d-block justify-content-center align-items-center">'+
+                                                            '<div class="distance text-center">'+
+                                                                '<i class="fa-solid fa-map-location-dot" style="color: #ffa800;"></i>'+
+                                                            '</div>'+
+                                                            '<div class="star-desc text-center">'+
+                                                                '<span id="distance">'+arr[i]['jarak']+'<br><sub class="fw-semibold">From your location</sub> </span>'+
+                                                            '</div>'+
+                                                        '</div>'+
+                                                    '</div>'+
+                                                '</div>'+
+
+                                            '</div>'+
+
+                                            '<div class="d-flex justify-content-center align-items-center my-3 mx-auto">'+
+                                                '<a href="#" class="btn btn-custome btn-sm" id="booking">{{ __("Book this Service") }}</a>'+
+                                            '</div>'+
+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>';
+                    }
+                    $("#card_merchant").html(html);
+                }
+            });
+        }
+
+
+    </script>
+
 @endsection
