@@ -174,15 +174,15 @@ Route::get('/detail-merchant/{id}', 'App\Http\Controllers\DetailMerchantControll
   * /------------------------------------------------------------------
   */
 Route::group(['prefix' => 'booking'], function() {
-    Route::get('/{id}', 'App\Http\Controllers\TransactionController@index')
-        ->name('create-booking')
-        ->middleware(['auth','verified']);
-
     Route::get('/success', 'App\Http\Controllers\TransactionController@booking_success')
         ->name('success-booking')
         ->middleware(['auth','verified']);
 
-    Route::get('/list-time', 'App\Http\Controllers\TransactionController@list_time')
+    Route::get('/{id}', 'App\Http\Controllers\TransactionController@index')
+        ->name('create-booking')
+        ->middleware(['auth','verified']);
+
+    Route::post('/list-time', 'App\Http\Controllers\TransactionController@list_time')
         ->name('get-time-booking')
         ->middleware(['auth','verified']);
 
@@ -191,6 +191,10 @@ Route::group(['prefix' => 'booking'], function() {
         ->middleware(['auth','verified']);
 });
 
+
+Route::get('/transaction', 'App\Http\Controllers\TransactionController@show_transaction')
+    ->name('show-transaction')
+    ->middleware(['auth','verified']);
 
 /**
  * /------------------------------------------------------------------

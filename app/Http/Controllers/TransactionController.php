@@ -55,6 +55,11 @@ class TransactionController extends Controller
         }
     }
 
+    public function booking_success()
+    {
+        return view('confirmation.transaction-sucess');
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -62,12 +67,14 @@ class TransactionController extends Controller
             'device_id'     => 'required',
             'booking_date'  => 'required',
             'booking_time'  => 'required',
+            'user_note'     => 'string|max:255|nullable',
         ]);
 
         $merchant_id    = $request->merchant_id;
         $device_id      = $request->device_id;
         $booking_date   = date('Y-m-d', strtotime($request->booking_date));
         $booking_time   = $request->booking_time;
+        $user_note      = $request->user_note;
 
         $booking = Booking::create([
             'customer_id'   => auth()->user()->id,
@@ -84,55 +91,51 @@ class TransactionController extends Controller
             'merchant_id'       => $merchant_id,
             'no_transaction'    => 'TR'.date('YmdHis').mt_rand(100000, 999999),
             'status'            => 'BOOKED',
+            'user_note'         => $user_note,
             'waranty'           => '0',
         ]);
 
 
         return response()->json([
-            'success' => true,
+            'status'  => 'success',
             'message' => 'Booking Success!',
             'data'    => $booking
         ], 201);
     }
 
-    public function booking_success()
+    public function list_time(Request $request)
     {
-        return view('confirmation.transaction-sucess');
-    }
+
+        $booking_date = $request->input('booking_date');
+        $merchant_id  = $request->input('merchant_id');
+        $merchant     = Merchant::find($merchant_id);
+
+        // join table booking table dan transaction table and get time booking information
+
+        $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
+                        ->where('booking.booking_date', $booking_date)
+                        ->where('booking.merchant_id', $merchant_id)
+                        ->where('transaction.status', 'BOOKED')
+                        ->get();
+        $time         = $this->create_time_range($merchant->open_hour, $merchant->close_hour, '60 mins', '24');
 
 
-    public function list_time()
-    {
-        print_r("adaskdjadskjad");
-        // $booking = $request->query('booking_date');
-        // $merchant_id = $request->query('merchant_id');
-
-        // print_r($booking, $merchant_id);
 
 
-        // $booking_date = date('Y-m-d', strtotime($request->query('booking_date')));
-        // $booking = Booking::where('merchant_id', $request->query('merchant_id'))
-        //             ->where('booking_date', $input_date)
-        //             ->get();
+        // data jam booking yang tersedia
+        if( $transaction->count() > 0 ){
+            foreach($transaction as $t){
+                $key = array_search(date('H:i', strtotime($t->booking_time)), $time);
+                if($key !== false){
+                    // jika ada yg sudah di booking, maka hapus dari array time;
+                    unset($time[$key]);
+                    // mengeluarkan hasil akhir time
+                    $time = array_values($time);
+                }
+            }
+        }
 
-        // // data jam booking yang tersedia
-        // $time           = $this->create_time_range($merchant->open_hour, $merchant->close_hour, '60 mins', '24');
-
-        //  // jika ada waktu yg sudah di booking, maka hapus dari array time
-        // if($booking){
-        //     foreach($booking as $b){
-        //         $key = array_search(date('H:i', strtotime($b->booking_time)), $time);
-        //         if($key !== false){
-        //             unset($time[$key]);
-        //         }
-        //     }
-        // }
-
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => 'success',
-        //     'data'    => $booking
-        // ], 201);
+        return response()->json($time, 201);
     }
 
 
@@ -167,6 +170,31 @@ class TransactionController extends Controller
         } else {
             return $booking_code;
         }
+    }
+
+
+    /**
+     * Display Transaction List.
+     *
+     * @param  \App\Models\Transaction  $transaction
+     * @param  \App\Models\Booking  $booking
+     * @return \Illuminate\Http\Response
+     */
+
+    public function show_transaction()
+    {
+        $user_id     = auth()->user()->id;
+        $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
+                        ->join('merchant', 'merchant.id', '=', 'booking.merchant_id')
+                        ->where('transaction.user_id', $user_id)
+                        ->get();
+
+        // return view('transaction.transaction', [
+        //     'transaction' => $transaction,
+        // ]);
+        // return json pretty_print($transaction);
+        // $trs = json_encode($transaction, JSON_PRETTY_PRINT);
+        return response()->json($transaction, 200);
     }
 
 }

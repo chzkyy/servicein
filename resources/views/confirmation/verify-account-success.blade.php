@@ -23,7 +23,7 @@
                         <div class="d-flex justify-content-center">
                             <div class="qoute"></div>
                             <div class="text">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+                                {{ __("We understand the importance of your laptops and the impact it has on your daily life, which is why we offer fast and reliable services such as repairs, upgrades, and maintenance. Our goal is to provide you with exceptional service that exceeds your expectations.") }}
                             </div>
                             <div class="creator blockquote-footer mt-4">
                                 Vincent Obi

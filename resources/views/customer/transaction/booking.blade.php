@@ -70,15 +70,14 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-6 mb-2">
-
+                                                        <div class="col-md-7 mb-2">
                                                             <div class="label-booking-time">
                                                                 <label for="booking-time"
                                                                     class="txt-gold form-label fw-semibold">{{ __('Pick time to book') }}<span class="text-danger">{{ __('* :') }}</span></label>
                                                             </div>
 
                                                             <div class="booking-time">
-                                                                <div class="col-md-12">
+                                                                <div class="col-md-12" id="d-time-label">
                                                                     {{-- @foreach ($time as $item)
                                                                         <label>
                                                                             <input type="radio" name="booking_time" id="booking_time" class="card-input-element" value="{{ $item }}" required/>
@@ -178,24 +177,28 @@
             // call ajax to get time list
             $.ajax({
                 url: "{{ route('get-time-booking') }}",
-                type: "get",
+                type: "POST",
                 dataType: 'json',
                 data: {
+                    _token: "{{ csrf_token() }}",
                     booking_date: format,
                     merchant_id: $('#merchant_id').val()
                 },
                 success: function(response) {
-                    console.log(response);
-                    // var html = '';
-                    // $.each(response, function(index, value) {
-                    //     html += '<label>';
-                    //     html += '<input type="radio" name="booking_time" id="booking_time" class="card-input-element" value="' + value + '" required/>';
-                    //     html += '<div class="card card-default card-input shadow shadow-md">';
-                    //     html += '<div class="card-header">' + value + '</div>';
-                    //     html += '</div>';
-                    //     html += '</label>';
-                    // });
-                    // $('.booking-time .col-md-12').html(html);
+                    var html = '';
+                    var string1 = JSON.stringify(response);
+                    const arr = JSON.parse(string1);
+                    for (let i = 0; i < arr.length; i++) {
+                        html += '<label>';
+                        html += '<input type="radio" name="booking_time" id="booking_time" class="card-input-element" value="' + arr[i] + '" required/>';
+                        html += '<div class="card card-default card-input shadow shadow-md">';
+                        html += '<div class="card-header">' + arr[i] + '</div>';
+                        html += '</div>';
+                        html += '</label>';
+                    }
+
+
+                    $('#d-time-label').html(html);
                 }
             });
         });

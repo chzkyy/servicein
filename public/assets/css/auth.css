@@ -60,6 +60,35 @@ body {
     border: 1px solid var(--primary-color) !important;
 }
 
+
+.btn-custome-outline {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color)!important;
+    border-radius: 4px;
+    border: solid 1px !important;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    padding: 10px 20px;
+    /* filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)); */
+}
+
+
+.btn-custome-outline:hover {
+    color: var(--white) !important;
+    background: var(--primary-color) !important;
+}
+
+.btn-custome-outline:active {
+    color: var(--white)!important;
+    background: var(--primary-color)!important;
+    border-color: var(--primary-color)!important;
+    border-radius: 4px;
+    border: solid 1px!important;
+}
+
 .btn-with-google {
     background: var(--white);
     box-sizing: border-box;
