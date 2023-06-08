@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <section class="vh-100">
+    <section>
         <div class="container-fluid">
             <div class="container">
                 <div class="col-md-12">
@@ -25,34 +25,31 @@
                                         <img class="img-fluid img-thumbnail mx-auto img-preview" style="width: 150px; height: 150px;">
                                         {{--  tombol upload  --}}
                                         <div class="d-flex justify-content-center align-items-center my-2">
-                                            <button type="submit" class="btn btn-link btn-sm" id="btn_uploadAvatar"><i class="fa-solid fa-pen-to-square"></i> {{ __("Update Picture") }}</button>
+                                            <button type="submit" class="btn btn-custome btn-sm" id="btn_uploadAvatar"><i class="fa-solid fa-pen-to-square"></i> {{ __("Update Picture") }}</button>
                                         </div>
 
                                     <div class="d-flex justify-content-center align-items-center">
                                         <label class="btn btn-link btn-sm custom-file-upload">
                                             <form action="{{ route('update-avatar-admin') }}" method="post" id="updt_avatar" enctype="multipart/form-data">
                                                 @csrf
-                                                <input type="file" name="profile_picture" id="profile_picture" class="custom-file-upload" onchange="preview_avatar()" accept="image/*">
-                                                    <i class="fa-solid fa-upload"></i> Change Picture
+                                                <small class="txt-fz-12">
+                                                    <input type="file" name="profile_picture" id="profile_picture" class="txt-fz-12 custom-file-upload" onchange="preview_avatar()" accept="image/*">
+                                                        <i class="fa-solid fa-upload"></i> Change Picture
+                                                </small>
                                             </form>
                                         </label>
 
                                     </div>
 
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <a href="{{ route('change-password') }}" class="btn btn-link btn-sm"><i
-                                                class="fa-solid fa-lock-open"></i> Change Password</a>
+                                        <small class="txt-fz-12">
+                                            <a href="{{ route('change-password') }}" class="btn txt-fz-12 btn-link btn-sm"><i class="fa-solid fa-lock-open"></i> Change Password</a>
+                                        </small>
                                     </div>
                                 </div>
 
                             </div>
-                            {{--  save button for desktop --}}
-                            <div class="d-none d-md-block justify-content-center text-center align-items-center mt-5">
-                                {{--  <button type="submit" class="btn btn-custome col-md-12 mt-3" id="btn_saveChanges">Save Changes</button>  --}}
-                                <button type="submit" class="btn btn-custome col-md-12 mt-3" id="sc">Save Changes</button>
-                                <a href="{{ route('profile.admin') }}"
-                                    class="btn btn-light shadow txt-primary col-md-12 mt-3">Cancel</a>
-                            </div>
+
                         </div>
 
                         <div class="col-md-8 offset-md-1 pt-5 mt-5">
@@ -155,16 +152,20 @@
                                         {{--  Contact Information  --}}
                                         {{--  <div class="h5 txt-gold my-4">Contact Detail</div>  --}}
 
+                                        {{--  save button for desktop --}}
+                                        <div class="d-none d-md-block justify-content-center text-end align-items-end mt-5">
+                                            <a href="{{ route('profile.admin') }}" class="btn btn-light col-md-2 shadow txt-primary mx-1 mt-4">Cancel</a>
+                                            <button type="submit" class="btn btn-custome mt-3 mx-1" id="btn_saveChanges">{{ __("Save Changes") }}</button>
+                                        </div>
+
                                     </div>
                                 </div>
                                 {{--  save button for mobile  --}}
                                 <div class="d-block d-md-none justify-content-center text-center align-items-center mt-5 mb-5">
                                     <div class="submit">
-                                        <button type="submit" class="btn btn-custome  col-12 mt-3">Save
-                                            Changes</button>
+                                        <button type="submit" class="btn btn-custome  col-12 mt-3">Save Changes</button>
                                     </div>
-                                    <a href="{{ route('profile') }}"
-                                        class="btn btn-light shadow txt-primary col-12 mt-3">Cancel</a>
+                                    <a href="{{ route('profile.admin') }}" class="btn btn-light shadow txt-primary col-12 mt-3">Cancel</a>
                                 </div>
                             </form>
                         </div>
@@ -350,48 +351,27 @@
                 buatMarker(this, event.latLng);
             });
 
-            {{--  /*
+
             window.onload = function () {
                 // set marker on load
-                var lat = {{ explode('/', $merchant->geo_location)[0] }};
-                var lng = {{ explode('/', $merchant->geo_location)[1] }};
+                let geo = "{{ $merchant->geo_location ?? '' }}";
+                var lat = "{{ explode(',', $merchant->geo_location)[0] }}";
+                var lng = "{{ explode(',', $merchant->geo_location)[1] }}";
+
                 setGeo(lat + ',' + lng);
             }
-            */  --}}
-        }
-
-        var open_h;
-        var open_m;
-
-        var close_h;
-        var close_m;
-
-        if ({{ $merchant->open_h != '-' }} != '-') {
-            open_h = {{ explode(':', $merchant->open_hour)[0] }};
-            open_m = {{ explode(':', $merchant->open_hour)[1] }};
-        } else {
-            open_h = 0;
-            open_m = 0;
-        }
-
-        if ({{ $merchant->close_hour != '-' }} != '-') {
-            close_h = {{ explode(':', $merchant->close_hour)[0] }};
-            close_m = {{ explode(':', $merchant->close_hour)[1] }};
-        } else {
-            close_h = 0;
-            close_m = 0;
         }
 
         var tpSelectbox = new tui.TimePicker('#timepicker-selectbox', {
-            initialHour: open_h,
-            initialMinute: open_m,
+            initialHour: {{ explode(':', $merchant->open_hour)[0] }} ?? 0,
+            initialMinute: {{ explode(':', $merchant->open_hour)[1] }} ?? 0,
             inputType: 'selectbox',
             showMeridiem: false
         });
 
         var tpSelectbox2 = new tui.TimePicker('#timepicker-selectbox2', {
-            initialHour: close_h,
-            initialMinute: close_m,
+            initialHour: {{ explode(':', $merchant->close_hour)[0] }} ?? 0,
+            initialMinute: {{ explode(':', $merchant->close_hour)[1] }} ?? 0,
             inputType: 'selectbox',
             showMeridiem: false
         });

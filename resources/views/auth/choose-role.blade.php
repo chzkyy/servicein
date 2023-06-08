@@ -38,21 +38,21 @@
                     <img src="{{ url('assets/img/Logo2.png') }}" alt="logo" class="logo-img">
                 </div>
 
-                <div class="d-none d-md-block align-items-center px-5 ms-xl-3 mt-4 pt-4 mb-5">
+                <div class="d-none d-md-block align-items-center px-4 ms-xl-3 mt-3 pt-4 mb-5">
                     <div class="row">
                         <span class="title-choose-role">{{ __('Choose Your Account Type!') }}</span>
-                        <span class="desc-choose-role text-wrap col-md-8">{{ __('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor!') }}</span>
+                        <span class="desc-choose-role text-wrap col-md-8">{{ __('Choose your account type below, you can choose a role according to your needs.') }}</span>
                     </div>
                 </div>
 
-                <div class="d-block d-md-none align-items-center px-5 ms-xl-3 mt-4 pt-4 mb-5">
+                <div class="d-block d-md-none align-items-center px-4 ms-xl-3 mt-3 pt-4 mb-5">
                     <div class="row">
                         <span class="title-choose-role">{{ __('Choose Your Account Type!') }}</span>
                     </div>
                 </div>
 
-                <div class="d-flex align-items-center px-5 ms-xl-4 mt-4 pt-4 pt-xl-0 mt-xl-n5">
-                    <div class="col-md-8">
+                <div class="d-flex align-items-center px-4 ms-xl-4 mt-4 pt-4 pt-xl-0 mt-xl-n5">
+                    <div class="col-md-9">
                         <form method="POST" id="formRole" action="{{ route('store.role') }}">
                             @csrf
 
@@ -78,7 +78,7 @@
                                 </div>
                             </label>
 
-                            <label class="mt-3 mb-5">
+                            <label class="mt-3 mb-3">
                                 <input type="radio" name="role" id="role" class="card-input-element d-none" value="Admin">
                                 <div class="card card-body shadow-lg bg-light d-flex flex-row justify-content-between align-items-center">
 

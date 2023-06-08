@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <section class="vh-100">
+    <section>
         <div class="container-fluid">
             <div class="container">
                 <div class="col-md-12">
@@ -150,27 +150,14 @@
                                                             </div>
                                                         </form>
 
-                                                        {{--  @foreach ($photos as $ph )
-
-                                                            {{ $ph }}
-                                                            <div class="col-md-3">
-                                                                <div class="card">
-                                                                    <img src="{{ asset('assets/img/example-img-merchant.png') }}"
-                                                                        class="card-img-top" alt="...">
-                                                                </div>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>  --}}
+                                                    </div>
                                                 </div>
-
 
                                             </div>
                                         </div>
 
                                     </div>
-
                                     {{--  <hr class="border border-gold border-1 opacity-50 mx-4">  --}}
-
                                 </div>
                             </div>
                         </div>
@@ -204,7 +191,7 @@
             let preloaded = [
                 @foreach ($photos as $ph)
                     {
-                        id: "{{ $loop->iteration }}",
+                        id: "{{ $ph['id'] }}",
                         src: "{{ $ph['src'] }}"
                     },
                 @endforeach
@@ -213,25 +200,65 @@
             $('.input-images').imageUploader({
                 imagesInputName: 'photos',
                 preloaded: preloaded,
-                preloadedInputName: 'old'
+                accept: 'image/*',
+                // image only
+                extensions: ['.jpg', '.jpeg', '.png'],
+                // maxfile size 2MB
+                maxFileSize: 2097152,
+                preloadedInputName: 'old',
             });
 
             $(".delete-image").click(function(e){
                 // mengambil id dari input old dari dalam uploaded-image
                 e.preventDefault();
                 let id = $(this).parent().find('input').val();
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('delete-merchant-gallery') }}",
-                    data: {
-                        _token : "{{ csrf_token() }}",
-                        id  : id
-                    },
 
-                    success: function(response) {
-                        alert(response);
+                Swal.fire({
+                    text: 'Are you sure want to delete this image?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#e3c10fe5',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: "{{ route('delete-merchant-gallery') }}",
+                            data: {
+                                _token : "{{ csrf_token() }}",
+                                id  : id
+                            },
+
+                            success: function(response) {
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your device has been deleted.',
+                                    'success'
+                                ).then((result) => {
+                                    location.reload();
+                                });
+                            }
+                        })
                     }
                 })
+
+            });
+
+            $("input[type='file']").on("change", function () {
+                if(this.files[0].size > 2000000) {
+                    file = $(this)[0].files[0];
+                    console.log(file);
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: file.name + ' size must be less than 2 MB!',
+                    }).then((result) => {
+                        location.reload();
+                    });
+                }
+
+                return false;
             });
 
             $('#save_gallery').click(function(e) {
@@ -239,28 +266,59 @@
 
                 let form = $('#photos')[0];
                 let formData = new FormData(form);
+                let file = $("input[type='file']")[0].files[0];
 
-                $.ajax({
-                    url: "{{ route('merchant-gallery') }}",
-                    type: "POST",
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(data) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: 'Success upload images',
-                            showConfirmButton: false,
-                            timer: 20000 // waktu popup 20 detik = 20000 ms
-                        }).then(function() {
-                            location.reload();
-                        });
-                    },
-                    error: function(err) {
-                        console.log(err);
-                    }
-                });
+                console.log(file);
+
+                if( file == undefined ) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please select image!',
+                    })
+
+                    return false;
+                }else if(file.size > 2000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'File size must be less than 2 MB!',
+                    })
+
+                    return false;
+                }
+                else {
+                    $.ajax({
+                        url: "{{ route('merchant-gallery') }}",
+                        type: "POST",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(data) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Success upload images',
+                                showConfirmButton: false,
+                                timer: 20000 // waktu popup 20 detik = 20000 ms
+                            }).then(function() {
+                                location.reload();
+                            });
+                        },
+                        error: function(err) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: err.responseJSON.message,
+                                showConfirmButton: false,
+                                timer: 20000 // waktu popup 20 detik = 20000 ms
+                            });
+
+                            console.clear();
+                        }
+                    });
+                }
+
             });
         });
     </script>

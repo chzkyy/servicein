@@ -16,7 +16,7 @@ class MerchantController extends Controller
     public function __construct()
     {
         // hanya role merchant yang bisa mengakses
-        // $this->middleware(['merchant']);
+        $this->middleware(['merchant']);
     }
 
     public function index()
@@ -140,29 +140,47 @@ class MerchantController extends Controller
 
         // Handle File Upload
         $request->validate([
+            // imzge validation max 2MB
             'photos' => 'required',
+            'photos.*' => 'required|image' // max 2MB = 2048
+        ],[
+            'photos.required' => 'Please select at least 1 image to upload.',
+            'photos.*.required' => 'Please select at least 1 image to upload.',
+            'photos.*.image' => 'Sorry! Only JPG, JPEG, PNG & GIF files are allowed.',
         ]);
 
-        // multiple file upload
-        $arr = [];
+        // if validation success
+        if( $request->hasfile('photos') )
+        {
+            // multiple file upload
+            $arr = [];
 
-        foreach ($request->file('photos') as $file) {
-            $fileName     = $file->getClientOriginalName();
-            $file->move(public_path('assets/img/merchant_gallery'), $fileName);
-            $arr[] = $fileName;
+            foreach ($request->file('photos') as $file) {
+                $fileName     = $file->getClientOriginalName();
+                $file->move(public_path('assets/img/merchant_gallery'), $fileName);
+                $arr[] = $fileName;
+            }
+
+            // insert data to database
+            foreach ($arr as $key => $value) {
+                $data = [
+                    'merchant_id'   => $request->merchant_id,
+                    'images'        => "assets/img/merchant_gallery/".$value,
+                ];
+
+                $this->createMerchantGallery($data);
+            }
+
+            return response()->json([
+                'message' => 'Your images has been successfully upload.'
+            ], 200);
         }
-
-        // insert data to database
-        foreach ($arr as $key => $value) {
-            $data = [
-                'merchant_id'   => $request->merchant_id,
-                'images'        => "assets/img/merchant_gallery/".$value,
-            ];
-
-            $this->createMerchantGallery($data);
+        else
+        {
+            return response()->json([
+                'message' => 'Please select at least 1 image to upload.'
+            ], 422);
         }
-
-        print_r("Success");
     }
 
 
@@ -223,6 +241,7 @@ class MerchantController extends Controller
         foreach ($imageGallery as $key => $value) {
             // id: 1, src: 'https://picsum.photos/500/500?random=1'}
             $arr[] = [
+                'id'    => $value->id,
                 'src'   => asset($value->images),
             ];
         }

@@ -12,23 +12,23 @@
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav col-md-12">
-                <li class="nav-item col-md-8 my-auto mx-auto">
+                <li class="nav-item col-md-6 my-auto mx-auto">
                     <form role="search">
                         <div class="custom-search">
                             <form action="" method="POST" id="search_merchant">
                                 <input type="text" class="custom-search-input" id="search_m" placeholder="Search">
-                                <button class="custom-search-botton" type="submit">Search</button>
+                                <button class="custom-search-botton" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                             </form>
                         </div>
                     </form>
                 </li>
 
-                <li class="nav-item my-auto">
+                {{--  <li class="nav-item my-auto">
                     <a href="#" class="nav-link cart text-white text-decoration-none">
                         <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
                         <span class="cart-number">0</span>
                     </a>
-                </li>
+                </li>  --}}
 
                 <li class="nav-item my-auto mx-1">
                     <a href="#" class="nav-link chat text-white text-decoration-none">
@@ -67,6 +67,11 @@
                                     <a class="dropdown-item" href="{{ route('profile.admin') }}">Profile</a>
                                 @else
                                     <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
+                                @endif
+                            </li>
+                            <li>
+                                @if ( Auth::user()->role == 'User' )
+                                    <a class="dropdown-item" href="{{ route('profile') }}">Transaction List</a>
                                 @endif
                             </li>
                             <hr>

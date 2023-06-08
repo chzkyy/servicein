@@ -5,27 +5,29 @@
 @endsection
 
 @section('content')
-    <section class="vh-100">
-        {{--  Jumbotron   --}}
-        <div class="p-5 text-center bg-image jdashboard">
-            <div class="mask pt-5">
-                <div class="d-flex justify-content-center align-items-center pt-5 mt-5">
-                    <div class="text-white pt-5">
-                        <h1 class="mb-3">{{ __('Your solution in service') }}</h1>
-                        <h4 class="mb-3">{{ __('Find a way to repair your device in one website') }}</h4>
-                        <a class="btn btn-custome btn-lg" href="#book_merchant" id="btn_bookNow" role="button">Book Now</a>
+    <section>
+        <section>
+            {{--  Jumbotron   --}}
+            <div class="p-5 text-center bg-image jdashboard">
+                <div class="mask pt-5">
+                    <div class="d-flex justify-content-center align-items-center pt-5 mt-5">
+                        <div class="text-white pt-5">
+                            <h1 class="mb-3">{{ __('Your solution in service') }}</h1>
+                            <h4 class="mb-3">{{ __('Find a way to repair your device in one website') }}</h4>
+                            <a class="btn btn-custome btn-lg" href="#book_merchant" id="btn_bookNow" role="button">Book Now</a>
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         {{--  content   --}}
-        <div class="containe my-4">
+        <div class="container my-4 mx-2">
             <div class="col-md-12 px-5">
                 <div class="row">
                     <div class="col-md-6 d-flex justify-content-center align-content-center">
-                        <div class="col-md-8 justify-content-center align-content-center">
+                        <div class="col-md-10 d-block my-auto justify-content-center align-content-center">
                             <img src="{{ url('assets/img/banner.png') }}" class="img-fluid" alt="banner">
                         </div>
                     </div>
@@ -33,24 +35,24 @@
                     <div class="col-md-6">
                         <div class="d-flex justify-content-start align-items-start">
                             <div class="txt-third mt-2">
-                                <h1 class="mb-2 text-title-dashboard fw-semibold">{{ __('Why Using Service.in ?') }}</h1>
+                                <h1 class="mb-2 text-title dashboard fw-semibold">{{ __('Why Using Service.in ?') }}</h1>
                                 <div
                                     class="d-flex justify-content-center align-items-center justify-content-md-start align-items-md-center">
-                                    <hr class="border border-cust border-2 opacity-50 TitleLine">
+                                    <hr class="border-cust border-2 opacity-50 TitleLine">
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-12">
                                 <div class="d-flex justify-content-start align-items-start mt-4">
                                     <div class="icon mt-2">
                                         <i class="fa-solid fa-truck-fast fa-2xl txt-primary"></i>
                                     </div>
+
                                     <div class="mx-4 txt-third descText">
                                         <h6 class="uppercase fw-semibold">{{ __('Nearest Store') }}</h6>
-                                        <p>{{ __('Showing the nearest store available. We prioritize the nearest store for your device repairment service.') }}
-                                        </p>
+                                        <p>{{ __('Showing the nearest store available. We prioritize the nearest store for your device repairment service.') }}</p>
                                     </div>
                                 </div>
 
@@ -60,8 +62,7 @@
                                     </div>
                                     <div class="mx-4 txt-third descText">
                                         <h6 class="uppercase fw-semibold">{{ __('Free Complaint') }}</h6>
-                                        <p>{{ __('Aftersales complaint guarantee. We will help you communicate with the store even after the device was done.') }}
-                                        </p>
+                                        <p>{{ __('Aftersales complaint guarantee. We will help you communicate with the store even after the device was done.') }}</p>
                                     </div>
                                 </div>
 
@@ -71,8 +72,7 @@
                                     </div>
                                     <div class="mx-4 txt-third descText">
                                         <h6 class="uppercase fw-semibold">{{ __('Community Trusted') }}</h6>
-                                        <p>{{ __('Handled by experienced store and technician only. We curated the store that already have a good review and professional Technician.') }}
-                                        </p>
+                                        <p>{{ __('Handled by experienced store and technician only. We curated the store that already have a good review and professional Technician.') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
         {{--  end content  --}}
 
         <div class="my-5 d-flex justify-content-center align-items-center">
-            <hr class="border border-cust border-1 opacity-50 w-75">
+            <hr class="border-cust border-1 opacity-50 w-75">
         </div>
         {{--  content 2  --}}
         <div class="container-fluid">
@@ -100,8 +100,15 @@
                         <div class="card mt-2 mb-4 border-2">
                             <div class="card-body">
                                 <div class="row d-flex justify-content-center align-items-center" id="card_merchant">
+                                </div>
 
+                            </div>
 
+                            {{--  pagination  --}}
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-md-12  d-flex justify-content-center align-items-center mb-3" id="pagination">
+                                    <div id="data-container"></div>
+                                    <div id="pagination-container"></div>
                                 </div>
                             </div>
                         </div>
@@ -118,6 +125,7 @@
 
 @section('additional-script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ url('assets/library/pagination.js.org_dist_2.6.0_pagination.js') }}"></script>
 
     <script type="text/javascript">
         var urlSearchAddress = "{{ url('api/searchPlace') }}";
@@ -152,83 +160,104 @@
                 },
                 dataType: "json",
                 success: function(data) {
-                    // loop through the data
 
-                    var html = '';
-                    // object to array
-                    var arr = $.map(data, function(el) {
-                        // if persentase is <70 then remove the data
-                        if (el['percentage'] < 80) {
-                            return null;
-                        }
+                    if (data.message == "Success") {
+                        var html = '';
+                        // object to array
+                        var arr = $.map(data.data, function(el) {
+                            // if persentase is <70 then remove the data
+                            if (el['percentage'] < 100) {
+                                return null;
+                            }
 
-                        return el
-                    });
+                            return el
+                        });
 
-                    var i;
-                    for (i = 0; i<arr.length; i++) {
-                        // console.log(arr[i]);
-                        html += '<div class="col-md-3 my-3">'+
-                            '<div class="card border-2">'+
-                                '<div class="card-body">'+
-                                    '<img src="{{ asset("assets/img/example-img-merchant.png") }}" class="card-img-top img-thumbnail" alt="image_toko">'+
-                                    '<div class="title text-center fw-semibold my-2" id="Merchant_name">'+arr[i]['merchant_name']+'</div>'+
+                        var i;
+                        if ( arr.length != '0' ){
+                            for (i = 0; i<arr.length; i++) {
+                                // console.log(arr[i]['id']);
+                                let img_url = arr[i]['gallery'][0];
+                                
+                                html += '<div class="col-md-3 my-3">'+
+                                    '<div class="card border-2">'+
+                                        '<div class="card-body">'+
+                                            '<img src="'+url+'/'+img_url+'" class="card-img-top img-thumbnail" alt="image_toko">'+
+                                            '<div class="title text-center fw-semibold my-2" id="Merchant_name">'+arr[i]['merchant_name']+'</div>'+
 
-                                    '<div class="rate">'+
-                                        '<div class="container">'+
-                                            '<div class="row">'+
-                                                '<div class="col-md-6">'+
-                                                    '<div class="d-flex justify-content-center align-items-center">'+
-                                                        '<div class="star d-block justify-content-center align-items-center">'+
-                                                            '<div class="star text-center">'+
-                                                                '<i class="fa-solid fa-star" style="color: #ffa800;"></i>'+
+                                            '<div class="rate">'+
+                                                '<div class="container">'+
+                                                    '<div class="row">'+
+                                                        '<div class="col-md-6">'+
+                                                            '<div class="d-flex justify-content-center align-items-center">'+
+                                                                '<div class="star d-block justify-content-center align-items-center">'+
+                                                                    '<div class="star text-center">'+
+                                                                        '<i class="fa-solid fa-star" style="color: #ffa800;"></i>'+
+                                                                    '</div>'+
+                                                                    '<div class="star-desc text-center">'+
+                                                                        '<span id="rate">'+arr[i]['rating']+'/5 <sub class="fw-semibold">Reviews</sub></span>'+
+                                                                    '</div>'+
+                                                                '</div>'+
+
                                                             '</div>'+
-                                                            '<div class="star-desc text-center">'+
-                                                                '<span id="rate">'+arr[i]['rating']+'/5 <sub class="fw-semibold">Reviews</sub></span>'+
+                                                        '</div>'+
+
+                                                        '<div class="col-md-6">'+
+                                                            '<div class="d-flex justify-content-center align-items-center">'+
+                                                                '<div class="distance d-block justify-content-center align-items-center">'+
+                                                                    '<div class="distance text-center">'+
+                                                                        '<i class="fa-solid fa-map-location-dot" style="color: #ffa800;"></i>'+
+                                                                    '</div>'+
+                                                                    '<div class="star-desc text-center">'+
+                                                                        '<span id="distance">'+arr[i]['jarak']+'<br><sub class="fw-semibold">From your location</sub> </span>'+
+                                                                    '</div>'+
+                                                                '</div>'+
                                                             '</div>'+
                                                         '</div>'+
 
                                                     '</div>'+
-                                                '</div>'+
 
-                                                '<div class="col-md-6">'+
-                                                    '<div class="d-flex justify-content-center align-items-center">'+
-                                                        '<div class="distance d-block justify-content-center align-items-center">'+
-                                                            '<div class="distance text-center">'+
-                                                                '<i class="fa-solid fa-map-location-dot" style="color: #ffa800;"></i>'+
-                                                            '</div>'+
-                                                            '<div class="star-desc text-center">'+
-                                                                '<span id="distance">'+arr[i]['jarak']+'<br><sub class="fw-semibold">From your location</sub> </span>'+
-                                                            '</div>'+
-                                                        '</div>'+
+                                                    '<div class="d-flex justify-content-center align-items-center my-3 mx-auto">'+
+                                                        '<a href="'+url+'/detail-merchant/'+arr[i]['id']+'" class="btn btn-custome btn-sm" id="booking">{{ __("Book this Service") }}</a>'+
                                                     '</div>'+
+
                                                 '</div>'+
-
                                             '</div>'+
-
-                                            '<div class="d-flex justify-content-center align-items-center my-3 mx-auto">'+
-                                                '<a href="#" class="btn btn-custome btn-sm" id="booking">{{ __("Book this Service") }}</a>'+
-                                            '</div>'+
-
                                         '</div>'+
                                     '</div>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>';
+                                '</div>';
+                            }
+                            $("#card_merchant").html(html);
+                            $('#pagination-container').pagination({
+                                dataSource: arr,
+                                pageSize: 5,
+                                showNavigator: true,
+                                formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
+                                position: 'bottom',
+                                callback: function(data, pagination) {
+                                    // template method of yourself
+                                    var template = $('#data-container').html(html);
+                                    var html = pagination.totalPages > 1? template : "";
+                                    return html;
+                                }
+                            });
+                            $("#pagination-container").find(".paginationjs-pages").before("<br><br>");
+                        } else {
+                            var html = '';
+
+                            html += '<div class="alert alert-secondary" role="alert">';
+                            html += '<h4 class="alert-heading text-center">Data Not Found!</h4>';
+                            html += '</div>';
+                            $("#card_merchant").html(html);
+                        }
                     }
-
-
-                    $("#card_merchant").html(html);
                 },
                 // error
                 error: function(xhr, status, error) {
                     var html = '';
-
-                    html += '<div class="alert alert-secondary" role="alert">';
-                    html += '<h4 class="alert-heading">Data Not Found!</h4>';
-                    html += '<p>' + error + '</p>';
-                    html += '<hr>';
-                    html += '<p class="mb-0">Please try again later.</p>';
+                    html += '<div class="alert alert-danger" role="alert">';
+                    html += '<h4 class="alert-heading text-center">Error!</h4>';
+                    html += '<p>'+error+'</p>';
                     html += '</div>';
                     $("#card_merchant").html(html);
                 }

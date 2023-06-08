@@ -63,47 +63,59 @@
                     </div>
 
                     <div class="d-flex align-items-center px-5 ms-xl-4 mt-3 pt-3 pt-xl-0 mt-xl-n5">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <form action="{{ route('register') }}" method="post">
                                 @csrf
 
-                                <div class="form-group">
-                                    <label for="username" class="form-label">{{ __('Username') }}</label>
-                                    <input type="text" class="form-control @error('email') is-invalid @enderror form-control-lg" id="username" name="username"
-                                        value="{{ old('username') }}" placeholder="Enter username" required
-                                        autocomplete="username" autofocus />
-                                </div>
+                                <div class="row my-2">
+                                    <div class="col-md-6">
+                                        <div class="form-group my-2">
+                                            <label for="username" class="form-label">{{ __('Username') }}</label>
+                                            <input type="text" class="form-control @error('email') is-invalid @enderror form-control-lg" id="username" name="username"
+                                                value="{{ old('username') }}" placeholder="Enter username" required
+                                                autocomplete="username" autofocus />
+                                        </div>
+                                    </div>
 
-                                <div class="form-group mt-2">
-                                    <label for="email" class="form-label">{{ __('Email address') }}</label>
-                                    <input type="email"
-                                        class="form-control @error('email') is-invalid @enderror form-control-lg"
-                                        id="email" name="email" value="{{ old('email') }}"
-                                        placeholder="Enter email address" required autocomplete="email" autofocus />
-                                </div>
-
-                                <div class="form-group mt-2">
-                                    <label for="password" class="form-label">{{ __('Password') }}</label>
-                                    <div class="input-group">
-                                        <input type="password" class="form-control @error('password') is-invalid @enderror form-control-lg input-group"
-                                            id="password" name="password" required autocomplete="current-password"
-                                            placeholder="Enter your password" />
-
-                                        <div class="input-group-append input-group-text" onclick="password()">
-                                            <i class="far fa-eye" id="eye"></i>
+                                    <div class="col-md-6">
+                                        <div class="form-group my-2">
+                                            <label for="email" class="form-label">{{ __('Email address') }}</label>
+                                            <input type="email"
+                                                class="form-control @error('email') is-invalid @enderror form-control-lg"
+                                                id="email" name="email" value="{{ old('email') }}"
+                                                placeholder="Enter email address" required autocomplete="email" autofocus />
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group mt-2">
-                                    <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
-                                    <div class="input-group">
-                                        <input type="password" class="form-control form-control-lg" id="password_confirmation"
-                                            name="password_confirmation" required autocomplete="new-password"
-                                            placeholder="Enter your password" />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group my-2">
+                                            <label for="password" class="form-label">{{ __('Password') }}</label>
+                                            <div class="input-group">
+                                                <input type="password" class="form-control @error('password') is-invalid @enderror form-control-lg input-group"
+                                                    id="password" name="password" required autocomplete="current-password"
+                                                    placeholder="Enter your password" />
 
-                                        <div class="input-group-append input-group-text" onclick="password_confirmation()">
-                                            <i class="far fa-eye" id="eye_confirmation"></i>
+                                                <div class="input-group-append input-group-text" onclick="password()">
+                                                    <i class="far fa-eye" id="eye"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group my-2">
+                                            <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
+                                            <div class="input-group">
+                                                <input type="password" class="form-control form-control-lg" id="password_confirmation"
+                                                    name="password_confirmation" required autocomplete="new-password"
+                                                    placeholder="Enter your password" />
+
+                                                <div class="input-group-append input-group-text" onclick="password_confirmation()">
+                                                    <i class="far fa-eye" id="eye_confirmation"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -81,6 +81,14 @@ class CustomerController extends Controller
         // get avatar
         $ava        = auth()->user()->avatar;
 
+        $dob        = $customer->dob;
+
+        if ($dob != NULL) {
+            $dob = date('Y-m-d', strtotime($dob));
+        } else {
+            $dob = NULL;
+        }
+
         if ( $ava == null )
         {
             $ava = NULL;
@@ -95,6 +103,7 @@ class CustomerController extends Controller
 
         return view('customer.profile.edit',
             [
+                'dob'        => $dob, // 'Y-m-d'
                 'customer'   => $customer,
                 'avatar'     => $ava,
             ]

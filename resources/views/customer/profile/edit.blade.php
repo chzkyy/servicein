@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <section class="vh-100">
+    <section>
         <div class="container-fluid">
             <div class="container">
                 <div class="col-md-12">
@@ -33,7 +33,10 @@
                                             <form action="{{ route('update-avatar') }}" method="post" id="updt_avatar" enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="file" name="profile_picture" id="profile_picture" class="custom-file-upload" onchange="preview_avatar()" accept="image/*">
-                                                    <i class="fa-solid fa-upload"></i> {{ __("Change Picture") }}
+                                                    <small>
+                                                        <i class="fa-solid fa-upload"></i> {{ __("Change Picture") }}
+                                                    </small>
+
                                             </form>
                                         </label>
 
@@ -41,7 +44,11 @@
 
                                     <div class="d-flex justify-content-center align-items-center">
                                         @if (Auth::user()->password != NULL)
-                                            <a href="{{ route('change-password') }}" class="btn btn-link btn-sm"><i class="fa-solid fa-lock-open"></i> {{ __("Change Password") }}</a>
+                                            <a href="{{ route('change-password') }}" class="btn btn-link btn-sm">
+                                                <small>
+                                                    <i class="fa-solid fa-lock-open"></i> {{ __("Change Password") }}
+                                                </small>
+                                            </a>
                                         @endif
                                     </div>
                                 </div>
@@ -103,7 +110,7 @@
                                                     <input type="date"
                                                         class="form-control @error('dob') is-invalid @enderror form-control-md"
                                                         id="dob" name="dob" required autocomplete="dob" max="{{ date('Y-m-d') }}"
-                                                        value="{{ date('Y-m-d', strtotime($customer->dob)) }}"
+                                                        value="{{ $dob }}"
                                                         placeholder="Enter your birth date" />
                                                 </div>
                                             </div>
@@ -158,7 +165,7 @@
                                         {{--  save button for desktop --}}
                                         <div class="d-none d-md-block justify-content-center text-end align-items-end mt-5">
                                             <a href="{{ route('profile') }}" class="btn btn-light col-md-2 shadow txt-primary mx-1 mt-4">Cancel</a>
-                                            <button type="submit" class="btn btn-custome col-md-2 mt-3 mx-1" id="btn_saveChanges">{{ __("Save Changes") }}</button>
+                                            <button type="submit" class="btn btn-custome mt-3 mx-1" id="btn_saveChanges">{{ __("Save Changes") }}</button>
                                         </div>
 
                                     </div>
@@ -166,11 +173,9 @@
                                 {{--  save button for mobile  --}}
                                 <div class="d-block d-md-none justify-content-center text-center align-items-center mt-5 mb-5">
                                     <div class="submit">
-                                        <button type="submit" class="btn btn-custome  col-12 mt-3">Save
-                                            Changes</button>
+                                        <button type="submit" class="btn btn-custome  col-12 mt-3">Save Changes</button>
                                     </div>
-                                    <a href="{{ route('profile') }}"
-                                        class="btn btn-light shadow txt-primary col-12 mt-3">Cancel</a>
+                                    <a href="{{ route('profile') }}" class="btn btn-light shadow txt-primary col-12 mt-3">Cancel</a>
                                 </div>
                             </form>
                         </div>

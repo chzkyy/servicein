@@ -5,24 +5,23 @@
 @endsection
 
 @section('content')
-    <section class="vh-100">
+    <section>
         <div class="container-fluid">
             <div class="container">
                 <div class="col-md-12">
-
                     @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>{{ __('Success') }}!</strong> {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <div class="col-md-8 mt-5 pt-5">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>{{ __('Success') }}!</strong> {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                         </div>
                     @endif
 
                     <div class="row mt-4">
                         <div class="col-sm-12 col-md-2 offset-md-1 pt-5 mt-5">
                             <div class="card d-flex justify-content-center align-items-center">
-
                                 <div class="card-body">
-
                                     @if ($avatar == null)
                                         <img src="{{ asset('assets/img/profile_picture.png') }}"
                                             class="img-fluid img-thumbnail" alt="profile_picture">
@@ -32,13 +31,20 @@
                                     @endif
 
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <a href="{{ route('edit.profile') }}" class="btn btn-link btn-sm mt-3"><i
-                                                class="fa-solid fa-pen-to-square"></i> Edit Profile</a>
+                                        <a href="{{ route('edit.profile') }}" class="btn btn-link btn-sm mt-3">
+                                            <small>
+                                                <i class="fa-solid fa-pen-to-square"></i> Edit Profile
+                                            </small>
+                                        </a>
                                     </div>
 
                                     <div class="d-flex justify-content-center align-items-center">
                                         @if (Auth::user()->password != NULL)
-                                            <a href="{{ route('change-password') }}" class="btn btn-link btn-sm"><i class="fa-solid fa-lock-open"></i> {{ __("Change Password") }}</a>
+                                            <a href="{{ route('change-password') }}" class="btn btn-link btn-sm"><i class="fa-solid fa-lock-open">
+                                                <small>
+                                                    </i> {{ __("Change Password") }}
+                                                </small>
+                                            </a>
                                         @endif
                                     </div>
                                 </div>

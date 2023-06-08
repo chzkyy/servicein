@@ -55,8 +55,8 @@ class ChooseRoleController extends Controller
                         'merchant_name'         => '-',
                         'merchant_desc'         => '-',
                         'merchant_address'      => '-',
-                        'open_hour'             => '-',
-                        'close_hour'            => '-',
+                        'open_hour'             => '8:00',
+                        'close_hour'            => '17:00',
                         'phone_number'          => '-',
                         'geo_location'          => '-,-',
                     ]);

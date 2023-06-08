@@ -8,7 +8,7 @@ use App\Models\Merchant;
 use App\Models\MerchantGallery;
 use App\Models\Review;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\Crypt;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -48,11 +48,11 @@ class GetAPI_Controller extends Controller
     public function getMatrix(Request $request)
     {
         // get data from getJarak
-        $data   = GetAPI::merchant();
+        $data       = GetAPI::merchant();
         //send request to model
-        $dataInput = $request->input('origin');
-        $origin = explode(",", $dataInput);
-        $jarak  = [];
+        $dataInput  = $request->input('origin');
+        $origin     = explode(",", $dataInput);
+        $jarak      = [];
 
 
         // hitung panjang karakter dari titik
@@ -101,13 +101,14 @@ class GetAPI_Controller extends Controller
             $rating = $this->show_rating($item['id']);
 
             // get gallery
-            $gallery = $this->get_gallery($item['id']);
+            $gallery = $this->show_gallery($item['id']);
 
             $dataBersih[] = [
-                'id'                => $item['id'],
-                'user_id'           => $item['user_id'],
-                'merchant_name'     => strtoupper($item['merchant_name']),
-                'merchant_desc'     => $item['merchant_desc'],
+                // encrypt id dengan panjang data 10 characters
+                'id'                => Crypt::encryptString($item['id']),
+                'user_id'           => Crypt::encryptString($item['user_id']),
+                'merchant_name'     => ucwords($item['merchant_name']),
+                'merchant_desc'     => ucfirst($item['merchant_desc']),
                 'merchant_address'  => $item['merchant_address'],
                 'open_hour'         => $item['open_hour'],
                 'close_hour'        => $item['close_hour'],
@@ -122,7 +123,16 @@ class GetAPI_Controller extends Controller
             ];
             $i++;
         }
-        return response()->json($dataBersih, 200, [], JSON_PRETTY_PRINT);
+
+        // filer data jarak terkecil
+        $dataBersih = array_reverse($dataBersih);
+
+        //create response
+        $response = [
+            'message'   => 'Success',
+            'data'      => $dataBersih,
+        ];
+        return response()->json($response, 200, [], JSON_PRETTY_PRINT);
     }
 
     public function show_rating($id)
@@ -140,14 +150,21 @@ class GetAPI_Controller extends Controller
         return $rating;
     }
 
-    public function get_gallery($id)
+    public function show_gallery($id)
     {
+        $dataGallery = [];
         $gallery = MerchantGallery::where('merchant_id', $id)->first();
         if ($gallery == null) {
-            return [];
+            $dataGallery = [];
+        }
+        else {
+            $gallery = MerchantGallery::where('merchant_id', $id)->get();
+            foreach ($gallery as $item) {
+                $dataGallery[] = $item['images'];
+            }
         }
 
-        return $gallery;
+        return $dataGallery;
     }
 
     public function show_percentage($id)
@@ -173,7 +190,7 @@ class GetAPI_Controller extends Controller
         if ($merchant->close_hour != '-') {
             $percentage += 100/7;
         }
-        if ($merchant->geo_location != '-') {
+        if ($merchant->geo_location != '-,-') {
             $percentage += 100/7;
         }
 

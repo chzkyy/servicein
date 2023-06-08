@@ -23,19 +23,44 @@ class DeviceController extends Controller
     public function __construct()
     {
         // hanya role customer yang bisa mengakses
-        $this->middleware(['customer']);
+        // $this->middleware(['customer']);
     }
 
 
     public function show()
     {
         $user_id = auth()->user()->id;
-        $device = Device::where('user_id', $user_id)->get();
+        $device = Device::where('user_id', $user_id)->paginate(5);
 
-        return view('customer.profile.addDevice',[
+        return view('customer.profile.listDevice',[
                 'device' => $device,
             ]
         );
+    }
+
+    // get device with query
+    public function getDevice(Request $request)
+    {
+
+        $search     = $request->query('search');
+        $user_id    = auth()->user()->id;
+        $device     = Device::where('user_id', $user_id)->get();
+
+        if ($search != NULL)
+        {
+            $device = Device::where('user_id', $user_id)
+                ->where(
+                    function ($query) use ($search) {
+                        $query->where('device_name', 'LIKE', "%{$search}%");
+                    }
+                )->get();
+        }
+        else
+        {
+            $device = Device::where('user_id', $user_id)->get();
+        }
+
+        return response()->json($device);
     }
 
     public function store(Request $request)
@@ -51,11 +76,6 @@ class DeviceController extends Controller
             'serial_number'  => 'required',
             'device_image'   =>'mimes:png,jpeg,jpg|max:2048',
         ]);
-        // message errpr
-        if ( $request->device_name == NULL || $request->type == NULL || $request->brand == NULL || $request->serial_number == NULL )
-        {
-            return back()->withInput()->with('error','Please fill all the required fields');
-        }
 
         // jika file upload ada maka simpan
         if ($request->hasFile('device_image'))

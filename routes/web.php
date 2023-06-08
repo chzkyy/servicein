@@ -17,11 +17,6 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 |
 */
 
-Route::get('/home', function () {
-    return view('index');
-})->name('index');
-
-Route::get('/test', 'App\Http\Controllers\MerchantController@index');
 
 /**
  * /------------------------------------------------------------------
@@ -44,10 +39,6 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')
  * |
  */
 Auth::routes();
-
-// Route::post('/register-admin', 'App\Http\Controllers\Auth\RegisterController@AdminRegister')
-//     ->name('admin.register')
-//     ->middleware(['guest']);
 
 Route::get('/change-password', 'App\Http\Controllers\Auth\ForgotPasswordController@ChangePassword')
     ->name('change-password');
@@ -113,42 +104,97 @@ Route::group(['prefix' => 'email'], function() {
  * |
  */
 
-Route::get('/profile', 'App\Http\Controllers\CustomerController@profile')
-    ->name('profile')
-    ->middleware(['auth', 'verified']);
+/**
+  * /------------------------------------------------------------------
+  * | Group Profile => /Profile/..
+  * /------------------------------------------------------------------
+  */
+Route::group(['prefix' => 'profile'], function() {
+    Route::get('/', 'App\Http\Controllers\CustomerController@profile')
+        ->name('profile')
+        ->middleware(['auth', 'verified']);
+
+    Route::get('/edit', 'App\Http\Controllers\CustomerController@edit_profile')
+        ->name('edit.profile')
+        ->middleware(['auth', 'verified']);
+
+    Route::post('/update', 'App\Http\Controllers\CustomerController@update_profile')
+        ->name('update.profile')
+        ->middleware(['auth', 'verified']);
+
+    Route::post('/avatar/update', 'App\Http\Controllers\CustomerController@update_avatar')
+        ->name('update-avatar')
+        ->middleware(['auth', 'verified']);
+});
 
 
-Route::get('/edit-profile', 'App\Http\Controllers\CustomerController@edit_profile')
-    ->name('edit.profile')
-    ->middleware(['auth', 'verified']);
+/**
+  * /------------------------------------------------------------------
+  * | Group Device => /device/..
+  * /------------------------------------------------------------------
+  */
 
-Route::post('/update-profile', 'App\Http\Controllers\CustomerController@update_profile')
-    ->name('update.profile')
-    ->middleware(['auth', 'verified']);
 
-Route::post('/update-avatar', 'App\Http\Controllers\CustomerController@update_avatar')
-    ->name('update-avatar')
-    ->middleware(['auth', 'verified']);
+Route::group(['prefix' => 'device'], function() {
+    Route::get('/', 'App\Http\Controllers\DeviceController@show')
+        ->name('list-device')
+        ->middleware(['auth', 'verified']);
 
-Route::get('/device', 'App\Http\Controllers\DeviceController@show')
-    ->name('list-device')
-    ->middleware(['auth', 'verified']);
+    Route::get('/list', 'App\Http\Controllers\DeviceController@getDevice')
+        ->name('get-list-device')
+        ->middleware(['auth', 'verified']);
 
-Route::post('/device/add', 'App\Http\Controllers\DeviceController@store')
-    ->name('add-device')
+    Route::post('/add', 'App\Http\Controllers\DeviceController@store')
+        ->name('add-device')
+        ->middleware(['auth','verified']);
+
+    Route::put('/remove/{id}', 'App\Http\Controllers\DeviceController@destroy')
+        ->name('delete-device')
+        ->middleware(['auth','verified']);
+
+    Route::post('/update', 'App\Http\Controllers\DeviceController@update')
+        ->name('edit-device')
+        ->middleware(['auth','verified']);
+});
+
+
+/**
+  * /------------------------------------------------------------------
+  * | for detail merchant information
+  * /------------------------------------------------------------------
+  */
+Route::get('/detail-merchant/{id}', 'App\Http\Controllers\DetailMerchantController@index')
+    ->name('detail-merchant')
     ->middleware(['auth','verified']);
 
-Route::get('/device/remove/{id}', 'App\Http\Controllers\DeviceController@destroy')
-    ->name('delete-device')
-    ->middleware(['auth','verified']);
 
-Route::post('/device/update', 'App\Http\Controllers\DeviceController@update')
-    ->name('edit-device')
-    ->middleware(['auth','verified']);
+/**
+  * /------------------------------------------------------------------
+  * | Group bookin => /booking/..
+  * /------------------------------------------------------------------
+  */
+Route::group(['prefix' => 'booking'], function() {
+    Route::get('/{id}', 'App\Http\Controllers\TransactionController@index')
+        ->name('create-booking')
+        ->middleware(['auth','verified']);
+
+    Route::get('/success', 'App\Http\Controllers\TransactionController@booking_success')
+        ->name('success-booking')
+        ->middleware(['auth','verified']);
+
+    Route::get('/list-time', 'App\Http\Controllers\TransactionController@list_time')
+        ->name('get-time-booking')
+        ->middleware(['auth','verified']);
+
+    Route::post('/booking/store', 'App\Http\Controllers\TransactionController@store')
+        ->name('store-booking')
+        ->middleware(['auth','verified']);
+});
+
 
 /**
  * /------------------------------------------------------------------
- * | Route customer
+ * | Route admin toko
  * /------------------------------------------------------------------
  * |
  * | Route untuk Admin Toko
@@ -179,13 +225,12 @@ Route::group(['prefix' => 'admin'], function() {
     Route::POST('/delete_gallery', 'App\Http\Controllers\MerchantController@delete_merchant_gallery')
         ->name('delete-merchant-gallery')
         ->middleware(['auth', 'verified']);
-
 });
 
 
 /**
  * /------------------------------------------------------------------
- * | Route customer
+ * | Route privacy policy
  * /------------------------------------------------------------------
  * |
  * | Route untuk privacy policy, terms and conditions dan lain-lain
