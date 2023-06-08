@@ -32,6 +32,9 @@
                             <div class="form-group mb-2">
                                 <label for="serial_number" class="form-label">{{ __('Device Serial Number') }}</label>
                                 <input type="text" class="form-control @error('serial_number') is-invalid @enderror form-control-md" name="serial_number" id="serial_number" placeholder="Input Your Device Serial Number" required autofocus>
+                                <small  class="text-muted txt-fz-12">
+                                    {{ __("*If you don't know your device serial number fill 0") }}
+                                </small>
                             </div>
                         </div>
 

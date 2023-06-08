@@ -21,15 +21,13 @@
                     <div class="container mx-2 my-5 pt-5">
                         <div class="row">
                             <div class="col-md-12 my-4">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12">
-                                            <small class="fw-semibold">
-                                                <a href="{{ url()->previous() }}" class="btn btn-light"> <i
-                                                        class="fa fa-chevron-left" aria-hidden="true"></i>
-                                                    {{ __('Back') }}</a>
-                                            </small>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <small class="fw-semibold">
+                                            <a href="{{ url()->previous() }}" class="btn btn-light"> <i
+                                                    class="fa fa-chevron-left" aria-hidden="true"></i>
+                                                {{ __('Back') }}</a>
+                                        </small>
                                     </div>
                                 </div>
                             </div>
@@ -37,6 +35,7 @@
 
                             <div class="col md-12">
                                 <div class="container-fluid">
+                                    <h2 class="fw-semibold title-merchant d-block d-md-none mb-4"></h2>
                                     <div class="row">
                                         <div class="d-block d-md-flex justify-content-md-between align-content-center">
                                             <div class="col-md-4 col-sm-12">
@@ -58,10 +57,10 @@
                                             <div class="col-md-7 offset-1 col-sm-12">
                                                 <div class="row">
                                                     <div class="col-md-8">
-                                                        <h2 class="fw-semibold title-merchant mb-4"></h2>
+                                                        <h2 class="fw-semibold title-merchant d-none d-md-block mb-4"></h2>
 
-                                                        <div class="row mb-4">
-                                                            <div class="col-md-4">
+                                                        <div class="row mb-4 mt-4 mt-md-0">
+                                                            <div class="col-md-4 mt-2">
                                                                 <div class="star d-block justify-content-center align-items-center">
                                                                     <div class="star text-center">
                                                                         <i class="fa-solid fa-star" style="color: #ffa800;"></i>
@@ -69,9 +68,9 @@
                                                                     <div class="star-desc text-center">
                                                                     </div>
                                                                 </div>
-
                                                             </div>
-                                                            <div class="col-md-8">
+
+                                                            <div class="col-md-8 mt-2">
                                                                 <div class="distance d-block justify-content-center align-items-center">
                                                                     <div class="distance text-center">
                                                                         <i class="fa-solid fa-map-location-dot" style="color: #ffa800;"></i>
