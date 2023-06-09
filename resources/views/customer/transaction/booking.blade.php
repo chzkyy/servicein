@@ -155,7 +155,12 @@
             showRightIcon: true,
             size: 'small',
             format: 'dddd, dd mmmm yyyy',
-            minDate: new Date(),
+            autoclose: true,
+            minDate: function() {
+                var date = new Date();
+                date.setDate(date.getDate()); //set min date to today
+                return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            },
             maxDate: function() {
                 var date = new Date();
                 date.setDate(date.getDate() + 30);
@@ -269,7 +274,6 @@
                             type: "POST",
                             url: "{{ route('store-booking') }}",
                             data: data,
-                            dataType: "json",
                             success: function(response) {
                                 if (response['status'] == 'success')
                                 {
@@ -289,7 +293,7 @@
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Oops...',
-                                    text: xhr.responseJSON.message,
+                                    text: 'Something went wrong!!'
                                 });
                             }
                         });

@@ -155,7 +155,7 @@
                                         {{--  save button for desktop --}}
                                         <div class="d-none d-md-block justify-content-center text-end align-items-end mt-5">
                                             <a href="{{ route('profile.admin') }}" class="btn btn-light col-md-2 shadow txt-primary mx-1 mt-4">Cancel</a>
-                                            <button type="submit" class="btn btn-custome mt-3 mx-1" id="btn_saveChanges">{{ __("Save Changes") }}</button>
+                                            <button class="btn btn-custome mt-3 mx-1" id="sc">{{ __("Save Changes") }}</button>
                                         </div>
 
                                     </div>
@@ -163,7 +163,7 @@
                                 {{--  save button for mobile  --}}
                                 <div class="d-block d-md-none justify-content-center text-center align-items-center mt-5 mb-5">
                                     <div class="submit">
-                                        <button type="submit" class="btn btn-custome  col-12 mt-3">Save Changes</button>
+                                        <button id="sc" class="btn btn-custome col-12 mt-3">Save Changes</button>
                                     </div>
                                     <a href="{{ route('profile.admin') }}" class="btn btn-light shadow txt-primary col-12 mt-3">Cancel</a>
                                 </div>
@@ -363,15 +363,15 @@
         }
 
         var tpSelectbox = new tui.TimePicker('#timepicker-selectbox', {
-            initialHour: {{ explode(':', $merchant->open_hour)[0] }} ?? 0,
-            initialMinute: {{ explode(':', $merchant->open_hour)[1] }} ?? 0,
+            initialHour: {{ explode(':', $merchant->open_hour)[0] }},
+            initialMinute: {{ explode(':', $merchant->open_hour)[1] }},
             inputType: 'selectbox',
             showMeridiem: false
         });
 
         var tpSelectbox2 = new tui.TimePicker('#timepicker-selectbox2', {
-            initialHour: {{ explode(':', $merchant->close_hour)[0] }} ?? 0,
-            initialMinute: {{ explode(':', $merchant->close_hour)[1] }} ?? 0,
+            initialHour: {{ explode(':', $merchant->close_hour)[0] }},
+            initialMinute: {{ explode(':', $merchant->close_hour)[1] }},
             inputType: 'selectbox',
             showMeridiem: false
         });
@@ -382,8 +382,11 @@
             var merchant_desc = $("#merchant_desc").val();
             var merchant_address = $("#merchant_address").val();
             var phone_number = $("#phone_number").val();
+            // sekect value tpSelectbox\
+            var open_hour = $("#open_hour").val(tpSelectbox.getHour() + ":" + tpSelectbox.getMinute());
+            var close_hour = $("#close_hour").val(tpSelectbox2.getHour() + ":" + tpSelectbox.getMinute());
 
-            if (merchant_name == '' || merchant_desc == '' || phone_number == '' || merchant_address == '') {
+            if (merchant_name == '' || merchant_desc == '' || phone_number == '' || merchant_address == '' || open_hour == '' || close_hour == '') {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -391,9 +394,6 @@
                 });
                 return false;
             }
-            // sekect value tpSelectbox\
-            $("#open_hour").val(tpSelectbox.getHour() + ":" + tpSelectbox.getMinute());
-            $("#close_hour").val(tpSelectbox2.getHour() + ":" + tpSelectbox.getMinute());
             $('#update_profile').submit();
         });
     </script>

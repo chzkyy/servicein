@@ -192,9 +192,27 @@ Route::group(['prefix' => 'booking'], function() {
 });
 
 
-Route::get('/transaction', 'App\Http\Controllers\TransactionController@show_transaction')
-    ->name('show-transaction')
-    ->middleware(['auth','verified']);
+/**
+  * /------------------------------------------------------------------
+  * | Group transaction => /transaction/..
+  * /------------------------------------------------------------------
+  */
+
+Route::group(['prefix' => 'transaction'], function() {
+    Route::get('/', 'App\Http\Controllers\TransactionController@show_transaction')
+        ->name('show-transaction')
+        ->middleware(['auth','verified']);
+
+    Route::get('/get', 'App\Http\Controllers\TransactionController@get_transaction')
+        ->name('customer.transaction.list')
+        ->middleware(['auth','verified']);
+    //
+});
+
+
+
+
+
 
 /**
  * /------------------------------------------------------------------

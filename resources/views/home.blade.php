@@ -52,7 +52,7 @@
 
                                     <div class="mx-4 txt-third descText">
                                         <h6 class="uppercase fw-semibold">{{ __('Nearest Store') }}</h6>
-                                        <p>{{ __('Showing the nearest store available. We prioritize the nearest store for your device repairment service.') }}</p>
+                                        <p class="text-break">{{ __('Showing the nearest store available. We prioritize the nearest store for your device repairment service.') }}</p>
                                     </div>
                                 </div>
 
@@ -62,7 +62,7 @@
                                     </div>
                                     <div class="mx-4 txt-third descText">
                                         <h6 class="uppercase fw-semibold">{{ __('Free Complaint') }}</h6>
-                                        <p>{{ __('Aftersales complaint guarantee. We will help you communicate with the store even after the device was done.') }}</p>
+                                        <p class="text-break">{{ __('Aftersales complaint guarantee. We will help you communicate with the store even after the device was done.') }}</p>
                                     </div>
                                 </div>
 
@@ -72,7 +72,7 @@
                                     </div>
                                     <div class="mx-4 txt-third descText">
                                         <h6 class="uppercase fw-semibold">{{ __('Community Trusted') }}</h6>
-                                        <p>{{ __('Handled by experienced store and technician only. We curated the store that already have a good review and professional Technician.') }}</p>
+                                        <p class="text-break">{{ __('Handled by experienced store and technician only. We curated the store that already have a good review and professional Technician.') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -99,15 +99,13 @@
                     <div class="row justify-content-center align-items-center txt-third mt-5">
                         <div class="card mt-2 mb-4 border-2">
                             <div class="card-body">
-                                <div class="row d-flex justify-content-center align-items-center" id="card_merchant">
+                                <div class="row d-flex justify-content-center align-items-center" id="data-container">
                                 </div>
-
                             </div>
 
                             {{--  pagination  --}}
                             <div class="row d-flex justify-content-center align-items-center">
                                 <div class="col-md-12  d-flex justify-content-center align-items-center mb-3" id="pagination">
-                                    <div id="data-container"></div>
                                     <div id="pagination-container"></div>
                                 </div>
                             </div>
@@ -173,83 +171,95 @@
                             return el
                         });
 
-                        var i;
-                        if ( arr.length != '0' ){
-                            for (i = 0; i<arr.length; i++) {
-                                // console.log(arr[i]['id']);
-                                let img_url = arr[i]['gallery'][0];
-                                
-                                html += '<div class="col-md-3 my-3">'+
-                                    '<div class="card border-2">'+
-                                        '<div class="card-body">'+
-                                            '<img src="'+url+'/'+img_url+'" class="card-img-top img-thumbnail" alt="image_toko">'+
-                                            '<div class="title text-center fw-semibold my-2" id="Merchant_name">'+arr[i]['merchant_name']+'</div>'+
+                        $('#pagination-container').pagination({
+                            dataSource: arr,
+                            pageSize: 6,
+                            showNavigator: true,
+                            formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
+                            position: 'bottom',
+                            callback: function(data, pagination) {
+                                var i;
+                                if ( data.length != '0' ){
+                                    for (i = 0; i<data.length; i++) {
+                                        if ( data[i]['gallery'][0] == undefined ){
+                                            var img_url = 'assets/img/no-image.jpg';
+                                        }else{
+                                            var img_url = data[i]['gallery'][0];
+                                        }
 
-                                            '<div class="rate">'+
-                                                '<div class="container">'+
-                                                    '<div class="row">'+
-                                                        '<div class="col-md-6">'+
-                                                            '<div class="d-flex justify-content-center align-items-center">'+
-                                                                '<div class="star d-block justify-content-center align-items-center">'+
-                                                                    '<div class="star text-center">'+
-                                                                        '<i class="fa-solid fa-star" style="color: #ffa800;"></i>'+
+                                        
+                                        var merchant_name = data[i]['merchant_name'];
+                                        var merchant_id = data[i]['id'];
+                                        var rating = data[i]['rating'];
+                                        var jarak = data[i]['jarak'];
+
+                                        html += '<div class="col-md-3 my-3">'+
+                                            '<div class="card border-2">'+
+                                                '<div class="card-body">'+
+                                                    '<img src="'+url+'/'+img_url+'" class="card-img-top object-fit-cover img-thumbnail" style="width:350px;  height:130px;" alt="image_toko">'+
+                                                    '<div class="title text-center fw-semibold my-2" id="Merchant_name">'+merchant_name+'</div>'+
+
+                                                    '<div class="rate">'+
+                                                        '<div class="container">'+
+                                                            '<div class="row">'+
+                                                                '<div class="col-md-6">'+
+                                                                    '<div class="d-flex justify-content-center align-items-center">'+
+                                                                        '<div class="star d-block justify-content-center align-items-center">'+
+                                                                            '<div class="star text-center">'+
+                                                                                '<i class="fa-solid fa-star" style="color: #ffa800;"></i>'+
+                                                                            '</div>'+
+                                                                            '<div class="star-desc text-center">'+
+                                                                                '<span id="rate">'+rating+'/5 <br> <sub class="fw-semibold">Reviews</sub></span>'+
+                                                                            '</div>'+
+                                                                        '</div>'+
+
                                                                     '</div>'+
-                                                                    '<div class="star-desc text-center">'+
-                                                                        '<span id="rate">'+arr[i]['rating']+'/5 <sub class="fw-semibold">Reviews</sub></span>'+
+                                                                '</div>'+
+
+                                                                '<div class="col-md-6">'+
+                                                                    '<div class="d-flex justify-content-center align-items-center">'+
+                                                                        '<div class="distance d-block justify-content-center align-items-center mt-3 m-md-0">'+
+                                                                            '<div class="distance text-center">'+
+                                                                                '<i class="fa-solid fa-map-location-dot" style="color: #ffa800;"></i>'+
+                                                                            '</div>'+
+                                                                            '<div class="star-desc text-center">'+
+                                                                                '<span id="distance">'+jarak+'<br><sub class="fw-semibold">From your location</sub> </span>'+
+                                                                            '</div>'+
+                                                                        '</div>'+
                                                                     '</div>'+
                                                                 '</div>'+
 
                                                             '</div>'+
-                                                        '</div>'+
 
-                                                        '<div class="col-md-6">'+
-                                                            '<div class="d-flex justify-content-center align-items-center">'+
-                                                                '<div class="distance d-block justify-content-center align-items-center">'+
-                                                                    '<div class="distance text-center">'+
-                                                                        '<i class="fa-solid fa-map-location-dot" style="color: #ffa800;"></i>'+
-                                                                    '</div>'+
-                                                                    '<div class="star-desc text-center">'+
-                                                                        '<span id="distance">'+arr[i]['jarak']+'<br><sub class="fw-semibold">From your location</sub> </span>'+
-                                                                    '</div>'+
-                                                                '</div>'+
+                                                            '<div class="d-flex justify-content-center align-items-center my-3 mx-auto">'+
+                                                                '<a href="'+url+'/detail-merchant/'+merchant_id+'" class="btn btn-custome btn-sm" id="booking">{{ __("Book this Service") }}</a>'+
                                                             '</div>'+
+
                                                         '</div>'+
-
                                                     '</div>'+
-
-                                                    '<div class="d-flex justify-content-center align-items-center my-3 mx-auto">'+
-                                                        '<a href="'+url+'/detail-merchant/'+arr[i]['id']+'" class="btn btn-custome btn-sm" id="booking">{{ __("Book this Service") }}</a>'+
-                                                    '</div>'+
-
                                                 '</div>'+
                                             '</div>'+
-                                        '</div>'+
-                                    '</div>'+
-                                '</div>';
-                            }
-                            $("#card_merchant").html(html);
-                            $('#pagination-container').pagination({
-                                dataSource: arr,
-                                pageSize: 5,
-                                showNavigator: true,
-                                formatNavigator: '<%= rangeStart %>-<%= rangeEnd %> of <%= totalNumber %> items',
-                                position: 'bottom',
-                                callback: function(data, pagination) {
-                                    // template method of yourself
-                                    var template = $('#data-container').html(html);
-                                    var html = pagination.totalPages > 1? template : "";
-                                    return html;
-                                }
-                            });
-                            $("#pagination-container").find(".paginationjs-pages").before("<br><br>");
-                        } else {
-                            var html = '';
+                                        '</div>';
+                                    }
+                                    // $("#card_merchant").html(html);
 
-                            html += '<div class="alert alert-secondary" role="alert">';
-                            html += '<h4 class="alert-heading text-center">Data Not Found!</h4>';
-                            html += '</div>';
-                            $("#card_merchant").html(html);
-                        }
+                                } else {
+                                    var html = '';
+
+                                    html += '<div class="alert alert-secondary" role="alert">';
+                                    html += '<h4 class="alert-heading text-center">Data Not Found!</h4>';
+                                    html += '</div>';
+                                    $("#card_merchant").html(html);
+                                }
+
+                                 // menhapus undifined di html
+                                html = html.replace(/undefined/g, "");
+                                $("#pagination-container").find(".paginationjs-pages").before("<br>");
+                                var template = $('#data-container').html(html);
+                                var html = pagination.totalPages > 1? template : "";
+                                return html;
+                            }
+                        });
                     }
                 },
                 // error

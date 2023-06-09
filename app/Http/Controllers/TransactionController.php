@@ -7,9 +7,11 @@ use App\Models\Customer;
 use App\Models\Merchant;
 use App\Models\MerchantGallery;
 use App\Models\Review;
+use App\Models\Notification;
 use App\Models\Transaction;
 use App\Models\Booking;
 use App\Models\GetAPI;
+use App\Models\Device;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -70,17 +72,21 @@ class TransactionController extends Controller
             'user_note'     => 'string|max:255|nullable',
         ]);
 
-        $merchant_id    = $request->merchant_id;
-        $device_id      = $request->device_id;
-        $booking_date   = date('Y-m-d', strtotime($request->booking_date));
-        $booking_time   = $request->booking_time;
-        $user_note      = $request->user_note;
+        $merchant_id        = $request->merchant_id;
+        $device_id          = $request->device_id;
+        $booking_date       = date('Y-m-d', strtotime($request->booking_date));
+        $booking_time       = $request->booking_time;
+        $user_note          = $request->user_note;
+
+        $booking_code       = $this->create_booking_code();
+        $transaction_code   = $this->create_transaction_code();
+
 
         $booking = Booking::create([
             'customer_id'   => auth()->user()->id,
             'merchant_id'   => $merchant_id,
             'device_id'     => $device_id,
-            'booking_code'  => $this->create_booking_code(),
+            'booking_code'  => $booking_code,
             'booking_date'  => $booking_date,
             'booking_time'  => $booking_time,
         ]);
@@ -89,18 +95,34 @@ class TransactionController extends Controller
             'booking_id'        => $booking->id,
             'user_id'           => auth()->user()->id,
             'merchant_id'       => $merchant_id,
-            'no_transaction'    => 'TR'.date('YmdHis').mt_rand(100000, 999999),
+            'no_transaction'    => $transaction_code,
             'status'            => 'BOOKED',
             'user_note'         => $user_note,
             'waranty'           => '0',
         ]);
 
+        $dateNow            = date('d F Y');
+        $username           = auth()->user()->username;
+        $merchant           = Merchant::where('id', $merchant_id)->first();
 
-        return response()->json([
+        // print_r($merchant->user_id);
+        // send notification to merchant
+        $this->send_notification(
+            $merchant->user_id,
+            'New Transaction • '.$dateNow,
+            'You have a new transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$booking->booking_code.' from '.$username.' on '.$booking->booking_date.' at '.$booking->booking_time.'Please check your transaction list for more information.'
+        );
+
+        $this->send_notification(
+            auth()->user()->id,
+            'Transaction has been booked  • '.$dateNow,
+            'Dear '.$username.' your transaction has successfully been made with transaction ID : '.$transaction->no_transaction.' and booking code : '.$booking->booking_code.' at '.$merchant->merchant_name.' on '.$booking->booking_date.' at '.$booking->booking_time.'.'
+        );
+
+        return response ()->json ([
             'status'  => 'success',
-            'message' => 'Booking Success!',
-            'data'    => $booking
-        ], 201);
+            'message' => 'Booking Success',
+        ], 200);
     }
 
     public function list_time(Request $request)
@@ -118,9 +140,6 @@ class TransactionController extends Controller
                         ->where('transaction.status', 'BOOKED')
                         ->get();
         $time         = $this->create_time_range($merchant->open_hour, $merchant->close_hour, '60 mins', '24');
-
-
-
 
         // data jam booking yang tersedia
         if( $transaction->count() > 0 ){
@@ -163,15 +182,25 @@ class TransactionController extends Controller
     {
         $booking_code = 'BK'.date('YmdHis').mt_rand(100000, 999999);
         $check_booking_code = Booking::where('booking_code', $booking_code)->first();
-
-        // check apakah booking code sudah ada
-        if ($check_booking_code) {
-            return $this->create_booking_code();
-        } else {
+        if($check_booking_code){
+            $this->create_booking_code();
+        }
+        else {
             return $booking_code;
         }
     }
 
+    public function create_transaction_code()
+    {
+        $transaction_code = 'TR'.date('YmdHis').mt_rand(100000, 999999);
+        $check_transaction_code = Transaction::where('no_transaction', $transaction_code)->first();
+        if($check_transaction_code){
+            $this->create_transaction_code();
+        }
+        else {
+            return $transaction_code;
+        }
+    }
 
     /**
      * Display Transaction List.
@@ -183,18 +212,48 @@ class TransactionController extends Controller
 
     public function show_transaction()
     {
-        $user_id     = auth()->user()->id;
-        $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
-                        ->join('merchant', 'merchant.id', '=', 'booking.merchant_id')
-                        ->where('transaction.user_id', $user_id)
-                        ->get();
+        return view('customer.transaction.transaction-list');
+    }
 
-        // return view('transaction.transaction', [
-        //     'transaction' => $transaction,
-        // ]);
-        // return json pretty_print($transaction);
-        // $trs = json_encode($transaction, JSON_PRETTY_PRINT);
+    public function get_transaction(Request $request)
+    {
+        $user_id     = auth()->user()->id;
+        $device      = Device::all();
+
+        $status      = $request->query('status');
+
+        // query transaction by status
+        if($status != 'ALL'){
+            $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
+                            ->join('device', 'device.id', '=', 'booking.device_id')
+                            ->join('merchant', 'merchant.id', '=', 'booking.merchant_id')
+                            ->where('transaction.user_id', $user_id)
+                            ->where('transaction.status', 'LIKE', '%'.$status.'%')
+                            ->orderBy('transaction.created_at', 'ASC')
+                            ->get();
+        } else {
+            $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
+                            ->join('device', 'device.id', '=', 'booking.device_id')
+                            ->join('merchant', 'merchant.id', '=', 'booking.merchant_id')
+                            ->where('transaction.user_id', $user_id)
+                            ->orderBy('transaction.created_at', 'ASC')
+                            ->get();
+        }
+
+
+        // json obj to array
+        // $transaction = json_decode($transaction, true);
         return response()->json($transaction, 200);
     }
 
+    public function send_notification($user_id, $title, $content)
+    {
+        $notification = Notification::create([
+            'user_id'       => $user_id,
+            'title'         => $title,
+            'content'       => $content,
+        ]);
+
+        return response()->json($notification, 201);
+    }
 }

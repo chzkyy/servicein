@@ -12,7 +12,7 @@
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav col-md-12">
-                <li class="nav-item col-md-6 my-auto mx-auto">
+                <li class="nav-item col-md-6 my-4 my-md-1 mx-auto mb-4 mb-md-0">
                     <form role="search">
                         <div class="custom-search">
                             <form action="" method="POST" id="search_merchant">
@@ -31,16 +31,18 @@
                 </li>  --}}
 
                 <li class="nav-item my-auto mx-1">
-                    <a href="#" class="nav-link chat text-white text-decoration-none">
-                        <i class="fa fa-envelope fa-lg" aria-hidden="true"></i>
-                        <span class="chat-number">0</span>
+                    <a href="#" class="nav-link text-white text-decoration-none bg">
+                        <i class="fa fa-envelope fa-lg d-none d-md-block" aria-hidden="true"></i>
+                        <span class="d-block d-md-none"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i> Messages</span>
+                        {{--  <span class="chat-number">0</span>  --}}
                     </a>
                 </li>
 
                 <li class="nav-item my-auto mx-1">
-                    <a href="#" class="nav-link notif text-white text-decoration-none">
-                        <i class="fa fa-bell fa-lg" aria-hidden="true"></i>
-                        <span class="notif-number">0</span>
+                    <a href="#" class="nav-link text-white text-decoration-none">
+                        <i class="fa fa-bell fa-lg d-none d-md-block" aria-hidden="true"></i>
+                        <span class="d-block d-md-none"><i class="fa fa-bell fa-lg" aria-hidden="true"></i> Notification</span>
+                        {{--  <span class="notif-number">0</span>  --}}
                     </a>
                 </li>
 
@@ -71,7 +73,7 @@
                             </li>
                             <li>
                                 @if ( Auth::user()->role == 'User' )
-                                    <a class="dropdown-item" href="{{ route('profile') }}">Transaction List</a>
+                                    <a class="dropdown-item" href="{{ route('show-transaction') }}">Transaction List</a>
                                 @endif
                             </li>
                             <hr>

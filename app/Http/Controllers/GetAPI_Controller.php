@@ -124,8 +124,10 @@ class GetAPI_Controller extends Controller
             $i++;
         }
 
-        // filer data jarak terkecil
-        $dataBersih = array_reverse($dataBersih);
+        // mengurutkan data berdasarkan jarak terdekat
+        $jarak = array_map(function($v){
+            return floatval(str_replace(',', '', $v));
+        }, $jarak);
 
         //create response
         $response = [

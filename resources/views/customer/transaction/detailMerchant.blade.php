@@ -82,7 +82,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="desc-merchant mb-3 mt-4 mt-md-0" style="white-space: pre-line;"></div>
+                                                    <div class="desc-merchant text-left text-wrap mb-3 mt-4 mt-md-0" style="white-space: pre-line;"></div>
                                                 </div>
                                                 <div class="col-md-12 pt-3">
                                                     <div class="row">
