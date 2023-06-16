@@ -8,21 +8,32 @@
     <section>
         <div class="container-fluid">
             <div class="container">
-                <div class="col-md-12">
-                    <div class="row mt-4">
-                        <div class="col-md-2 offset-md-1 pt-5 mt-5">
-                            <div class="card d-flex justify-content-center align-items-center">
+                <div class="col-md-12 mt-4">
+                    <div class="row  pt-5 mt-5">
+
+                        @if (session('success'))
+                            <div class="col-md-12 d-flex justify-content-center ">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>{{ __('Success') }}!</strong> {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        @endif
+
+                        <div class=" col-md-3 offset-md-1">
+                            <div class="card shadow border d-flex justify-content-center align-items-center">
                                 <div class="card-body">
 
-                                    @if ($avatar == null)
-                                        <img src="{{ asset('assets/img/profile_picture.png') }}"
-                                            class="img-fluid img-thumbnail avatar" alt="profile_picture">
-                                    @elseif ($avatar != null)
-                                        <img src="{{ $avatar }}" class="img-fluid img-thumbnail avatar mx-auto"
-                                            alt="profile_picture" style="width: 150px; height: 150px;">
-                                    @endif
+                                        @if ($avatar == null)
+                                            <img src="{{ asset('assets/img/profile_picture.png') }}"
+                                                class="img-fluid img-thumbnail avatar " alt="profile_picture"
+                                                style="width: auto; height: 150px;">
+                                        @elseif ($avatar != null)
+                                            <img src="{{ $avatar }}" class="img-fluid img-thumbnail avatar mx-auto card-img mx-auto object-fit-none"
+                                                alt="profile_picture" style="width: auto; height: 150px;">
+                                        @endif
 
-                                        <img class="img-fluid img-thumbnail mx-auto img-preview" style="width: 150px; height: 150px;">
+                                        <img class="img-fluid img-thumbnail card-img mx-auto object-fit-none img-preview" style="width: auto; height: 150px;">
                                         {{--  tombol upload  --}}
                                         <div class="d-flex justify-content-center align-items-center my-2">
                                             <button type="submit" class="btn btn-custome btn-sm" id="btn_uploadAvatar"><i class="fa-solid fa-pen-to-square"></i> {{ __("Update Picture") }}</button>
@@ -52,10 +63,10 @@
 
                         </div>
 
-                        <div class="col-md-8 offset-md-1 pt-5 mt-5">
+                        <div class="col-md-7">
                             <form action="{{ route('update.profile.admin') }}" method="post" id="update_profile">
                                 @csrf
-                                <div class="card mb-5">
+                                <div class="card shadow border mb-5">
                                     <div class="card-body txt-third m-4">
                                         <div class="merchant_name mb-4">
                                             <img src="{{ url('assets/img/Avatar.png') }}" alt="Avatar" class="img-fluid">
@@ -71,7 +82,7 @@
                                         <div class="h5 txt-gold my-4">Business Information</div>
 
                                         <div class="detail-profile">
-                                            <div class="merchant_name col-md-6 mb-2">
+                                            <div class="merchant_name col-md-12 mb-2">
                                                 <div class="form-group mt-2">
                                                     <label for="merchant_name"
                                                         class="form-label fw-semiboldl">{{ __('Business Name') }}</label>
@@ -83,7 +94,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="merchant_desc col-md-6 mb-2">
+                                            <div class="merchant_desc col-md-12 mb-2">
                                                 <div class="form-group mt-2">
                                                     <label for="merchant_desc"
                                                         class="form-label fw-semiboldl">{{ __('Businnes Description') }}</label>
@@ -98,7 +109,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="phone_number col-md-6 mb-2">
+                                            <div class="phone_number col-md-12 mb-2">
                                                 <div class="form-group mt-2">
                                                     <label for="phone_number"
                                                         class="form-label fw-semiboldl">{{ __('Business Phone Number') }}</label>
@@ -114,7 +125,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="open_hour col-md-6 mb-2">
+                                            <div class="open_hour col-md-12 mb-2">
                                                 <div class="form-group mt-2">
                                                     <label for="open_hour"
                                                         class="form-label fw-semiboldl">{{ __('Open Hour') }}</label>
@@ -123,7 +134,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="close_hour col-md-6 mb-2">
+                                            <div class="close_hour col-md-12 mb-2">
                                                 <div class="form-group mt-2">
                                                     <label for="close_hour"
                                                         class="form-label fw-semiboldl">{{ __('Close Hour') }}</label>
@@ -132,7 +143,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group col-md-6 mt-2 text-black">
+                                            <div class="form-group col-md-12 mt-2 text-black">
                                                 <label for="merchant_address"
                                                     class="form-label fw-semiboldl">{{ __('Address') }}</label>
                                                 <textarea name="merchant_address" id="merchant_address" size="maxlength"
@@ -155,15 +166,15 @@
                                         {{--  save button for desktop --}}
                                         <div class="d-none d-md-block justify-content-center text-end align-items-end mt-5">
                                             <a href="{{ route('profile.admin') }}" class="btn btn-light col-md-2 shadow txt-primary mx-1 mt-4">Cancel</a>
-                                            <button class="btn btn-custome mt-3 mx-1" id="sc">{{ __("Save Changes") }}</button>
+                                            <a class="btn btn-custome mt-3 mx-1" id="sc">{{ __("Save Changes") }}</a>
                                         </div>
 
                                     </div>
                                 </div>
                                 {{--  save button for mobile  --}}
                                 <div class="d-block d-md-none justify-content-center text-center align-items-center mt-5 mb-5">
-                                    <div class="submit">
-                                        <button id="sc" class="btn btn-custome col-12 mt-3">Save Changes</button>
+                                    <div class="sbmt">
+                                        <a class="btn btn-custome col-12 mt-3" id="sc2">Save Changes</a>
                                     </div>
                                     <a href="{{ route('profile.admin') }}" class="btn btn-light shadow txt-primary col-12 mt-3">Cancel</a>
                                 </div>
@@ -394,7 +405,66 @@
                 });
                 return false;
             }
-            $('#update_profile').submit();
+
+            // confirmaion change data
+            Swal.fire({
+                title: 'Are you sure?',
+                text : "You will change this data!",
+                icon : 'warning',
+                showCancelButton : true,
+                confirmButtonColor: '#e3c10fe5',
+                confirmButtonText : 'Yes, change it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Your data has been changed!',
+                    }).then(function () {
+                        $('#update_profile').submit();
+                    });
+                }
+            });
+        });
+
+        // for mobile devices
+        $("#sc2").click(function(){
+            var merchant_name = $("#merchant_name").val();
+            var merchant_desc = $("#merchant_desc").val();
+            var merchant_address = $("#merchant_address").val();
+            var phone_number = $("#phone_number").val();
+            // sekect value tpSelectbox\
+            var open_hour = $("#open_hour").val(tpSelectbox.getHour() + ":" + tpSelectbox.getMinute());
+            var close_hour = $("#close_hour").val(tpSelectbox2.getHour() + ":" + tpSelectbox.getMinute());
+
+            if (merchant_name == '' || merchant_desc == '' || phone_number == '' || merchant_address == '' || open_hour == '' || close_hour == '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please fill all field!',
+                });
+                return false;
+            }
+
+            // confirmaion change data
+            Swal.fire({
+                title: 'Are you sure?',
+                text : "You will change this data!",
+                icon : 'warning',
+                showCancelButton : true,
+                confirmButtonColor: '#e3c10fe5',
+                confirmButtonText : 'Yes, change it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Your data has been changed!',
+                    }).then(function () {
+                        $('#update_profile').submit();
+                    });
+                }
+            });
         });
     </script>
 @endsection

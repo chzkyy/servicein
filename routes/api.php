@@ -30,4 +30,3 @@ Route::post('getMatrix', 'App\Http\Controllers\GetAPI_Controller@getMatrix');
 Route::get('searchPlace', 'App\Http\Controllers\GetAPI_Controller@searchPlace');
 Route::post('getLocation', 'App\Http\Controllers\GetAPI_Controller@getLocation');
 Route::get('maps', 'App\Http\Controllers\GetAPI_Controller@MapsJs');
-

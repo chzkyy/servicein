@@ -19,10 +19,10 @@ class MerchantController extends Controller
         $this->middleware(['merchant']);
     }
 
-    public function index()
-    {
-        return view('adminToko.testMaps');
-    }
+    // public function index()
+    // {
+    //     return view('adminToko.testMaps');
+    // }
 
 
     protected function update_merchant(Request $request)
@@ -118,6 +118,11 @@ class MerchantController extends Controller
         // Handle File Upload
         $request->validate([
             'profile_picture' => 'required|mimes:png,jpeg,jpg|max:2048',
+        ],
+        [
+            'profile_picture.required' => 'Please select an image to upload.',
+            'profile_picture.mimes' => 'Sorry! Only JPG, JPEG, PNG files are allowed.',
+            'profile_picture.max' => 'Sorry! Maximum allowed size for an image is 2MB.',
         ]);
 
         $fileName = $username.'.'.$request->profile_picture->extension();
@@ -128,7 +133,7 @@ class MerchantController extends Controller
             'avatar' => "assets/img/profile/".$fileName,
         ]);
 
-        return redirect()->route('profile.admin')->with('success','You have successfully upload file.')->with('file', $fileName);
+        return redirect()->back()->with('success','Avatar updated successfully.')->with('file', $fileName);
     }
 
     public function merchant_gallery(Request $request)

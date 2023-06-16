@@ -38,7 +38,7 @@ class LoginController extends Controller
                 return '/';
                 break;
             case 'Admin':
-                return '/';
+                return '/admin';
                 break;
             case NULL:
                 return '/choose';

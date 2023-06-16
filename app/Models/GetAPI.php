@@ -81,6 +81,61 @@ class GetAPI extends Model
         return $dataBersih;
     }
 
+    public static function searchMerchant($search)
+    {
+        $data = DB::table('merchant')
+            ->join('users', 'merchant.user_id', '=', 'users.id')
+            ->select('merchant.*', 'users.email')
+            ->where('merchant_name', 'like', '%'.$search.'%')
+            ->get();
+
+        $dataBersih = [];
+
+        // get geo location
+        foreach ($data as $item) {
+            $geo = $item->geo_location;
+            $geo = explode(',', $geo);
+            $item->geo_location = $geo;
+        }
+
+        // mapping data to array
+        foreach ($data as $item) {
+
+            if ( $item->geo_location[0] != '-' ) {
+                $dataBersih[] = [
+                    'id'                => $item->id,
+                    'user_id'           => $item->user_id,
+                    'merchant_name'     => $item->merchant_name,
+                    'merchant_desc'     => $item->merchant_desc,
+                    'merchant_address'  => $item->merchant_address,
+                    'open_hour'         => $item->open_hour,
+                    'close_hour'        => $item->close_hour,
+                    'phone_number'      => $item->phone_number,
+                    'latitude'          => $item->geo_location[0],
+                    'longitude'         => $item->geo_location[1],
+                    'email'             => $item->email,
+                ];
+            }
+            else {
+                $dataBersih[] = [
+                    'id'                => $item->id,
+                    'user_id'           => $item->user_id,
+                    'merchant_name'     => $item->merchant_name,
+                    'merchant_desc'     => $item->merchant_desc,
+                    'merchant_address'  => $item->merchant_address,
+                    'open_hour'         => $item->open_hour,
+                    'close_hour'        => $item->close_hour,
+                    'phone_number'      => $item->phone_number,
+                    'latitude'          => null,
+                    'longitude'         => null,
+                    'email'             => $item->email,
+                ];
+            }
+        }
+
+        return $dataBersih;
+    }
+
     /**
      * Request API Google Map
      *

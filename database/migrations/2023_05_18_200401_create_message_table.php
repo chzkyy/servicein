@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('message', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained('customer');
-            $table->foreignId('merchant_id')->constrained('merchant');
-            $table->string('message');
+            $table->foreignId('from')->constrained('users');
+            $table->foreignId('to')->constrained('users');
+            $table->string('message')->nullable();
             $table->string('attachment')->nullable();
-            $table->string('status')->default('unread');
+            $table->boolean('status')->default(false); // 0 = unread, 1 = read
             $table->timestamps();
             $table->softDeletes();
         });

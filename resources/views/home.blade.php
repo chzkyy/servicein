@@ -181,13 +181,14 @@
                                 var i;
                                 if ( data.length != '0' ){
                                     for (i = 0; i<data.length; i++) {
+                                        // console.log(data);
                                         if ( data[i]['gallery'][0] == undefined ){
                                             var img_url = 'assets/img/no-image.jpg';
                                         }else{
                                             var img_url = data[i]['gallery'][0];
                                         }
 
-                                        
+
                                         var merchant_name = data[i]['merchant_name'];
                                         var merchant_id = data[i]['id'];
                                         var rating = data[i]['rating'];
@@ -196,7 +197,9 @@
                                         html += '<div class="col-md-3 my-3">'+
                                             '<div class="card border-2">'+
                                                 '<div class="card-body">'+
-                                                    '<img src="'+url+'/'+img_url+'" class="card-img-top object-fit-cover img-thumbnail" style="width:350px;  height:130px;" alt="image_toko">'+
+                                                    '<div class="d-flex justify-content-center">'+
+                                                        '<img src="'+url+'/'+img_url+'" class="card-img-top object-fit-cover img-thumbnail" style="width:350px;  height:130px;" alt="image_toko">'+
+                                                    '</div>'+
                                                     '<div class="title text-center fw-semibold my-2" id="Merchant_name">'+merchant_name+'</div>'+
 
                                                     '<div class="rate">'+
@@ -249,7 +252,7 @@
                                     html += '<div class="alert alert-secondary" role="alert">';
                                     html += '<h4 class="alert-heading text-center">Data Not Found!</h4>';
                                     html += '</div>';
-                                    $("#card_merchant").html(html);
+                                    //$("#card_merchant").html(html);
                                 }
 
                                  // menhapus undifined di html

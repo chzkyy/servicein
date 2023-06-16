@@ -19,7 +19,7 @@ class ChooseRoleController extends Controller
         if ($user) {
             // check user role
             if ($user->role == 'Admin') {
-                return redirect()->to('/');
+                return redirect()->to('/admin');
             } elseif ($user->role == 'User') {
                 return redirect()->to('/');
             } else {

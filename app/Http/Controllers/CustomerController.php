@@ -32,7 +32,7 @@ class CustomerController extends Controller
         // update data user profile
         Customer::where('user_id', $user_id)->update([
             'fullname'      => $request->fullname,
-            'dob'           => $request->dob,
+            'dob'           => date('Y-m-d', strtotime($request->dob)),
             'phone_number'  => $request->phone_number,
             'cust_address'  => $request->cust_address,
             'gender'        => $request->gender,
@@ -120,6 +120,11 @@ class CustomerController extends Controller
         // Handle File Upload
         $request->validate([
             'profile_picture' => 'required|mimes:png,jpeg,jpg|max:2048',
+        ],
+        [
+            'profile_picture.required' => 'Please upload a file',
+            'profile_picture.mimes' => 'Only jpeg, jpg, and png are allowed',
+            'profile_picture.max' => 'Sorry! Maximum allowed size for an image is 2MB',
         ]);
 
         $fileName = $username.'.'.$request->profile_picture->extension();
@@ -130,7 +135,13 @@ class CustomerController extends Controller
             'avatar' => "assets/img/profile/".$fileName,
         ]);
 
-        return redirect()->route('profile.admin')->with('success','You have successfully upload file.')->with('file', $fileName);
+        // if validate error then return back
+        if ( $request->profile_picture->getError() )
+        {
+            return back()->with('error', $request->profile_picture->getError())->with('file', $fileName);
+        }
+
+        return redirect()->back()->with('success','Avatar updated successfully.')->with('file', $fileName);
     }
 
     // function for show percentage of profile

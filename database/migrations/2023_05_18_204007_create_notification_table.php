@@ -18,8 +18,7 @@ return new class extends Migration
             $table-> foreignId('user_id')->constrained('users');
             $table->string('title');
             $table->string('content');
-            // status read or unread
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->default(false); // 0 = unread, 1 = read
             $table->timestamps();
             $table->softDeletes();
         });

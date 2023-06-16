@@ -23,7 +23,7 @@ class DeviceController extends Controller
     public function __construct()
     {
         // hanya role customer yang bisa mengakses
-        // $this->middleware(['customer']);
+        $this->middleware(['customer']);
     }
 
 
@@ -80,8 +80,9 @@ class DeviceController extends Controller
         // jika file upload ada maka simpan
         if ($request->hasFile('device_image'))
         {
-            $fileName = 'device_'.auth()->user()->username.'_'.time().'.'.$request->edit_device_image->extension();
-            $request->edit_device_image->move(public_path('assets/img/devices'), $fileName);
+
+            $fileName = 'device_'.auth()->user()->username.'_'.time().'.'.$request->device_image->extension();
+            $request->device_image->move(public_path('assets/img/devices'), $fileName);
 
             $filePath = 'assets/img/devices/'.$fileName;
         }

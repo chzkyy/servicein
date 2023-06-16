@@ -19,15 +19,17 @@
                     @endif
 
                     <div class="row mt-4">
-                        <div class="col-sm-12 col-md-2 offset-md-1 pt-5 mt-5">
-                            <div class="card d-flex justify-content-center align-items-center">
+                        <div class="col-sm-12 col-md-3 offset-md-1 pt-5 mt-5">
+                            <div class="card shadow border d-flex justify-content-center align-items-center">
                                 <div class="card-body">
+
                                     @if ($avatar == null)
                                         <img src="{{ asset('assets/img/profile_picture.png') }}"
-                                            class="img-fluid img-thumbnail" alt="profile_picture">
+                                            class="img-fluid card-img d-block mx-auto object-fit-none" alt="profile_picture"
+                                            style="width: auto; height: 150px;">
                                     @elseif ($avatar != null)
-                                        <img src="{{ $avatar }}" class="img-fluid img-thumbnail d-block mx-auto"
-                                            alt="profile_picture" style="width: 150px; height: 150px;">
+                                        <img src="{{ $avatar }}" class="img-fluid card-img d-block mx-auto object-fit-none"
+                                            alt="profile_picture" style="width: auto; height: 150px;">
                                     @endif
 
                                     <div class="d-flex justify-content-center align-items-center">
@@ -75,8 +77,8 @@
 
                         </div>
 
-                        <div class="col-md-8 offset-md-1 pt-md-5 mt-md-5">
-                            <div class="card">
+                        <div class="col-md-7 pt-md-5 mt-md-5">
+                            <div class="card shadow border">
                                 <div class="card-body txt-third m-4">
                                     {{--  full name  --}}
                                     <div class="fullname mb-4">

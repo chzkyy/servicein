@@ -23,6 +23,7 @@
 
                                 </div>
                             </div>
+
                             @if (session('success'))
                                 <div class="col-md-12">
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -31,7 +32,6 @@
                                     </div>
                                 </div>
                             @endif
-
 
                             <div class="container">
                                 <div class="col md-12">
@@ -149,6 +149,20 @@
 
 @section('additional-script')
     <script>
+        function preview_AddDevice() {
+            const avatar = document.querySelector('#device_image');
+            const imgPreview = document.querySelector('.img-preview');
+
+            imgPreview.style.display = 'block';
+
+            const OFReader = new FileReader();
+            OFReader.readAsDataURL(avatar.files[0]);
+
+            OFReader.onload = function(OFREvent) {
+                imgPreview.src = OFREvent.target.result;
+            }
+        }
+
         $('#booking_date').datepicker({
             uiLibrary: 'bootstrap5',
             iconsLibrary: 'fontawesome',
@@ -270,6 +284,10 @@
                     confirmButtonText: '{{ __("Yes, Confirm Booking") }}'
                 }).then((result) => {
                     if (result.isConfirmed) {
+
+                        $('#btn_confirmBooking').html('<i class="fa fa-spinner fa-spin"></i> Loading...');
+                        $('#btn_confirmBooking').addClass('disabled');
+
                         $.ajax({
                             type: "POST",
                             url: "{{ route('store-booking') }}",

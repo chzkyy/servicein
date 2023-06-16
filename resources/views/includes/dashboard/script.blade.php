@@ -17,8 +17,8 @@
     <script src="https://cdn.rawgit.com/sachinchoolur/lg-zoom.js/master/dist/lg-zoom.js"></script>
     <script src="https://cdn.rawgit.com/sachinchoolur/lg-hash.js/master/dist/lg-hash.js"></script>
     <script src="https://cdn.rawgit.com/sachinchoolur/lg-share.js/master/dist/lg-share.js"></script>
-    <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
 
 
     <script>
@@ -96,6 +96,31 @@
     </script>
 
     <script>
+        $(document).ready(function() {
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Geolocation is not supported by this browser.',
+                    });
+                }
+            }
+
+            getLocation();
+
+            function showPosition(position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+                $('#origin').val(lat + ',' + lng);
+            }
+        });
+
+    </script>
+
+    <script>
         $('#btn_saveChanges').click(function(){
             var fullname = $('#fullname').val();
             var gemder = $('#gender').val();
@@ -135,6 +160,27 @@
             $('#btn_uploadAvatar').show();
         }
 
+        $("input[type='file']").on("change", function () {
+            if(this.files[0].size > 2000000) {
+                file = $(this)[0].files[0];
+                //console.log(file);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: file.name + ' size must be less than 2 MB!',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('.img-preview').hide();
+                        $('#btn_uploadAvatar').hide();
+                        $('.avatar').show();
+                    }
+                });
+            }
+
+            return false;
+        });
+
         $('#btn_uploadAvatar').click(function(){
             $('#updt_avatar').submit();
         });
@@ -149,4 +195,102 @@
                 scrollTop: $($.attr(this, 'href')).offset().top
             }, 1000);
         });
+
+        $(document).ready(function(){
+            get_notif();
+            getChat();
+            setInterval(function() {
+                get_notif();
+                getChat();
+            }, 5000); //5 seconds
+        });
+
+        function read (id) {
+            $.ajax ({
+                url: "{{ route('read-notification') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: id
+                },
+                dataType: "JSON",
+                success: function(data) {
+                    get_notif();
+                },
+                error: function(err) {
+                   // console.log(err);
+                }
+            });
+        }
+
+        function get_notif()
+        {
+            $.ajax ({
+                url: "{{ route('get-notification') }}",
+                type: "GET",
+                dataType: "JSON",
+                success: function(res) {
+                    html = '';
+                    var notif_count = res['all_notif'];
+
+                    // d-block #notif_count
+                    if (notif_count == 0) {
+                        $('#notif_count').removeClass('d-md-inline');
+                        $('#notif_count').addClass('d-none');
+                    } else {
+                        $('#notif_count').removeClass('d-none');
+                        $('#notif_count').addClass('d-md-inline d-none');
+                        $('#notif_mobile').addClass('d-sm-inline')
+                    }
+                    $('#notif_mobile').html(notif_count);
+                    $('#notif_count').html(notif_count);
+                    $.each(res['data'], function(key, value) {
+                        html += '<a class="dropdown-item d-flex align-items-center" onClick="read('+value.id+');" id="notif_url">'+
+                                    '<div>'+
+                                        '<div class="small text-gray-500 fw-bold" id="notif_title">'+value.title+'</div>'+
+                                        '<div class="text-truncate" style="max-width: 250px;" id="notif_content">'+value.content+'</div>'+
+                                    '</div>'+
+                                '</a>';
+
+
+                        $('#notif_list').html(html);
+                    });
+
+                },
+                error: function(err) {
+                   // console.log(err);
+                }
+            });
+        }
+
+        function getChat() {
+            $.ajax({
+                url: "{{ route('get-list-customer') }}",
+                type: "get",
+                dataType: "json",
+                success: function(res) {
+                    var count = 0;
+                    $.each(res, function(index, value) {
+                        if (value.status == 'Unread') {
+                            count++;
+                        }
+                    });
+
+                    if (notif_count == 0) {
+                        $('#chat_dstp').removeClass('d-md-inline');
+                        $('#chat_dstp').addClass('d-none');
+                    } else {
+                        $('#chat_dstp').addClass('d-md-inline d-none');
+                        $('#chat_dstp').removeClass('d-none');
+                        $('#chat_mobile').addClass('d-sm-inline')
+                    }
+                    $('#chat_mobile').html(count);
+                    $('#chat_dstp').html(count);
+                },
+                error: function(xhr) {
+                    //console.log(xhr.responseText);
+                }
+            });
+        }
+
     </script>

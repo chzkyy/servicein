@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.profileMerchant')
 
 @section('title')
     {{ __('Profile') }}
@@ -10,25 +10,26 @@
             <div class="container">
                 <div class="col-md-12">
 
-                    @if (session('success'))
+                    {{--  @if (session('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <strong>{{ __('Success') }}!</strong> {{ session('success') }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                    @endif
+                    @endif  --}}
 
-                    <div class="row mt-4">
-                        <div class="col-sm-12 col-md-2 offset-md-1 pt-5 mt-5">
-                            <div class="card d-flex justify-content-center align-items-center">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-3 offset-md-1 ">
+                            <div class="card shadow border d-flex justify-content-center align-items-center">
 
                                 <div class="card-body">
 
                                     @if ($avatar == null)
                                         <img src="{{ asset('assets/img/profile_picture.png') }}"
-                                            class="img-fluid img-thumbnail" alt="profile_picture">
+                                            class="img-fluid card-img d-block mx-auto object-fit-none" alt="profile_picture"
+                                            style="width: auto; height: 150px;">
                                     @elseif ($avatar != null)
-                                        <img src="{{ $avatar }}" class="img-fluid img-thumbnail d-block mx-auto"
-                                            alt="profile_picture" style="width: 150px; height: 150px;">
+                                        <img src="{{ $avatar }}" class="img-fluid card-img d-block mx-auto object-fit-none"
+                                            alt="profile_picture" style="width: auto; height: 150px;">
                                     @endif
 
                                     <div class="d-flex justify-content-center align-items-center">
@@ -42,6 +43,7 @@
                                         @endif
                                     </div>
                                 </div>
+
                             </div>
 
                             <div class="d-none d-md-flex justify-content-center align-items-center b-profile txt-gold mb-5">
@@ -52,8 +54,9 @@
                                 </div>
                             </div>
 
+                            {{--  mobile view  --}}
                             <div class="d-block d-md-none progress mt-5 mb-2">
-                                <div class="progress-bar bg-custome" role="progressbar" style="width: {{ $percentage }}%;"
+                                <div class="progress-bar bg-custome" role="progressbar" style="width: {{ $percentage }}%; height: 20px;"
                                     aria-valuenow="{{ $percentage }}" aria-valuemin="0" aria-valuemax="100">
                                     {{ $percentage }}%</div>
                             </div>
@@ -64,8 +67,8 @@
 
                         </div>
 
-                        <div class="col-md-8 offset-md-1 pt-md-5 mt-md-5 mb-4">
-                            <div class="card">
+                        <div class="col-md-7 mb-4">
+                            <div class="card shadow border">
                                 <div class="card-body txt-third m-4">
                                     {{--  full name  --}}
                                     <div class="fullname mb-4">
@@ -116,7 +119,7 @@
                                                         {{ date("H:i", strtotime( $merchant->open_hour )) }}
                                                     @endif
                                                 </span>
-                                                <span class="blockquote-footer"></span>
+                                                <span>-</span>
                                                 <span>
                                                     @if ( $merchant->close_hour == '-')
                                                         {{ __(NULL) }}
@@ -247,7 +250,7 @@
             $("input[type='file']").on("change", function () {
                 if(this.files[0].size > 2000000) {
                     file = $(this)[0].files[0];
-                    console.log(file);
+                    //console.log(file);
 
                     Swal.fire({
                         icon: 'error',
@@ -268,7 +271,7 @@
                 let formData = new FormData(form);
                 let file = $("input[type='file']")[0].files[0];
 
-                console.log(file);
+                // console.log(file);
 
                 if( file == undefined ) {
                     Swal.fire({

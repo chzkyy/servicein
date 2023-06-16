@@ -2,7 +2,7 @@
 @section('title', 'Choose Role')
 @section('content')
 
-<section class="vh-100">
+<section class="min-vh-100">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-5 px-0 d-none d-sm-block">

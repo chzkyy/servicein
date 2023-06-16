@@ -8,21 +8,44 @@
     <section>
         <div class="container-fluid">
             <div class="container">
-                <div class="col-md-12">
-                    <div class="row mt-4">
-                        <div class="col-md-2 offset-md-1 pt-5 mt-5">
-                            <div class="card d-flex justify-content-center align-items-center">
+                <div class="col-md-12 mt-4">
+
+
+                    <div class="row pt-5 mt-5">
+                        {{--  show error  --}}
+                        @if (session('success'))
+                            <div class="col-md-12 d-flex justify-content-center ">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>{{ __('Success') }}!</strong> {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="col-md-10 d-flex justify-content-center">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>{{ __('Failed') }}!</strong> {{ session('error') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        @endif
+
+                        <div class="col-md-3 offset-1">
+                            <div class="card shadow border d-flex justify-content-center align-items-center">
                                 <div class="card-body">
 
-                                    @if ($avatar == null)
-                                        <img src="{{ asset('assets/img/profile_picture.png') }}"
-                                            class="img-fluid img-thumbnail avatar" alt="profile_picture">
-                                    @elseif ($avatar != null)
-                                        <img src="{{ $avatar }}" class="img-fluid img-thumbnail avatar mx-auto"
-                                            alt="profile_picture" style="width: 150px; height: 150px;">
-                                    @endif
+                                        @if ($avatar == null)
+                                            <img src="{{ asset('assets/img/profile_picture.png') }}"
+                                                class="img-fluid img-thumbnail avatar " alt="profile_picture"
+                                                style="width: auto; height: 150px;">
+                                        @elseif ($avatar != null)
+                                            <img src="{{ $avatar }}" class="img-fluid img-thumbnail avatar mx-auto card-img object-fit-none"
+                                                alt="profile_picture" style="width: auto; height: 150px;">
+                                        @endif
 
-                                        <img class="img-fluid img-thumbnail mx-auto img-preview" style="width: 150px; height: 150px;">
+                                        <img class="img-fluid img-thumbnail card-img mx-auto object-fit-none img-preview" style="width: auto; height: 150px;">
+
                                         {{--  tombol upload  --}}
                                         <div class="d-flex justify-content-center align-items-center my-2">
                                             <button type="submit" class="btn btn-custome btn-sm" id="btn_uploadAvatar"><i class="fa-solid fa-pen-to-square"></i> {{ __("Update Picture") }}</button>
@@ -56,10 +79,10 @@
                             </div>
                         </div>
 
-                        <div class="col-md-8 offset-md-1 pt-5 mt-5">
+                        <div class="col-md-7">
                             <form action="{{ route('update.profile') }}" method="post" id="update_profile">
                                 @csrf
-                                <div class="card mb-5">
+                                <div class="card shadow border mb-5">
                                     <div class="card-body txt-third m-4">
                                         {{--  full name  --}}
                                         <div class="fullname mb-4">
@@ -71,7 +94,7 @@
                                         <div class="h5 txt-gold my-4">{{ __("General Information") }}</div>
 
                                         <div class="detail-profile">
-                                            <div class="fullname col-md-6 mb-2">
+                                            <div class="fullname col-md-12 mb-2">
                                                 <div class="form-group mt-2">
                                                     <label for="fullname"
                                                         class="form-label fw-semiboldl">{{ __('Fullname') }}</label>
@@ -83,7 +106,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="gender col-md-6 mb-2">
+                                            <div class="gender col-md-12 mb-2">
                                                 <div class="form-group mt-2">
                                                     <label for="gender"
                                                         class="form-label fw-semiboldl">{{ __('Gender') }}</label>
@@ -102,15 +125,14 @@
                                                 </div>
                                             </div>
 
-                                            <div class="dob col-md-6 mb-2">
+                                            <div class="dob col-md-12 mb-2">
                                                 <div class="form-group mt-2">
                                                     <label for="dob"
                                                         class="form-label fw-semiboldl">{{ __('Birth Date') }}</label>
                                                     {{--  dob  --}}
-                                                    <input type="date"
+                                                    <input type="text"
                                                         class="form-control @error('dob') is-invalid @enderror form-control-md"
-                                                        id="dob" name="dob" required autocomplete="dob" max="{{ date('Y-m-d') }}"
-                                                        value="{{ $dob }}"
+                                                        id="dob" name="dob" required value="{{ date("d-m-Y", strtotime($customer->dob)) }}"
                                                         placeholder="Enter your birth date" />
                                                 </div>
                                             </div>
@@ -139,7 +161,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="email col-md-6 mb-2">
+                                            <div class="email col-md-12 mb-2">
                                                 <div class="form-group mt-2">
                                                     <label for="email"
                                                         class="form-label fw-semiboldl">{{ __('Email') }}</label>
@@ -151,7 +173,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="cust_address col-md-6 mb-2">
+                                            <div class="cust_address col-md-12 mb-2">
                                                 <div class="form-group mt-2">
                                                     <label for="cust_address"
                                                         class="form-label fw-semiboldl">{{ __('Address') }}</label>
@@ -187,4 +209,31 @@
 
         </div>
     </section>
+@endsection
+
+
+@section('additional-script')
+    <script>
+        $('#dob').datepicker({
+            format: 'dd-mm-yyyy',
+            maxDate: new Date(),
+            uiLibrary: 'bootstrap5',
+            iconsLibrary: 'fontawesome',
+            showRightIcon: true,
+            size: 'small',
+            autoclose: true,
+            todayHighlight: true,
+        });
+
+        $('#dob').change(function() {
+            var date = $(this).val();
+            var newDate = new Date(date);
+            var format = newDate.toLocaleDateString('en-CA', {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric'
+            });
+        })
+
+    </script>
 @endsection

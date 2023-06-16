@@ -1,0 +1,211 @@
+/* var color */
+:root {
+    --primary-color: #e3c10fe5;
+    --secondary-color: #ffa500;
+    --white: #ffffff;
+    --secondary-white: #e4eaf3;
+    --black: #313131;
+    --gray: #828282;
+    --bgold: #655503;
+    --third: #494949;
+}
+
+/* base root */
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+body {
+    /* color: #fff; */
+    font-family: "Inter", sans-serif !important;
+    scroll-behavior: smooth !important;
+}
+
+/* base color */
+.txt-primary {
+    color: var(--primary-color);
+}
+
+.txt-secondary {
+    color: var(--gray);
+}
+
+.txt-third {
+    color: var(--third);
+}
+
+.txt-gold {
+    color: var(--bgold);
+}
+
+.txt-black {
+    color: var(--black);
+}
+
+/* border custom */
+.border-cust {
+    --bs-border-opacity: 1;
+    border: 1px solid var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.border-gold {
+    --bs-border-opacity: 1;
+    border-color: var(--bgold) !important;
+}
+
+.bg-custome {
+    background-color: var(--primary-color) !important;
+}
+
+.btn-custome {
+    background: var(--primary-color) !important;
+    border-radius: 4px;
+    color: var(--white) !important;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.btn-custome-outline {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color)!important;
+    border-radius: 4px;
+    border: solid 1px !important;
+}
+
+.btn-custome-outline:hover {
+    color: var(--white) !important;
+    background: var(--primary-color) !important;
+}
+
+.btn-custome-outline:active {
+    color: var(--white)!important;
+    background: var(--primary-color)!important;
+    border-color: var(--primary-color)!important;
+    border-radius: 4px;
+    border: solid 1px!important;
+}
+
+.btn-custome:hover {
+    color: var(--secondary-white);
+    background: var(--secondary-color) !important;
+}
+
+.btn-custome:focus {
+    color: var(--secondary-white);
+    background: var(--secondary-color);
+}
+
+.btn-custome:active {
+    color: var(--primary-color) !important;
+    border: 1px solid var(--primary-color) !important;
+}
+
+
+/* navbar */
+.navbar-bg {
+    background: linear-gradient(0deg, rgba(227, 193, 15, 0.6), rgba(227, 193, 15, 0.6)), url(../../assets/img/img-login.jpg);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 0px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    object-fit: cover;
+}
+
+.sidebar-bg {
+    background-color: #867000e5 !important;
+    /* background-color: #E7C827 !important; */
+}
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff !important;
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.page-link {
+    color: var(--primary-color) !important;
+}
+
+.notif-bg {
+    opacity:72% !important;
+    /* pointer */
+    cursor: pointer;
+}
+
+.border {
+    border: 0.8px solid !important;
+}
+
+.card-input-element {
+    display: none;
+}
+
+.card-input {
+    margin: 10px;
+    padding: 0px;
+}
+
+.card-input:hover {
+    cursor: pointer;
+}
+
+.card-input-element:checked + .card-input {
+    box-shadow: 0 0 2px 2px #000;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+
+.txt-fz-12 {
+    font-size: 12px !important;
+}
+
+.card-wrap {
+    overflow-x: scroll;
+    display: flex;
+}
+
+.card-wrap::-webkit-scrollbar {
+    height: 4px;
+}
+
+/* Track */
+.card-wrap::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+/* Handle */
+.card-wrap::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: var(--primary-color);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+.card-wrap::-webkit-scrollbar-thumb:window-inactive {
+    background: var(--primary-color);
+}
+
+.table-custome {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+
+
+/* create hover in card-list with background color grey */
+.card-list:hover {
+    background-color: var(--gray) !important;
+    cursor: pointer;
+    color: var(--white) !important;
+}

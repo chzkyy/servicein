@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('user_note')->nullable();
             $table->string('merchant_note')->nullable();
             $table->string('service_confirmation')->nullable();
-            $table->string('waranty');
-            $table->string('picture')->nullable();
+            $table->date('waranty')->nullable();
+            $table->boolean('status_confirmation')->nullable(); // 0 = unread, 1 = read
             $table->timestamps();
             $table->softDeletes();
         });

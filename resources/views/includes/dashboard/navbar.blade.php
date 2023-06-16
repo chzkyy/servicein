@@ -11,38 +11,72 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav col-md-12">
-                <li class="nav-item col-md-6 my-4 my-md-1 mx-auto mb-4 mb-md-0">
-                    <form role="search">
+            <ul class="navbar-nav col-md-12 d-flex justify-content-end">
+
+                @guest
+                    <li class="nav-item col-md-6 my-4 my-md-1 mx-auto mb-4 mb-md-0">
+
                         <div class="custom-search">
-                            <form action="" method="POST" id="search_merchant">
-                                <input type="text" class="custom-search-input" id="search_m" placeholder="Search">
+                            <form action="{{ route('search-merchant') }}" method="get" id="search_merchant">
+                                <input type="text" class="custom-search-input" id="search" name="search" placeholder="Search" value="{{ request('search') }}">
+                                <input type="hidden" name="origin" id="origin">
                                 <button class="custom-search-botton" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                             </form>
                         </div>
-                    </form>
+                    </li>
+                @elseif( Auth::user()->role != 'Admin' )
+                    <li class="nav-item col-md-6 my-4 my-md-1 mx-auto mb-4 mb-md-0">
+                        <div class="custom-search">
+                            <form action="{{ route('search-merchant') }}" method="get" id="search_merchant">
+
+                                <input type="text" class="custom-search-input" id="search" name="search" placeholder="Search" value="{{ request('search') }}">
+                                <input type="hidden" name="origin" id="origin">
+                                <button class="custom-search-botton" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+                    </li>
+
+                @endguest
+
+                {{--  notification  --}}
+                {{--  notification   --}}
+                <li class="nav-item dropdown my-auto mx-1">
+
+                    {{--  create icon with badge  --}}
+                    <a class="nav-link" id="notificationDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{--  badge count in desktop view and hide in mobile --}}
+                        <span class="d-none badge bg-danger position-absolute top-0 start-50 badge-counter badge-pill" id="notif_count"></span>
+                        <i class="fas fa-bell fa-fw" style="color: #fff"></i>
+                        {{--  badge count in mobile view and hide in desktop --}}
+                        <span class="d-md-none position-absolute badge bg-danger ms-2 fw-semibold text-white start-0 top-0 badge-pill badge-counter" id="notif_mobile"></span>
+                        <span class="d-md-none ms-2 fw-semibold text-white">Notification</span>
+                    </a>
+
+
+                    <ul class="dropdown-menu dropdown-menu-end mt-3 dropdown-menu-right shadow animated--grow-in" aria-labelledby="notificationDropdown">
+                        <li><h6 class="dropdown-header text-white border border-1 border-dark rounded bg-warning fw-semibold">NOTIFICATION CENTER</h6></li>
+
+                        <li id="notif_list" class="text-center small text-gray-500"></li>
+                        @guest
+                            <li class="text-center small text-gray-500">{{ __("No Notification") }}</li>
+                        @else
+                            <li>
+                                <a class="dropdown-item text-center small mb-n3 text-gray-600" href="{{ route('notification') }}">Show All Notification</a>
+                            </li>
+                        @endguest
+                        {{--  button see all message  --}}
+                    </ul>
                 </li>
 
-                {{--  <li class="nav-item my-auto">
-                    <a href="#" class="nav-link cart text-white text-decoration-none">
-                        <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
-                        <span class="cart-number">0</span>
-                    </a>
-                </li>  --}}
-
+                {{--  chat notification  --}}
                 <li class="nav-item my-auto mx-1">
-                    <a href="#" class="nav-link text-white text-decoration-none bg">
-                        <i class="fa fa-envelope fa-lg d-none d-md-block" aria-hidden="true"></i>
-                        <span class="d-block d-md-none"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i> Messages</span>
-                        {{--  <span class="chat-number">0</span>  --}}
-                    </a>
-                </li>
-
-                <li class="nav-item my-auto mx-1">
-                    <a href="#" class="nav-link text-white text-decoration-none">
-                        <i class="fa fa-bell fa-lg d-none d-md-block" aria-hidden="true"></i>
-                        <span class="d-block d-md-none"><i class="fa fa-bell fa-lg" aria-hidden="true"></i> Notification</span>
-                        {{--  <span class="notif-number">0</span>  --}}
+                    <a class="nav-link" id="messagesDropdown" href="{{ route('chat') }}" >
+                        {{--  badge count in desktop view and hide in mobile --}}
+                        <span class="d-none badge bg-danger position-absolute top-0 my-3 ms-2 badge-counter badge-pill" id="chat_dstp"></span>
+                        <i class="fas fa-envelope fa-fw" style="color: #fff"></i>
+                        {{--  badge count in mobile view and hide in desktop --}}
+                        <span class="d-md-none position-absolute badge bg-danger ms-2 fw-semibold text-white start-0 top-0 badge-pill badge-counter" id="chat_mobile"></span>
+                        <span class="d-md-none ms-2 fw-semibold text-white">Messages</span>
                     </a>
                 </li>
 
@@ -53,17 +87,17 @@
                         <a href="{{ route('login') }}" class="nav-link">
                             {{--  profile image with text  --}}
                             <img src="{{ url('assets/img/Avatar.png') }}" alt="Avatar" class="img-fluid">
-                            <span class="mx-2 fw-semibold">Login / Sign Up</span>
+                            <span class="mx-2 fw-semibold text-white">Login / Sign Up</span>
                         </a>
                     </li>
                 @else
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    <li class="nav-item dropdown ">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             <img src="{{ url('assets/img/Avatar.png') }}" alt="Avatar" class="img-fluid">
-                            <span class="mx-2 fw-semibold">{{ Auth::user()->username }}</span>
+                            <span class="mx-2 fw-semibold text-white">{{ Auth::user()->username }}</span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
+                        <ul class="dropdown-menu mt-3 dropdown-menu-end">
                             <li>
                                 @if ( Auth::user()->role == 'Admin' )
                                     <a class="dropdown-item" href="{{ route('profile.admin') }}">Profile</a>

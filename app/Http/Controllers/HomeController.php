@@ -45,6 +45,13 @@ class HomeController extends Controller
                 if ($role == NULL) {
                     return redirect()->to('/choose');
                 }
+                else if( $role == 'Admin' ) {
+                    return redirect()->to('/admin');
+                }
+                elseif ( $role ==  'Super_Admin' )
+                {
+                    return redirect()->to('/super-admin');
+                }
                 else {
                     return view('home');
                 }

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('merchant_id')->constrained('merchant');
             $table->string('no_bill'); // nomor tagihan
-            $table->string('amount');
+            $table->double('amount');
             $table->string('proof_of_payment')->nullable();
-            $table->date('bills_date'); // tanggal pembayaran
+            $table->string('bills_date', 6); // bulan tagihan format: YYYYMM
             $table->string('status')->nullable();
             $table->string('reason')->nullable();
             $table->string('approved_by')->nullable();

@@ -94,7 +94,7 @@
                                                         </div>
 
                                                         <div class="col-md-9 col-sm-12 mt-md-0 mt-3">
-                                                            <a href="#" class="btn btn-custome-outline">
+                                                            <a href="{{ route('chat-merchant', $id) }}" class="btn btn-custome-outline">
                                                                 {{ __('Chat Merchant') }}
                                                             </a>
                                                         </div>
@@ -164,117 +164,124 @@
                                                                 </div>
                                                             </div>
                                                         @else
-                                                            <div class="card my-2 review border border-2 shadow my-3">
-                                                                <div class="card-body">
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <div class="row">
-                                                                                <div class="col-md-2 profile-img my-auto">
-                                                                                    <img src="{{ url('assets/img/profile/adm.jpg') }}"
-                                                                                        class="img-fluid img-thumbnail rounded-circle"
-                                                                                        alt="Profile Image">
+                                                            @foreach ($review as $r )
+                                                                <div class="card my-2 review border border-2 shadow my-3">
+                                                                    <div class="card-body">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-2 profile-img my-auto d-flex justify-content-center align-content-center">
+                                                                                        <img src="{{ url($r['avatar']) }}"
+                                                                                            class="img-circle" alt="Profile Image">
+                                                                                    </div>
+                                                                                    <div class="col-md-7 profile-text my-auto">
+                                                                                        <h4 class="my-auto">{{ ucwords($r['username']) }}</h4>
+                                                                                    </div>
+
+                                                                                    <div class="col-md-3 rate my-auto">
+                                                                                        @if ( $r['rating'] == 0 )
+                                                                                            <div class="non-star d-block">
+                                                                                                <i class="fa-regular fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-regular fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-regular fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-regular fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-regular fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                            </div>
+                                                                                        @elseif ( $r['rating'] == 1 )
+                                                                                            <div class="one-star d-block">
+                                                                                                <i class="fa-solid fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-regular fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-regular fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-regular fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-regular fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                            </div>
+                                                                                        @elseif ( $r['rating'] == 2 )
+                                                                                            <div class="two-star d-block">
+                                                                                                <i class="fa-solid fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-solid fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-regular fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-regular fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-regular fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                            </div>
+                                                                                        @elseif ( $r['rating'] == 3 )
+                                                                                            <div class="three-star d-block">
+                                                                                                <i class="fa-solid fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-solid fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-solid fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-regular fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-regular fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                            </div>
+                                                                                        @elseif ( $r['rating'] == 4 )
+                                                                                            <div class="four-star d-block">
+                                                                                                <i class="fa-solid fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-solid fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-solid fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-solid fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-regular fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                            </div>
+                                                                                        @elseif ( $r['rating'] == 5 )
+                                                                                            <div class="five-star d-block">
+                                                                                                <i class="fa-solid fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-solid fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-solid fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-solid fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                                <i class="fa-solid fa-star"
+                                                                                                    style="color: #ffa800;"></i>
+                                                                                            </div>
+                                                                                        @endif
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div class="col-md-7 profile-text my-auto">
-                                                                                    <h4 class="my-auto">Review</h4>
+
+                                                                                <div class="container">
+                                                                                    <div class="review mt-4">
+                                                                                        {{ ucwords($r['review']) }}
+                                                                                    </div>
+
+                                                                                    <div class="date mt-2 text-muted">
+                                                                                        <small>
+                                                                                            {{ date('d F Y', strtotime($r['created_at'])) }}
+                                                                                        </small>
+                                                                                    </div>
                                                                                 </div>
 
-                                                                                <div class="col-md-3 rate my-auto">
-                                                                                    <div class="non-star d-none">
-                                                                                        <i class="fa-regular fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-regular fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-regular fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-regular fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-regular fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                    </div>
-                                                                                    <div class="one-star d-none">
-                                                                                        <i class="fa-solid fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-regular fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-regular fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-regular fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-regular fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                    </div>
-                                                                                    <div class="two-star d-none">
-                                                                                        <i class="fa-solid fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-solid fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-regular fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-regular fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-regular fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                    </div>
-                                                                                    <div class="three-star d-none">
-                                                                                        <i class="fa-solid fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-solid fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-solid fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-regular fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-regular fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                    </div>
-                                                                                    <div class="four-star d-none">
-                                                                                        <i class="fa-solid fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-solid fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-solid fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-solid fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-regular fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                    </div>
-                                                                                    <div class="five-star d-none">
-                                                                                        <i class="fa-solid fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-solid fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-solid fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-solid fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                        <i class="fa-solid fa-star"
-                                                                                            style="color: #ffa800;"></i>
-                                                                                    </div>
-                                                                                </div>
+
                                                                             </div>
-
-
-                                                                            <div class="review my-3 mx-2">
-                                                                                Lorem, ipsum dolor sit amet consectetur adipisicing
-                                                                                elit. Numquam ullam sunt modi, ab provident aliquam iure
-                                                                                consectetur atque voluptatibus ipsum enim quo, minima id
-                                                                                optio, ducimus reprehenderit? Atque, molestias odio!
-                                                                            </div>
-
-                                                                            <div class="date mx-2 my-2 text-muted">
-                                                                                <small>
-                                                                                    12 Desember 2022
-                                                                                </small>
-                                                                            </div>
-
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            @endforeach
                                                         @endif
 
-                                                        {{-- end review --}}
+                                                        {{--  end review  --}}
                                                     </div>
 
                                                     <div class="col-md-3 offset-0 d-none d-md-block offset-md-1 col-sm-12 sidebar">
@@ -322,8 +329,6 @@
                                 </div>
 
                             </div>
-                            <div class="container">
-                            </div>
                         </div>
                     </div>
 
@@ -353,7 +358,7 @@
                     slider.lightSlider({
                         slideshow: true,
                         slide: function(event, ui) {
-                            console.log(ui);
+                            //console.log(ui);
                         }
                     });
                 }
@@ -377,32 +382,37 @@
 
             function showPosition(position) {
                 //alert("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
-
+                var id = window.location.href.split('/').pop();
                 $.ajax({
                     // call api route
-                    url: "{{ url('api/getMatrix') }}",
+                    url: url+"/get-detail/merchant",
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
-                        origin: position.coords.latitude + ',' + position.coords.longitude
+                        origin: position.coords.latitude + ',' + position.coords.longitude,
+                        merchant_id: id
                     },
                     dataType: "json",
                     success: function(data) {
 
                         if (data.message == "Success") {
                             var html = '';
+                            // get id from url
                             // object to array
                             var arr = $.map(data.data, function(el) {
                                 // if persentase is <70 then remove the data
-                                if (el['percentage'] < 100) {
+                                // console.log(el['id']);
+                                if (el['id'] == id) {
                                     return null;
                                 }
 
+                                //console.log(el);
                                 return el
                             });
 
                             var i;
                             if (arr.length != '0') {
+                                // mapping data to html
                                 for (i = 0; i < arr.length; i++) {
                                     // find merchant by id
                                     var merchant = data.data.find(x => x.id == arr[i]['id']);
@@ -423,6 +433,7 @@
                                     $(".destination-desc").html('<small class="text-muted" id="distance">'+merchant['jarak']+'<span> From your location</span></small>');
                                     $(".star-desc").html('<small id="rate" class="text-muted">'+merchant['rating']+'/5 <span>Reviews</span></small>');
                                 }
+
                             } else {
                                 var html = '';
                                 html += '<div class="alert alert-secondary" role="alert">';
