@@ -162,7 +162,7 @@ class MerchantController extends Controller
 
             foreach ($request->file('photos') as $file) {
                 $fileName     = $file->getClientOriginalName();
-                $file->move(public_path('assets/img/merchant_gallery'), $fileName);
+                $file->move(public_path('assets/img/merchant_gallery/'.$username), $fileName);
                 $arr[] = $fileName;
             }
 
@@ -170,7 +170,7 @@ class MerchantController extends Controller
             foreach ($arr as $key => $value) {
                 $data = [
                     'merchant_id'   => $request->merchant_id,
-                    'images'        => "assets/img/merchant_gallery/".$value,
+                    'images'        => "assets/img/merchant_gallery/".$username.'/'.$value,
                 ];
 
                 $this->createMerchantGallery($data);
