@@ -12,7 +12,7 @@
     <hr class="sidebar-divider my-0">
 
     {{--  <!-- Nav Item - Dashboard -->  --}}
-    <li class="nav-item active">
+    <li class="nav-item {{ $title === 'Merchant - Dashboard' ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('home') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>{{ __("Dashboard") }}</span></a>
@@ -31,8 +31,8 @@
     {{--  <hr class="sidebar-divider">  --}}
 
     {{--  <!-- Nav Item - Dashboard -->  --}}
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('home') }}">
+    <li class="nav-item {{ $title === 'Merchant - Bills' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin-bills') }}">
             <i class="fas fa-fw fa-file-invoice"></i>
             <span>{{ __("Bill") }}</span></a>
     </li>

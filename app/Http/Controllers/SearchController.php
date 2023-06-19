@@ -80,9 +80,9 @@ class SearchController extends Controller
             {
                 $dataBersih[] = [
                     // encrypt id dengan panjang data 10 characters
-                    'id'                => Crypt::encryptString($key['id']),
-                    'user_id'           => Crypt::encryptString($key['user_id']),
-                    // 'merchant_id'       => Crypt::encryptString($key['merchant_id']),
+                    'id'                => Crypt::encrypt($key['id']),
+                    'user_id'           => Crypt::encrypt($key['user_id']),
+                    // 'merchant_id'       => Crypt::encrypt($key['merchant_id']),
                     'merchant_name'     => ucwords($key['merchant_name']),
                     'jarak'             => strtoupper($jarak[$i]),
                     'percentage'        => $percentage,

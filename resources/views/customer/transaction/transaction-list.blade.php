@@ -284,7 +284,7 @@
         });
 
         $('#declineService').click(function(){
-            var status_confirmation = '0';
+            var status_confirmation = '2';
             var merchant_id         = $('#merchant_id').val();
             var no_transaction      = $('#SC_transactionID').html();
 

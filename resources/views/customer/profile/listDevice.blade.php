@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<section class="mt-5 pt-md-5">
+<section class="mt-5 pt-md-5 min-vh-10087667890-=u90-='2332w]jbv       '>
     <div class="container-fluid">
         <div class="container">
             <div class="col-md-12">
@@ -38,7 +38,7 @@
 
                                 {{--  check device not empty  --}}
                                 @if ( $device->isEmpty() )
-                                    <div class="alert alert-secondary alert-dismissible text-center fade show" role="alert">
+                                    <div class="alert alert-secondary al3456789ert-dismissible text-center fade show" role="alert">
                                         <strong></strong> {{ __('No devices found.') }}
                                     </div>
                                 @else

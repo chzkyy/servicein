@@ -117,11 +117,11 @@
                                                     <div class="col-md-3 offset-0 d-block d-md-none offset-md-1 col-sm-12">
                                                         <div class="card my-2 review border border-2 shadow my-3">
                                                             <div class="card-body">
-                                                                <div
-                                                                    class="title d-flex justify-content-center align-content-center fw-semibold">
-                                                                    {{ __('Contact Detail') }}</div>
-                                                                <div
-                                                                    class="detail d-flex justify-content-center align-content-center">
+                                                                <div class="title d-flex justify-content-center align-content-center fw-semibold">
+                                                                    {{ __('Contact Detail') }}
+                                                                </div>
+
+                                                                <div class="detail d-flex justify-content-center align-content-center">
                                                                     <div class="title text-center mt-4 mb-3">
                                                                         {{ __('Open Hour') }}
                                                                         <div class="desc">
@@ -129,8 +129,8 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div
-                                                                    class="detail d-flex justify-content-center align-content-center">
+
+                                                                <div class="detail d-flex justify-content-center align-content-center">
                                                                     <div class="title text-center mb-3">
                                                                         {{ __('Email') }}
                                                                         <div class="desc">
@@ -138,8 +138,8 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div
-                                                                    class="detail d-flex justify-content-center align-content-center">
+
+                                                                <div class="detail d-flex justify-content-center align-content-center">
                                                                     <div class="title text-center mb-3">
                                                                         {{ __('Address') }}
                                                                         <div class="desc">
@@ -147,6 +147,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>

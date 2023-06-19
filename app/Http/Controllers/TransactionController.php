@@ -162,7 +162,7 @@ class TransactionController extends Controller
             }
             else {
                 return view('customer.transaction.detail-transaction',[
-                    'merchant_id' => crypt::encryptString($transaction->merchant_id),
+                    'merchant_id' => crypt::encrypt($transaction->merchant_id),
                     'transaction' => $transaction,
                     'review'      => $review,
                 ]);
@@ -337,6 +337,7 @@ class TransactionController extends Controller
             'status_process'    => $status_process,
             'status_done'       => $status_done,
             'status_cancel'     => $status_cancel,
+            'title'             => 'Merchant - Dashboard',
         ]);
     }
 
@@ -518,7 +519,7 @@ class TransactionController extends Controller
                                     ->first();
 
         // mengambil data merchant_id and encrypt merchant_id dari $transaction
-        $merchant_id = Crypt::encryptString($transaction->merchant_id);
+        $merchant_id = Crypt::encrypt($transaction->merchant_id);
         $transaction->merchant_id = $merchant_id;
 
 
@@ -532,7 +533,7 @@ class TransactionController extends Controller
         $status                 = 'ON PROGRESS';
 
         $customer               = Customer::find($request->input('customer_id'));
-        $merchant_id            = Crypt::decryptString($request->input('merchant_id'));
+        $merchant_id            = Crypt::decrypt($request->input('merchant_id'));
         $user_id                = Merchant::find($merchant_id)->user_id;
 
         Transaction::where('no_transaction', $no_transaction)->update([

@@ -130,7 +130,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-6 my-4">
+                                                <div class="col-md-3 my-4">
                                                     <p class="fw-semibold txt-gold">{{ __("Description") }}</p>
                                                         {{--  form text area  --}}
                                                     @if ($transaction->status == 'BOOKED')
@@ -192,6 +192,15 @@
                                                         @else
                                                             <div>{{ $transaction->user_note }}</div>
                                                         @endif
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3 my-4">
+                                                    <p class="fw-semibold txt-gold">{{ __('Status Confirmation') }}</p>
+
+                                                    <div class="row my-2">
+                                                        <div class="fw-semibold">{{ __('Status') }}</div>
+                                                        <div>{{ $status_confirmation }}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -518,7 +527,7 @@
                     $('#submitConfirmation').html('<i class="fa fa-spinner fa-spin"></i> Sending...');
                     $('#submitConfirmation').addClass('disabled');
                     $('#close').addClass('disabled');
-                    
+
                     $.ajax({
                         url: "{{ route('send-confirmation') }}",
                         type: "POST",

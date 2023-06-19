@@ -35,7 +35,7 @@ class ChatController extends Controller
      */
     public function viewChatCust($merchant_id)
     {
-        $merchant_id = Crypt::decryptString($merchant_id);
+        $merchant_id = Crypt::decrypt($merchant_id);
         $merchant    = Merchant::where('id', $merchant_id)->first();
         $profileChat = User::where('id', $merchant->user_id)->first();
         // return $merchant;
@@ -46,7 +46,7 @@ class ChatController extends Controller
         }
 
         return view('chat.room-cust',[
-            'merchant_id' => Crypt::encryptString($merchant_id),
+            'merchant_id' => Crypt::encrypt($merchant_id),
             'avatar'      => $avatar,
             'name'        => $merchant->merchant_name,
         ]);
@@ -54,7 +54,7 @@ class ChatController extends Controller
 
     public function getMessageCust(Request $request)
     {
-        $merchant_id = Crypt::decryptString($request->input('merchant_id'));
+        $merchant_id = Crypt::decrypt($request->input('merchant_id'));
         $user         = auth()->user()->id;
         $merchant     = Merchant::where('id', $merchant_id)->first();
         $chat         = Chat::where('from', $user)->where('to', $merchant->user_id)->get(); // chat dari customer ke merchant
@@ -134,7 +134,7 @@ class ChatController extends Controller
                 'status'        => $value->status,
                 'created_at'    => $value->created_at,
                 'time'          => $time,
-                'merchant_id'   => Crypt::encryptString($merchant->id),
+                'merchant_id'   => Crypt::encrypt($merchant->id),
                 'avatar'        => $user->avatar,
                 'merchant_name' => $merchant->merchant_name,
             ];
@@ -153,7 +153,7 @@ class ChatController extends Controller
     // send message from customer to merchant
     public function sendMessage(Request $request)
     {
-        $merchant_id = Crypt::decryptString($request->input('to'));
+        $merchant_id = Crypt::decrypt($request->input('to'));
         $merchant    = Merchant::where('id', $merchant_id)->first();
         $message = Chat::create([
             'from'          => $request->input('from'),
@@ -177,7 +177,7 @@ class ChatController extends Controller
 
     public function viewChatMerch($customer_id)
     {
-        $customer_id = Crypt::decryptString($customer_id);
+        $customer_id = Crypt::decrypt($customer_id);
         $customer    = Customer::where('id', $customer_id)->first();
         $user        = User::where('id', $customer->user_id)->first();
         // return $customer;
@@ -192,7 +192,7 @@ class ChatController extends Controller
         }
 
         return view('chat.room-merchant',[
-            'customer_id' => Crypt::encryptString($customer_id),
+            'customer_id' => Crypt::encrypt($customer_id),
             'avatar'      => $avatar,
             'name'        => $customer->fullname,
         ]);
@@ -238,7 +238,7 @@ class ChatController extends Controller
                 'attachment'    => $value->attachment,
                 'status'        => $value->status,
                 'customer_name' => $customer->fullname,
-                'customer_id'   => Crypt::encryptString($customer->id),
+                'customer_id'   => Crypt::encrypt($customer->id),
                 'avatar'        => $user->avatar,
                 'time'          => $time,
                 'created_at'    => $value->created_at,
@@ -260,7 +260,7 @@ class ChatController extends Controller
 
     public function getMessageMerch(Request $request)
     {
-        $customer_id  = Crypt::decryptString($request->input('customer_id'));
+        $customer_id  = Crypt::decrypt($request->input('customer_id'));
         $user         = auth()->user()->id;
         $customer     = Customer::where('id', $customer_id)->first();
         $chatCust     = Chat::where('from', $customer->user_id)->where('to', $user)->get();
@@ -307,7 +307,7 @@ class ChatController extends Controller
     // send message from merchant to customer
     public function sendMessageMerch(Request $request)
     {
-        $customer_id = Crypt::decryptString($request->input('to'));
+        $customer_id = Crypt::decrypt($request->input('to'));
         $customer    = Customer::where('id', $customer_id)->first();
         $message = Chat::create([
             'from'          => $request->input('from'),

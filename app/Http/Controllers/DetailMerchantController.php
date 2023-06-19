@@ -36,7 +36,7 @@ class DetailMerchantController extends Controller
     public function index($id)
     {
         try {
-            $id_merchant    = Crypt::decryptString($id);
+            $id_merchant    = Crypt::decrypt($id);
             $merchant       = Merchant::find($id_merchant);
             $review         = Review::where('merchant_id', $id_merchant)->first();
             $gallery        = $this->show_gallery($id_merchant);
@@ -106,7 +106,7 @@ class DetailMerchantController extends Controller
         //send request to model
         $dataInput    = $request->input('origin');
         $id_merchant  = $request->input('merchant_id');
-        $id_merchant  = Crypt::decryptString($id_merchant);
+        $id_merchant  = Crypt::decrypt($id_merchant);
 
         $origin       = explode(",", $dataInput);
         $jarak        = [];
@@ -165,8 +165,8 @@ class DetailMerchantController extends Controller
 
                 $dataBersih[] = [
                     // encrypt id dengan panjang data 10 characters
-                    'id'                => Crypt::encryptString($key['id']),
-                    'user_id'           => Crypt::encryptString($key['user_id']),
+                    'id'                => Crypt::encrypt($key['id']),
+                    'user_id'           => Crypt::encrypt($key['user_id']),
                     'merchant_name'     => ucwords($key['merchant_name']),
                     'merchant_desc'     => ucfirst($key['merchant_desc']),
                     'merchant_address'  => $key['merchant_address'],

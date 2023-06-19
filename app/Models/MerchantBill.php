@@ -14,8 +14,9 @@ class MerchantBill extends Model
     protected $fillable = [
         'merchant_id',
         'no_bill',
+        'amount',
         'proof_of_payment',
-        'bill_date',
+        'bills_date',
         'status',
         'reason',
         'approved_by',

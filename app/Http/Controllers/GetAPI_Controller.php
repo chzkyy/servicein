@@ -105,8 +105,8 @@ class GetAPI_Controller extends Controller
 
             $dataBersih[] = [
                 // encrypt id dengan panjang data 10 characters
-                'id'                => Crypt::encryptString($item['id']),
-                'user_id'           => Crypt::encryptString($item['user_id']),
+                'id'                => Crypt::encrypt($item['id']),
+                'user_id'           => Crypt::encrypt($item['user_id']),
                 'merchant_name'     => ucwords($item['merchant_name']),
                 'merchant_desc'     => ucfirst($item['merchant_desc']),
                 'merchant_address'  => $item['merchant_address'],

@@ -36,6 +36,37 @@ Route::group(['prefix' => 'super-admin'], function () {
         ->name('get-data-merchant')
         ->middleware(['auth', 'verified', 'super_admin']);
 
+    Route::post('/deleteMerchant', 'App\Http\Controllers\SuperAdminController@deleteAccount')
+        ->name('delete-merchant')
+        ->middleware(['auth', 'verified', 'super_admin']);
+
+    Route::post('/suspendMerchant', 'App\Http\Controllers\SuperAdminController@suspendAccount')
+        ->name('suspend-merchant')
+        ->middleware(['auth', 'verified', 'super_admin']);
+
+    Route::get('/viewbill/{id}', 'App\Http\Controllers\SuperAdminController@viewBIll')
+        ->name('viewBill-merchant')
+        ->middleware(['auth', 'verified', 'super_admin']);
+
+    Route::get('/sendbill/{id}', 'App\Http\Controllers\SuperAdminController@sendBill')
+        ->name('sendBill-merchant')
+        ->middleware(['auth', 'verified', 'super_admin']);
+
+    Route::post('/getListTransaction', 'App\Http\Controllers\SuperAdminController@getListTransaction')
+        ->name('getListTransaction-admin')
+        ->middleware(['auth', 'verified', 'super_admin']);
+
+    Route::post('/createbill', 'App\Http\Controllers\SuperAdminController@createBill')
+        ->name('createBill-merchant')
+        ->middleware(['auth', 'verified', 'super_admin']);
+
+    Route::post('/approve', 'App\Http\Controllers\SuperAdminController@approved')
+        ->name('approve-merchant')
+        ->middleware(['auth', 'verified', 'super_admin']);
+
+    Route::post('/decline', 'App\Http\Controllers\SuperAdminController@decline')
+        ->name('decline-merchant')
+        ->middleware(['auth', 'verified', 'super_admin']);
 });
 
 
@@ -457,6 +488,14 @@ Route::group(['prefix' => 'admin'], function() {
 
     Route::post('/chat/send', 'App\Http\Controllers\ChatController@sendMessageMerch')
         ->name('sendAdminChat')
+        ->middleware(['auth', 'verified', 'merchant']);
+
+    Route::get('/bills', 'App\Http\Controllers\SuperAdminController@viewMerchant')
+        ->name('admin-bills')
+        ->middleware(['auth', 'verified', 'merchant']);
+
+    Route::get('/list-bills', 'App\Http\Controllers\SuperAdminController@getListBillsMerchant')
+        ->name('admin-list-bills')
         ->middleware(['auth', 'verified', 'merchant']);
 });
 

@@ -38,24 +38,25 @@
                             </div>
 
                             <div class="col-md-12">
-                                <div class="filter col-md-2 mb-1 z-50">
-                                    {{--  create dropdown  --}}
-                                    <select name="filter_bulan" id="filter_bulan" class="form-control select2">
-                                        <option value=""></option>
-                                        <option value="01">January</option>
-                                        <option value="02">February</option>
-                                        <option value="03">March</option>
-                                        <option value="04">April</option>
-                                        <option value="05">May</option>
-                                        <option value="06">June</option>
-                                        <option value="07">July</option>
-                                        <option value="08">August</option>
-                                        <option value="09">September</option>
-                                        <option value="10">October</option>
-                                        <option value="11">November</option>
-                                        <option value="12">December</option>
-                                    </select>
-                                </div>
+                                {{--  <div class="filter col-md-2 mb-1 z-50">
+                                </div>  --}}
+                                <select name="filter_bulan" id="filter_bulan" class="form-control col-md-2 col-sm-3 select2">
+                                    <option value=""></option>
+                                    <option value="01">January</option>
+                                    <option value="02">February</option>
+                                    <option value="03">March</option>
+                                    <option value="04">April</option>
+                                    <option value="05">May</option>
+                                    <option value="06">June</option>
+                                    <option value="07">July</option>
+                                    <option value="08">August</option>
+                                    <option value="09">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+
+
                                 <div class="table-responsive min-vh-100">
                                     <table id="merchant_list" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                                         <thead class="table-custome">
@@ -127,11 +128,13 @@
                         },
                         "responsive"    : true,
                         "autoWidth"     : false,
-                        "searching"     : false,
+                        "searching"     : true,
                         "destroy"       : true,
                         "data"          : res,
                         "bLengthChange" : false,
-                        "dom"           : '<"pull-left"f>' + 'B' + 'lrtip',
+                        "dom"           : '<"row"<"col-md-6 d-flex align-items-end mt-3 mt-md-0 align-content-center "lB><"col-md-6 d-block align-items-end"f>>' +
+                                            '<"row"<"col-md-12"tr>>' +
+                                            '<"row"<"col-md-5"i><"col-md-7"p>>',
                         "pagingType"    : "simple",
                         "iDisplayLength": 5,
                         "bInfo"         : false,
@@ -269,24 +272,162 @@
                                 width : "10%",
                                 className: "text-center",
                                 render: function ( data, type, row, meta ) {
-                                    return '<a href="{{ url("admin/merchant/detail") }}/'+data+'" class="btn btn-custome btn-sm border-0 mr-1">Send Bill</a>'+
-                                            '<a href="{{ url("admin/merchant/detail") }}/'+data+'" class="btn btn-custome btn-sm border-0 ml-1">View Bill</a>';
+                                    var html = '';
+                                    //get row status
+                                    var status = row.status;
+                                    console.log(status);
+                                    if ( status == "-" || status == 'UNPAID' || status == 'DECLINE' )
+                                    {
+                                        html += '<a href="{{ url("super-admin/sendbill/") }}/'+data+'" class="btn btn-custome btn-sm border-0 mr-1">Send Bill</a>';
+                                        html += '<a href="{{ url("super-admin/viewbill/") }}/'+data+'" class="btn btn-custome btn-sm border-0 ml-1 disabled">View Bill</a>';
+                                    }
+                                    else
+                                    {
+                                        html += '<a href="{{ url("super-admin/sendbill/") }}/'+data+'" class="btn btn-custome btn-sm border-0 mr-1 disabled">Send Bill</a>';
+                                        html += '<a href="{{ url("super-admin/viewbill/") }}/'+data+'" class="btn btn-custome btn-sm border-0 ml-1">View Bill</a>';
+                                    }
+
+                                    return html;
                                 }
                             },
                         ],
                         "buttons"         : [
                             {
                                 text: 'Remove',
-                                    className: 'btn btn-custome border-0 btn-sm mx-1',
-                                    action: function(e, dt, node, config) {
+                                className: 'btn btn-custome border-0 btn-sm mx-1 mb-0',
+                                action: function(e, dt, node, config) {
+                                    var selected = $("#merchant_list").DataTable().rows('.selected').indexes();
+
+                                    if ( selected.length == 0 ) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Please select a row!',
+                                        })
+                                    } else {
+                                        var data = dt.rows({selected: true}).data();
+                                        var data = dt.rows({selected: true}).data();
+                                        var id   = data[0].merchant_id;
+
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            title: 'Are you sure?',
+                                            text: 'Do you want to remove '+data[0].name+'?',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#e3c10fe5',
+                                            confirmButtonText: 'Yes, remove it!',
+                                            cancelButtonText: 'No, cancel!',
+                                        }).then((result) => {
+                                            if (result.value) {
+                                                $.ajax({
+                                                    url: "{{ route('delete-merchant') }}",
+                                                    type: "post",
+                                                    data: {
+                                                        _token: "{{ csrf_token() }}",
+                                                        id: id,
+                                                    },
+                                                    dataType: "JSON",
+                                                    success: function (data) {
+                                                        if (data.status == 'success') {
+                                                            Swal.fire({
+                                                                icon: 'success',
+                                                                title: 'Success!',
+                                                                text: data.message,
+                                                            }).then((result) => {
+                                                                if (result.value) {
+                                                                    location.reload();
+                                                                }
+                                                            });
+                                                        } else {
+                                                            Swal.fire({
+                                                                icon: 'error',
+                                                                title: 'Oops...',
+                                                                text: data.message,
+                                                            })
+                                                        }
+                                                    },
+                                                    error: function (jqXHR, textStatus, errorThrown) {
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Oops...',
+                                                            text: errorThrown,
+                                                        })
+                                                    }
+                                                });
+                                            } else if ( result.dismiss === Swal.DismissReason.cancel ) {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Cancelled',
+                                                    text: 'Remove cancelled!',
+                                                })
+                                            }
+                                        })
+                                    }
+
 
                                 }
                             },
                             {
                                 text: 'Suspend',
-                                className: 'btn btn-custome border-0 btn-sm mx-1',
+                                className: 'btn btn-custome border-0 btn-sm mx-1 mb-0',
                                 action: function(e, dt, node, config) {
+                                    var selected = $("#merchant_list").DataTable().rows('.selected').indexes();
 
+                                    if ( selected.length == 0 ) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Please select a row!',
+                                        })
+                                    } else {
+                                        var data = dt.rows({selected: true}).data();
+                                        var data = dt.rows({selected: true}).data();
+                                        var id   = data[0].merchant_id;
+
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            title: 'Are you sure?',
+                                            text: 'Do you want to suspend '+data[0].name+'?',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#e3c10fe5',
+                                            confirmButtonText: `Suspend`,
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                $.ajax({
+                                                    url: "{{ route('suspend-merchant') }}",
+                                                    type: "POST",
+                                                    data: {
+                                                        _token: "{{ csrf_token() }}",
+                                                        id: id,
+                                                    },
+                                                    success: function (data) {
+                                                        Swal.fire({
+                                                            icon: 'success',
+                                                            title: 'Success',
+                                                            text: data.message,
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                location.reload();
+                                                            }
+                                                        })
+                                                    },
+                                                    error: function (data) {
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Oops...',
+                                                            text: data.message,
+                                                        })
+                                                    }
+                                                })
+                                            } else if ( result.dismiss === Swal.DismissReason.cancel ) {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Cancelled',
+                                                    text: 'Remove cancelled!',
+                                                })
+                                            }
+                                        })
+                                    }
                                 }
                             },
                         ]
