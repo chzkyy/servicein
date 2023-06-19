@@ -59,7 +59,6 @@
                                                     <small>
                                                         <i class="fa-solid fa-upload"></i> {{ __("Change Picture") }}
                                                     </small>
-
                                             </form>
                                         </label>
 
@@ -124,6 +123,9 @@
                                                     <label class="form-check-label" for="gender">Female</label>
                                                 </div>
                                             </div>
+
+                                            {{--  error message  --}}
+
 
                                             <div class="dob col-md-12 mb-2">
                                                 <div class="form-group mt-2">
@@ -235,5 +237,40 @@
             });
         })
 
+        @if ($errors->has('fullname'))
+            Swal.fire({
+                icon: 'error',
+                title: '{{ $errors->first('fullname') }}',
+                text: '{{ $errors->first('fullname') }}'
+            });
+        @endif
+        @if ($errors->has('dob'))
+            Swal.fire({
+                icon: 'error',
+                title: '{{ $errors->first('dob') }}',
+                text: '{{ $errors->first('dob') }}'
+            });
+        @endif
+        @if ($errors->has('gender'))
+            Swal.fire({
+                icon: 'error',
+                title: '{{ $errors->first('gender') }}',
+                text: '{{ $errors->first('gender') }}'
+            });
+        @endif
+        @if ($errors->has('phone_number'))
+            Swal.fire({
+                icon: 'error',
+                title: '{{ $errors->first('phone_number') }}',
+                text: '{{ $errors->first('phone_number') }}'
+            });
+        @endif
+        @if ($errors->has('cust_address'))
+            Swal.fire({
+                icon: 'error',
+                title: '{{ $errors->first('cust_address') }}',
+                text: '{{ $errors->first('cust_address') }}'
+            });
+        @endif
     </script>
 @endsection

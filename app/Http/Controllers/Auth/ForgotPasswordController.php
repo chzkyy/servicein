@@ -66,7 +66,6 @@ class ForgotPasswordController extends Controller
             ->withInput();
         }
 
-
         #Update the new Password
         User::whereId(auth()->user()->id)->update([
             'password' => Hash::make($request->password)

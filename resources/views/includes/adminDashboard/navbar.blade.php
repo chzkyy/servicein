@@ -37,7 +37,12 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                <img class="img-profile mr-2 rounded-circle" src="{{ url('../dashboard/img/undraw_profile.svg') }}">
+                @if ( Auth::user()->avatar != null )
+                    <img class="img-profile mr-2 rounded-circle" src="{{ url(Auth::user()->avatar) }}" alt="Avatar" class="img-fluid">
+
+                @else
+                    <img class="img-profile mr-2 rounded-circle" src="{{ url('../dashboard/img/undraw_profile.svg') }}">
+                @endif
                 <span class="mr-2 d-none d-lg-inline text-white small font-weight-bold">{{ Auth::user()->username }}</span>
             </a>
             {{--  <!-- Dropdown - User Information -->  --}}

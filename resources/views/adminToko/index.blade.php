@@ -235,7 +235,7 @@
                             success: function(response) {
                                 Swal.fire(
                                     'Deleted!',
-                                    'Your device has been deleted.',
+                                    'Your image has been deleted.',
                                     'success'
                                 ).then((result) => {
                                     location.reload();

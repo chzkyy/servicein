@@ -173,7 +173,7 @@ return [
         'password' => [
             'required' => 'Password is required',
             'min' => 'Password must be at least :min characters',
-            'regex' => 'Password must contain at least one uppercase, one lowercase, one number, and one special character',
+            'regex' => 'Password must contain at least one uppercase, one lowercase, one number',
             'confirmed' => 'Password confirmation does not match',
         ],
         'username' => [

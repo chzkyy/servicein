@@ -384,3 +384,11 @@ input[type="number"] {
     color: var(--white) !important;
 }
 
+.img-profile {
+    object-fit: cover !important;
+    object-position: center !important;
+    border-radius: 50% !important;
+    height: 30px !important;
+    width: 30px !important;
+    justify-content: center !important;
+}

@@ -28,6 +28,24 @@ class CustomerController extends Controller
     {
         // get user id
         $user_id = auth()->user()->id;
+        //VALIDATE
+        $validator = Validator::make($request->all(), [
+            'fullname'      => 'required|string|max:255',
+            'dob'           => 'required|date',
+            'phone_number'  => 'required|string|max:12',
+            'cust_address'  => 'required|string|max:255',
+            'gender'        => 'required',
+        ],
+        [
+            'fullname' => 'Imput your fullname.',
+            'dob' => 'Imput your date of birth.',
+            'phone_number' => 'Imput your phone number.',
+            'cust_address' => 'Imput your address.',
+            'gender' => 'Imput your gender.',
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
         // update data user profile
         Customer::where('user_id', $user_id)->update([

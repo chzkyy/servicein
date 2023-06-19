@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <section class="min-vh-100">
+    <section class="">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-5 px-0 d-none d-sm-block">
@@ -38,11 +38,15 @@
                 </div>
 
                 <div class="col-md-7 text-black">
-                    <div class="d-flex align-item-center px-5 mt-2 pt-4">
-                        <div class="col-12">
+                    <div class="d-flex align-item-center px-5 mt-2 pt-3">
+                        <div class="col-md-12">
                             <div class="d-none d-sm-flex justify-content-between">
                                 <div class="back">
-                                    <a href="{{ url()->previous() }}" class="txt-secondary fw-semibold"><i class="fa fa-chevron-left fa-xs" aria-hidden="true"></i> {{ __('Back') }}</a>
+                                    @if ( Auth::user()->role == 'Admin' )
+                                        <a href="{{ route('profile.admin') }}" class="txt-secondary fw-semibold"><i class="fa fa-chevron-left fa-xs" aria-hidden="true"></i> {{ __('Back') }}</a>
+                                    @else
+                                        <a href="{{ route('profile') }}" class="txt-secondary fw-semibold"><i class="fa fa-chevron-left fa-xs" aria-hidden="true"></i> {{ __('Back') }}</a>
+                                    @endif
                                 </div>
                                 <div class="create-account">
                                     <span class="text-create-account"> {{ __('Change Password') }} </span>
@@ -58,7 +62,7 @@
                         </div>
                     </div>
 
-                    <div class="d-flex align-items-center px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+                    <div class="d-flex align-items-center px-5 ms-xl-4 mt-4 pt-4 pt-xl-0 mt-xl-n5">
                         <div class="col-md-8">
                             <form action="{{ route('password.change') }}" method="POST">
                                 @csrf
@@ -121,7 +125,7 @@
                                     <button type="submit" class="col-12 btn btn-custome btn-lg btn-block">{{ __('Confirm') }}</button>
                                 </div>
 
-                                <span class="text-center text-secondary d-block mt-5"><i class="fa-solid fa-lock"></i>
+                                <span class="text-center text-secondary d-block mt-3"><i class="fa-solid fa-lock"></i>
                                     {{ __('Your Info is safely secured') }}
                                 </span>
                             </form>

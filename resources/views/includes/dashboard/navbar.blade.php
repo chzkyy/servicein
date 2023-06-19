@@ -94,7 +94,13 @@
                     <li class="nav-item dropdown ">
                         <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            <img src="{{ url('assets/img/Avatar.png') }}" alt="Avatar" class="img-fluid">
+                            {{--  if avatar != null  --}}
+                            @if ( Auth::user()->avatar != null )
+                                <img class="img-profile" src="{{ url(Auth::user()->avatar) }}" alt="Avatar" class="img-fluid">
+
+                            @else
+                                <img src="{{ url('assets/img/Avatar.png') }}" alt="Avatar" class="img-fluid">
+                            @endif
                             <span class="mx-2 fw-semibold text-white">{{ Auth::user()->username }}</span>
                         </a>
                         <ul class="dropdown-menu mt-3 dropdown-menu-end">
