@@ -347,6 +347,8 @@ class TransactionController extends Controller
         $merchant_id = Merchant::where('user_id', $user_id)->first();
         $status      = $request->query('status');
 
+        $data        = [];
+
         if ( $status == 'ALL' )
         {
             $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
@@ -356,6 +358,7 @@ class TransactionController extends Controller
                                         ->where('merchant.id', $merchant_id->id)
                                         ->orderBy('transaction.created_at', 'DESC')
                                         ->get();
+
         } elseif ( $status == 'ON PROGRESS' )
         {
             $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
@@ -385,7 +388,7 @@ class TransactionController extends Controller
     public function getTransactionDetailMerchant($id)
     {
         try {
-            $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
+             $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
                                         ->join('device', 'device.id', '=', 'booking.device_id')
                                         ->join('merchant', 'merchant.id', '=', 'booking.merchant_id')
                                         ->join('customer', 'customer.user_id', '=', 'transaction.user_id')
@@ -393,12 +396,26 @@ class TransactionController extends Controller
                                         ->orderBy('transaction.created_at', 'ASC')
                                         ->first();
 
+            $service_confirmation = Transaction::where('no_transaction', $id)
+                                                ->first();
+
             if(!$transaction){
                 return abort(404, 'Data Not Found!');
             }
             else {
+                if($service_confirmation->status_confirmation == '0'){
+                    $status_confirmation = 'Waiting Confirmation';
+                } else if($service_confirmation->status_confirmation == 1){
+                    $status_confirmation = 'Confirmed';
+                } else if($service_confirmation->status_confirmation == 2){
+                    $status_confirmation = 'Rejected';
+                } else if ($service_confirmation->status_confirmation == null){
+                    $status_confirmation = '-';
+                }
+
                 return view('adminToko.Transaksi.detail-transaksi',[
                     'transaction' => $transaction,
+                    'status_confirmation' => $status_confirmation,
                 ]);
             }
         } catch (DecryptException $e) {
@@ -476,9 +493,11 @@ class TransactionController extends Controller
 
         $customer               = Customer::find($request->input('customer_id'));
         $user                   = User::find($customer->user_id);
+        $status_confirmation     = '0'; // Waiting Confirmation
 
         Transaction::where('no_transaction', $no_transaction)->update([
                         'service_confirmation' => $service_confirmation,
+                        'status_confirmation'  => $status_confirmation,
                         'status' => $status,
                     ]);
 
@@ -489,13 +508,13 @@ class TransactionController extends Controller
 
         $this->send_notification(
             $customer->user_id,
-            $merchant->merchant_name.' Sent a confirmation • '.$dateNow,
+            ucwords($merchant->merchant_name).' Sent a confirmation • '.$dateNow,
             'Dear '.ucwords($user->username).' you have pending confirmation on transaction ID : '. $no_transaction.'. Please check your transaction list.',
         );
 
         $this->send_notification_by_email(
             $customer->user_id,
-            $merchant->merchant_name.' Sent a confirmation • '.$dateNow,
+            ucwords($merchant->merchant_name).' Sent a confirmation • '.$dateNow,
             'Dear '.ucwords($user->username).' you have pending confirmation on transaction ID : '. $no_transaction.'. Please check your transaction list.',
         );
 
@@ -533,7 +552,7 @@ class TransactionController extends Controller
         $status                 = 'ON PROGRESS';
 
         $customer               = Customer::find($request->input('customer_id'));
-        $merchant_id            = Crypt::decrypt($request->input('merchant_id'));
+        $merchant_id            = Crypt::encrypt($request->input('merchant_id'));
         $user_id                = Merchant::find($merchant_id)->user_id;
 
         Transaction::where('no_transaction', $no_transaction)->update([
@@ -810,6 +829,7 @@ class TransactionController extends Controller
 
         $status      = $request->query('status');
 
+        $data        = [];
         // query transaction by status
         if($status != 'ALL'){
             $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
@@ -837,10 +857,24 @@ class TransactionController extends Controller
                             ->get();
         }
 
+        foreach($transaction as $t){
+            $data[] = [
+                'id'                => $t->id,
+                'merchant_id'       => Crypt::encrypt($t->merchant_id),
+                'no_transaction'    => $t->no_transaction,
+                'booking_code'      => $t->booking_code,
+                'booking_date'      => $t->booking_date,
+                'booking_time'      => $t->booking_time,
+                'device_name'       => $t->device_name,
+                'merchant_name'     => $t->merchant_name,
+                'status'            => $t->status,
+                'created_at'        => $t->created_at,
+            ];
+        }
 
         // json obj to array
         // $transaction = json_decode($transaction, true);
-        return response()->json($transaction, 200);
+        return response()->json($data, 200);
     }
 
     public function send_notification($user_id, $title, $content)

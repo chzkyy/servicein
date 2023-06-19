@@ -13,8 +13,7 @@
                         <div class="col-md-10 mx-auto">
 
                             <div class="col-md-12 mb-3 d-flex justify-content-end">
-                                <button type="button" class="btn col-md-2 btn-sm btn-block btn-custome">{{ __("Chat") }}</button>
-
+                                <a href="" id="btn_modal_chat" class="btn col-md-2 btn-sm btn-block text-decoration-none btn-custome">{{ __("Chat") }}</a>
                             </div>
 
                             <div class="col-md-12 mb-3">

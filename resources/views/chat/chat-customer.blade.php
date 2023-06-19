@@ -56,6 +56,10 @@
                         var avatar = url+'/'+value.avatar;
                         let time   = value.time;
 
+                        if ( value.message == null  && value.attachment != null) {
+                            value.message = '<i class="fas fa-image"></i> Image';
+                        }
+
                         if(value.status == 'Unread') {
                             html += '<a href="'+url+'/chat/'+value.merchant_id+'" class="text-decoration-none text-black card-list">'+
                                         '<div class="card bg-transparent card-list border shadow rounded rounded-4 my-3">'+

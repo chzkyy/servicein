@@ -29,78 +29,85 @@ class SuperAdminController extends Controller
 
     public function getDataMerchant(Request $request)
     {
-        $data_merchant = Merchant::join('transaction', 'transaction.merchant_id', '=', 'merchant.id')
-                                ->join('users', 'users.id', '=', 'merchant.user_id')
-                                ->select('merchant.*', 'transaction.*', 'users.status_account')
+        $data_merchant = Merchant::join('users', 'users.id', '=', 'merchant.user_id')
+                                ->select('merchant.*', 'users.status_account', 'users.email')
                                 ->get();
 
-        $input_month = $request->query('month');
-        //mengabungkan data merchant dan transaksi
         $data = [];
         foreach ($data_merchant as $key => $value) {
-            $bills = $this->show_bill($value->merchant_id);
 
-
-            if ( $bills != null )
-            {
-                // $bills->bills_date = 062023 jadi 06
-                $month  = substr($bills->bills_date, 0, 2);
-                $status = $bills->status;
-            }
-            else {
-                $month  = '-';
-                $status = '-';
-            }
-
-
-
-            if ( $value->status == 'DONE'  && $value->status_account == 'active' )
-            {
-                $data[$key]['id']           = $value->id;
-                $data[$key]['merchant_id']  = Crypt::encrypt($value->merchant_id);
-                $data[$key]['name']         = $value->merchant_name;
-                $data[$key]['phone_number'] = $value->phone_number;
-                $data[$key]['address']      = $value->address;
-                $data[$key]['description']  = $value->description;
-                $data[$key]['rating']       = $this->show_rating($value->merchant_id);
-                $data[$key]['transaction']  = $this->show_transaction($value->merchant_id);
-                $data[$key]['month_bill']   = $month;
-                $data[$key]['status']       = $status;
-                $data[$key]['status_account'] = $value->status_account;
-                $data[$key]['created_at']   = $value->created_at;
-                $data[$key]['updated_at']   = $value->updated_at;
-            }
+            $data[$key]['id']           = $value->id;
+            // $data[$key]['merchant_id']  = $value->merchant_id;
+            $data[$key]['merchant_id']  = Crypt::encrypt($value->id);
+            $data[$key]['name']         = $value->merchant_name;
+            $data[$key]['phone_number'] = $value->phone_number;
+            $data[$key]['email']        = $value->email;
+            $data[$key]['rating']       = $this->show_rating($value->merchant_id);
+            $data[$key]['status_account'] = $value->status_account;
+            $data[$key]['created_at']   = $value->created_at;
+            $data[$key]['updated_at']   = $value->updated_at;
         }
 
         $data = $this->unique_multidim_array($data,'name');
 
-        if ( $input_month != 'ALL' )
-        {
-            // search $data berdasarkan month_bill
-            $data = array_filter($data, function ($var) use ($input_month) {
-                return ($var['month_bill'] == $input_month);
-            });
-
-            return response()->json($data, 200);
-        }
-
         return response()->json($data, 200);
     }
 
-
-    public function activateAccount($id)
+    public function viewCreateBill($id)
     {
-        $id      = Crypt::decrypt($id);
+        return view('adminApps.create-bill', [
+            'id' => $id
+        ]);
+    }
+
+    public function listBill(Request $request)
+    {
+        $input      = $request->input('id');
+        $id         = Crypt::decrypt($input);
+        $viewBill   = MerchantBill::where('merchant_id', $id)
+                        ->get();
+
+        $jumlah_quantity  = Transaction::where('merchant_id', $id)
+                        ->where('status', 'DONE')
+                        ->whereMonth('created_at', '=', date('m', strtotime('-1 month')))
+                        ->count();
+
+        $data = [];
+        foreach ($viewBill as $key => $value) {
+
+            // $bill_date =
+            $month  = substr($value->bills_date, 0, 2);
+            $year   = substr($value->bills_date, 2, 4);
+            $bill_date = date("F Y", strtotime($year.'-'.$month.'-01'));
+
+            $data[$key]['id']           = $value->id;
+            $data[$key]['no_bill']      = $value->no_bill;
+            $data[$key]['merchant_id']  = Crypt::encrypt($value->merchant_id);
+            $data[$key]['bill_date']    = $bill_date;
+            $data[$key]['quantity']     = $jumlah_quantity;
+            $data[$key]['status']       = $value->status;
+            $data[$key]['created_at']   = $value->created_at;
+            $data[$key]['updated_at']   = $value->updated_at;
+        }
+
+        return response( $data, 200 );
+    }
+
+
+    public function activateAccount(Request $request)
+    {
+        $input   = $request->input('id');
+        $id      = Crypt::decrypt($input);
         $user_id = Merchant::where('id', $id)
                     ->first()
                     ->user_id;
 
         $data    = User::where('id', $user_id)
-                        ->update([
-                            'status_account' => 'active',
-                        ]);
+                    ->update([
+                        'status_account' => 'active',
+                    ]);
 
-        return response()->json($data, 200);
+        return response()->json($id, 200);
     }
 
     public function suspendAccount(Request $request)
@@ -112,34 +119,36 @@ class SuperAdminController extends Controller
                     ->user_id;
 
         $data    = User::where('id', $user_id)
-                        ->update([
-                            'status_account' => 'suspended',
-                        ]);
+                    ->update([
+                        'status_account' => 'suspended',
+                    ]);
 
         return response()->json($data, 200);
     }
 
     public function viewBIll($id)
     {
-        $id               = Crypt::decrypt($id);
-        $user_id          = Merchant::where('id', $id)
+        $merchant_id      = MerchantBill::where('no_bill', $id)
                                 ->first()
-                                ->user_id;
+                                ->merchant_id;
+
         $merchant         = Merchant::join('users', 'users.id', '=', 'merchant.user_id')
-                                ->where('merchant.id', $id)
+                                ->where('merchant.id', $merchant_id)
                                 ->select('merchant.*', 'users.email')
                                 ->get();
 
         $data      = [];
-        // bill = 1 bulan sebelumnya denga format 052023
-        $prevmonth = strtotime("-1 month");
-        $bill_date = date("F Y", $prevmonth);
 
-        $merchant_bill              = $this->show_bill($id);
+        $merchant_bill = MerchantBill::where('no_bill', $id)
+                                ->first();
 
-        if( $merchant_bill['proof_of_payment'] == NULL )
+        $month  = substr($merchant_bill['bills_date'], 0, 2);
+        $year   = substr($merchant_bill['bills_date'], 2, 4);
+        $bill_date = date("F Y", strtotime($year.'-'.$month.'-01'));
+
+        if( $merchant_bill['proof_of_payment'] == null )
         {
-            $merchant_bill['proof_of_payment'] = '/assets/img/no-image.jpg';
+            $merchant_bill['proof_of_payment'] = 'assets/img/no-image.jpg';
         }
 
         foreach( $merchant as $value )
@@ -152,11 +161,14 @@ class SuperAdminController extends Controller
             $data['status']             = $merchant_bill['status'];
             $data['bill_date']          = $bill_date;
             $data['proof_of_payment']   = $merchant_bill['proof_of_payment'];
+
         }
 
         return view('adminApps.view-bill', [
             'merchant' => $data
         ]);
+
+        // return response()->json($data,   200);
     }
 
     public function sendBIll($id)
@@ -392,15 +404,15 @@ class SuperAdminController extends Controller
 
     public function getListBillsMerchant()
     {
-        $user_id = auth()->user()->id;
-        $email   = auth()->user()->email;
-        $merchant = Merchant::where('user_id', $user_id)->first();
+        $user_id    = auth()->user()->id;
+        $email      = auth()->user()->email;
+        $merchant   = Merchant::where('user_id', $user_id)->first();
 
-        $data     = MerchantBill::where('merchant_id', $merchant->id)->get();
+        $data                 = MerchantBill::where('merchant_id', $merchant->id)->get();
         $total_transaction    = $this->show_transaction($merchant->id);
 
         foreach( $data as $key => $value ) {
-            $month  = substr($value->bills_date, 0, 2);
+            $month                              = substr($value->bills_date, 0, 2);
             $data[$key]['no_bill']              = $value->no_bill;
             $data[$key]['bills_date']           = $month;
             $data[$key]['total_transaction']    = $total_transaction;
@@ -411,6 +423,128 @@ class SuperAdminController extends Controller
         }
 
         return response()->json($data, 200);
+    }
+
+    public function viewBillsMerchant($id)
+    {
+        $merchant_id      = MerchantBill::where('no_bill', $id)
+                                ->first()
+                                ->merchant_id;
+
+        $merchant         = Merchant::join('users', 'users.id', '=', 'merchant.user_id')
+                                ->where('merchant.id', $merchant_id)
+                                ->select('merchant.*', 'users.email')
+                                ->get();
+
+        $data      = [];
+
+        $merchant_bill = MerchantBill::where('no_bill', $id)
+                                ->first();
+
+        $month  = substr($merchant_bill['bills_date'], 0, 2);
+        $year   = substr($merchant_bill['bills_date'], 2, 4);
+        $bill_date = date("F Y", strtotime($year.'-'.$month.'-01'));
+        $m      = date("m", strtotime($year.'-'.$month.'-01'));
+
+        if( $merchant_bill['proof_of_payment'] == null )
+        {
+            $merchant_bill['proof_of_payment'] = 'assets/img/no-image.jpg';
+        }
+
+        $total_transaction    = $this->show_transaction($merchant_id);
+
+        foreach( $merchant as $value )
+        {
+            $data['id']                 = $value->id;
+            $data['merchant_id']        = Crypt::encrypt($value->id);
+            $data['merchant_name']      = $value->merchant_name;
+            $data['merchant_desc']      = $value->merchant_desc;
+            $data['email']              = $value->email;
+            $data['total_transaction']  = $total_transaction;
+            $data['amount']             = $merchant_bill['amount'];
+            $data['status']             = $merchant_bill['status'];
+            $data['bill_date']          = $bill_date;
+            $data['month']              = $m;
+            $data['bill_no']            = $id;
+            $data['proof_of_payment']   = $merchant_bill['proof_of_payment'];
+
+        }
+
+        return view('adminToko.Bills.viewBills', [
+            'merchant' => $data
+        ]);
+    }
+
+    public function getListTransactionBills(Request $request)
+    {
+        $merchant_id      = $request->input('merchant_id');
+        $merchant_id      = Crypt::decrypt($merchant_id);
+        $month            = $request->input('month');
+
+
+
+        $data_transaction = Transaction::where('merchant_id', $merchant_id)
+                            ->where('status', 'DONE')
+                            ->whereMonth('created_at', '=', $month)
+                            ->get();
+
+        $dataBersih = [];
+        // membuat total transaksi
+        foreach ($data_transaction as $key => $value) {
+            $dataBersih[$key]['id']             = $value->id;
+            $dataBersih[$key]['merchant_id']    = $value->merchant_id;
+            $dataBersih[$key]['status']         = $value->status;
+            $dataBersih[$key]['no_transaction'] = $value->no_transaction;
+            $dataBersih[$key]['created_at']     = ($value->created_at)->format('d F Y');
+            $dataBersih[$key]['updated_at']     = $value->updated_at;
+        }
+
+        // sort by date
+        usort($dataBersih, function($a, $b) {
+            return $b['created_at'] <=> $a['created_at'];
+        });
+
+        return response()->json($dataBersih, 200);
+    }
+
+    public function sendproof(Request $request)
+    {
+        $file           = $request->file('file');
+        $bill_no        = $request->input('bill_no');
+
+        $merchant_id    = MerchantBill::where('no_bill', $bill_no)
+                            ->first()
+                            ->merchant_id;
+
+        $date          = MerchantBill::where('no_bill', $bill_no)
+                            ->first()
+                            ->bills_date;
+
+        // save file
+        $file_name = $merchant_id.'-'.$bill_no.'.'.$file->getClientOriginalExtension();
+        $file->move('assets/img/bills/'.$merchant_id.'/'.$date, $file_name);
+
+        // update data
+        $update = MerchantBill::where('no_bill', $bill_no)
+                    ->update([
+                        'proof_of_payment'  => 'assets/img/bills/'.$merchant_id.'/'.$date.'/'.$file_name,
+                        'status'            => 'PAID'
+                    ]);
+
+        if($update)
+        {
+            return response()->json([
+                'status'    => 'success',
+                'message'   => 'Success upload proof of payment'
+            ], 200);
+        }
+        else
+        {
+            return response()->json([
+                'status'    => 'error',
+                'message'   => 'Failed upload proof of payment'
+            ], 200);
+        }
     }
 
     function unique_multidim_array($array, $key) {

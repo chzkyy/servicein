@@ -48,7 +48,7 @@
                                                         @php
                                                             $status = explode(' - ', $transaction->status);
                                                         @endphp
-                                                        <span class="badge bg-dark">{{ $status[0] }}</span>{{ __(" - ") }}<span class="badge badge-warning">{{ $status[1] }}</span>
+                                                        <span class="badge bg-dark">{{ $status[0] }}</span>{{ __(" - ") }}<span class="badge bg-warning">{{ $status[1] }}</span>
                                                     @elseif ($transaction->status == 'ON COMPLAINT')
                                                         <span class="badge bg-info">{{ $transaction->status }}</span>
                                                     @endif

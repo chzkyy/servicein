@@ -51,12 +51,15 @@
                                 {{--  crreate field text  --}}
                                 <div class="bg-transparent mt-3">
                                     <div class="input-group">
-                                        {{--  <input type="text" class="form-control shadow rounded rounded-2 border-1 border-secondary bg-light small" id="chat-text" placeholder="Type a message" aria-label="Recipient's username" aria-describedby="basic-addon2">  --}}
-                                        <textarea name="" id="chat-text" cols="30" rows="1" class="form-control shadow rounded rounded-2 border-1 border-secondary bg-light small" placeholder="Type a message"></textarea>
+                                        <input type="text" class="form-control shadow rounded rounded-2 border-1 border-secondary bg-light small" id="chat-text" placeholder="Type a message" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                        {{--  <textarea name="" id="chat-text" cols="30" rows="1" class="form-control shadow rounded rounded-2 border-1 border-secondary bg-light small" placeholder="Type a message"></textarea>  --}}
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary ms-2" type="button">
+
+                                            <input type="file" name="attachment" id="attachment" class="d-none">
+                                            <label for="attachment" class="btn btn-primary ms-2">
                                                 <i class="fas fa-paperclip"></i>
-                                            </button>
+                                            </label>
+
                                             <button class="btn btn-primary" id="sendChat" type="button">
                                                 <i class="fas fa-paper-plane"></i>
                                             </button>
@@ -83,9 +86,40 @@
         $(document).ready(function() {
             $(".containerBubble").animate({ scrollTop: 20000000 }, "slow");
 
+            $('#sendAttachment').click(function() {
+                $('#attachment').click();
+            });
+
+            $('#attachment').change(function() {
+                var file = $(this)[0].files[0];
+                var formData = new FormData();
+                formData.append('file', file);
+                formData.append('_token', "{{ csrf_token() }}");
+                formData.append('to', "{{ $customer_id }}");
+                formData.append('from', "{{ auth()->user()->id }}");
+                $.ajax({
+                    url: "{{ route('sendAttachment-merchant') }}",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        console.log(data);
+                        getChat();
+                    }
+                })
+            });
+
             setInterval(function() {
                 getChat();
             }, 5000); //5 seconds
+
+            // sned with enter key
+            $('#chat-text').keypress(function(e) {
+                if (e.which == 13) {
+                    $('#sendChat').click();
+                }
+            });
 
             $('#sendChat').click(function() {
                 var message = $('#chat-text').val();
@@ -124,35 +158,65 @@
                     //
                     var html = '';
                     $.each(data, function(index, value) {
-                        if (value.from == "{{ auth()->user()->id }}") {
-                            html += '<div class="d-flex flex-row justify-content-end mb-4">';
-                            html += '<div class="p-3 me-3 col-md-6 border rounded rounded-full bg-white border-2 shadow">';
-                            html += '<p class="small mb-0 text-wrap col-md-12 chat">' + value.message + '</p>';
-                            html += '</div>';
-                            html += '</div>';
-                        } else {
-                            html += '<div class="d-flex flex-row justify-content-start mb-4">';
-                            html += '<div class="p-3 ms-3 col-md-6 border rounded rounded-full bg-gradient-light border-2 shadow">';
-                            html += '<p class="small mb-0 text-wrap col-md-12 chat">' + value.message + '</p>';
-                            html += '</div>';
-                            html += '</div>';
+                        var url_image = "{{ url('') }}/" + value.attachment;
 
-                            $.ajax({
-                                url: "{{ route('readChat') }}",
-                                type: "post",
-                                data: {
-                                    _token: "{{ csrf_token() }}",
-                                    id: value.id
-                                },
-                                dataType: "json",
-                                success: function(res) {
-                                    // console.log(res);
-                                }
-                            })
+                        if ( value.attachment == null ) {
+                            if (value.from == "{{ auth()->user()->id }}") {
+                                html += '<div class="d-flex flex-row justify-content-end mb-4">';
+                                html += '<div class="p-3 me-3 col-md-6 border rounded rounded-full bg-white border-2 shadow">';
+                                html += '<p class="small mb-0 text-wrap col-md-12 chat">' + value.message + '</p>';
+                                html += '</div>';
+                                html += '</div>';
+                            } else {
+                                html += '<div class="d-flex flex-row justify-content-start mb-4">';
+                                html += '<div class="p-3 ms-3 col-md-6 border rounded rounded-full bg-gradient-light border-2 shadow">';
+                                html += '<p class="small mb-0 text-wrap col-md-12 chat">' + value.message + '</p>';
+                                html += '</div>';
+                                html += '</div>';
+
+                                $.ajax({
+                                    url: "{{ route('readChat') }}",
+                                    type: "post",
+                                    data: {
+                                        _token: "{{ csrf_token() }}",
+                                        id: value.id
+                                    },
+                                    dataType: "json",
+                                    success: function(res) {
+                                        // console.log(res);
+                                    }
+                                })
+                            }
+                        } else {
+                            if (value.from == "{{ auth()->user()->id }}") {
+                                html += '<div class="d-flex flex-row justify-content-end mb-4">';
+                                html += '<div class="p-3 me-3 col-md-6 border rounded rounded-full bg-white border-2 shadow">';
+                                html += '<img src="'+url_image+'" class="img-fluid" alt="attachment">';
+                                html += '</div>';
+                                html += '</div>';
+                            } else {
+                                html += '<div class="d-flex flex-row justify-content-start mb-4">';
+                                html += '<div class="p-3 ms-3 col-md-6 border rounded rounded-full bg-gradient-light border-2 shadow">';
+                                html += '<img src="'+url_image+'" class="img-fluid" alt="attachment">';
+                                html += '</div>';
+                                html += '</div>';
+                                $.ajax({
+                                    url: "{{ route('readChat') }}",
+                                    type: "post",
+                                    data: {
+                                        _token: "{{ csrf_token() }}",
+                                        id: value.id
+                                    },
+                                    dataType: "json",
+                                    success: function(res) {
+                                        // console.log(res);
+                                    }
+                                })
+                            }
                         }
                     });
                     $('.containerBubble').html(html);
-                    $(".containerBubble").animate({ scrollTop: 20000000 }, "slow");
+                    //$(".containerBubble").animate({ scrollTop: 20000000 }, "slow");
                 }
             })
         }

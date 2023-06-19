@@ -202,7 +202,12 @@
                                                     '</div>'+
                                                 '</div>'+
                                             '</div>';
+
+                                    var merchant_id = value.merchant_id;
+                                    var url_chat = url+'/chat/'+merchant_id;
+                                    $('#btn_modal_chat').attr('href', url_chat);
                                 });
+
 
                                 // menhapus undifined di html
                                 html = html.replace(/undefined/g, "");

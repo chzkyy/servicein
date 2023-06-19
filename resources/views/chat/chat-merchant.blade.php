@@ -38,7 +38,6 @@
     <script>
 
         $(document).ready(function() {
-
             setInterval(function() {
                 getChat();
             }, 5000);
@@ -56,6 +55,10 @@
                         // console.log(value);
                         var avatar = url+'/'+value.avatar;
                         let time   = value.time;
+
+                        if ( value.message == null  && value.attachment != null) {
+                            value.message = '<i class="fas fa-image"></i> Image';
+                        }
 
                         if(value.status == 'Unread') {
                             html += '<a href="'+url+'/admin/chat/'+value.customer_id+'" class="text-decoration-none text-black card-list">'+

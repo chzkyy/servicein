@@ -38,36 +38,17 @@
                             </div>
 
                             <div class="col-md-12">
-                                {{--  <div class="filter col-md-2 mb-1 z-50">
-                                </div>  --}}
-                                <select name="filter_bulan" id="filter_bulan" class="form-control col-md-2 col-sm-3 select2">
-                                    <option value=""></option>
-                                    <option value="01">January</option>
-                                    <option value="02">February</option>
-                                    <option value="03">March</option>
-                                    <option value="04">April</option>
-                                    <option value="05">May</option>
-                                    <option value="06">June</option>
-                                    <option value="07">July</option>
-                                    <option value="08">August</option>
-                                    <option value="09">September</option>
-                                    <option value="10">October</option>
-                                    <option value="11">November</option>
-                                    <option value="12">December</option>
-                                </select>
-
 
                                 <div class="table-responsive min-vh-100">
                                     <table id="merchant_list" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                                         <thead class="table-custome">
                                             <tr>
                                                 <th class="text-center">{{ __('No') }}</th>
-                                                <th class="text-center">{{ __('Store Name') }}</th>
-                                                <th class="text-center">{{ __('Transaction') }}</th>
-                                                <th class="text-center">{{ __('Month') }}</th>
-                                                <th class="text-center">{{ __('Status') }}</th>
+                                                <th class="text-center">{{ __('Store') }}</th>
+                                                <th class="text-center">{{ __('Email') }}</th>
                                                 <th class="text-center">{{ __('Phone') }}</th>
                                                 <th class="text-center">{{ __('Rating') }}</th>
+                                                <th class="text-center">{{ __('Status Account') }}</th>
                                                 <th class="text-center">{{ __('Action') }}</th>
                                             </tr>
                                         </thead>
@@ -93,33 +74,15 @@
 <script src="https://cdn.datatables.net/plug-ins/1.13.4/api/sum().js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        $('#filter_bulan').select2({
-            placeholder: "ALL",
-            allowClear: true
-        });
-
         $(document).ready(function() {
-            var month = 'ALL';
-            // get value from dropdown
-            $('#filter_bulan').on('change', function() {
-                var month = $(this).val();
-                if (month == '') {
-                    month = 'ALL';
-                }
-                getData(month);
-            });
-
-            getData(month);
+            getData();
         });
 
 
-        function getData(month) {
+        function getData() {
             $.ajax({
                 url: "{{ route('get-data-merchant') }}",
                 type: "GET",
-                data: {
-                    month: month
-                },
                 dataType: "json",
                 success: function(res) {
                     $("#merchant_list").DataTable({
@@ -154,79 +117,19 @@
                                 width : "10%",
                                 className: "text-center",
                                 orderable: false,
-                            },
-                            {
-                                "data": "transaction",
-                                orderable: false,
-                                width : "10%",
-                                className: "text-center",
-                                "render": function ( data, type, row, meta ) {
-                                    return data + " Transaction";
+                                render : function(data, type, row, meta) {
+                                    // first upper case
+                                    var name = data.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                                        return letter.toUpperCase();
+                                    });
+
+                                    return name;
                                 }
                             },
                             {
-                                "data": "month_bill",
+                                "data": "email",
                                 orderable: false,
                                 width : "10%",
-                                className: "text-center",
-                                render: function ( data, type, row, meta ) {
-                                    if( data == '01' )
-                                    {
-                                        return "January";
-                                    }
-                                    else if( data == '02' )
-                                    {
-                                        return "February";
-                                    }
-                                    else if( data == '03' )
-                                    {
-                                        return "March";
-                                    }
-                                    else if( data == '04' )
-                                    {
-                                        return "April";
-                                    }
-                                    else if( data == '05' )
-                                    {
-                                        return "May";
-                                    }
-                                    else if( data == '06' )
-                                    {
-                                        return "June";
-                                    }
-                                    else if( data == '07' )
-                                    {
-                                        return "July";
-                                    }
-                                    else if( data == '08' )
-                                    {
-                                        return "August";
-                                    }
-                                    else if( data == '09' )
-                                    {
-                                        return "September";
-                                    }
-                                    else if( data == '10' )
-                                    {
-                                        return "October";
-                                    }
-                                    else if( data == '11' )
-                                    {
-                                        return "November";
-                                    }
-                                    else if( data == '12' )
-                                    {
-                                        return "December";
-                                    }
-                                    else if( data == '-' )
-                                    {
-                                        return "-";
-                                    }
-                                }
-                            },
-                            {
-                                "data": "status",
-                                width : "5%",
                                 className: "text-center",
                             },
                             {
@@ -268,33 +171,165 @@
                                 }
                             },
                             {
-                                "data": "merchant_id",
+                                data: "status_account",
                                 width : "10%",
+                                orderable: false,
                                 className: "text-center",
                                 render: function ( data, type, row, meta ) {
                                     var html = '';
                                     //get row status
-                                    var status = row.status;
-                                    console.log(status);
-                                    if ( status == "-" || status == 'UNPAID' || status == 'DECLINE' )
+                                    var status = row.status_account;
+                                    if ( status == 'active' )
                                     {
-                                        html += '<a href="{{ url("super-admin/sendbill/") }}/'+data+'" class="btn btn-custome btn-sm border-0 mr-1">Send Bill</a>';
-                                        html += '<a href="{{ url("super-admin/viewbill/") }}/'+data+'" class="btn btn-custome btn-sm border-0 ml-1 disabled">View Bill</a>';
+                                        html += '<span class="badge badge-success">'+status+'</span>';
                                     }
                                     else
                                     {
-                                        html += '<a href="{{ url("super-admin/sendbill/") }}/'+data+'" class="btn btn-custome btn-sm border-0 mr-1 disabled">Send Bill</a>';
-                                        html += '<a href="{{ url("super-admin/viewbill/") }}/'+data+'" class="btn btn-custome btn-sm border-0 ml-1">View Bill</a>';
+                                        html += '<span class="badge badge-danger">'+status+'</span>';
                                     }
-
                                     return html;
+                                }
+                            },
+                            {
+                                data: "merchant_id",
+                                width : "10%",
+                                className: "text-center",
+                                render: function ( data, type, row, meta ) {
+                                    return '<a href="'+url+'/super-admin/viewdetail/'+data+'" class="btn btn-custome btn-sm text-white border-0 mx-1 mb-0">View Detail</a>';
                                 }
                             },
                         ],
                         "buttons"         : [
                             {
-                                text: 'Remove',
+                                text: 'Unsuspend',
+                                className: 'btn btn-info text-white border-0 btn-sm mx-1 mb-0',
+                                action: function(e, dt, node, config) {
+                                    var selected = $("#merchant_list").DataTable().rows('.selected').indexes();
+
+                                    if ( selected.length == 0 ) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Please select a row!',
+                                        })
+                                    } else {
+                                        var data = dt.rows({selected: true}).data();
+                                        var data = dt.rows({selected: true}).data();
+                                        var id   = data[0].merchant_id;
+
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            title: 'Are you sure?',
+                                            text: 'Do you want to unsuspend '+data[0].name+'?',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#e3c10fe5',
+                                            confirmButtonText: 'Yes, unsuspend it!',
+                                            cancelButtonText: 'No, cancel!',
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                $.ajax({
+                                                    url: "{{ route('active-merchant') }}",
+                                                    type: "POST",
+                                                    data: {
+                                                        _token: "{{ csrf_token() }}",
+                                                        id: id,
+                                                    },
+                                                    success: function (response) {
+                                                        Swal.fire({
+                                                            icon: 'success',
+                                                            title: 'Success!',
+                                                            text: 'Merchant has been unsuspended.',
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                location.reload();
+                                                            }
+                                                        });
+                                                    },
+                                                    error: function (xhr, ajaxOptions, thrownError) {
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Oops...',
+                                                            text: 'Something went wrong!',
+                                                        })
+                                                    }
+                                                });
+                                            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Cancelled',
+                                                    text: 'Unsuspend merchant cancelled!',
+                                                })
+                                            }
+                                        })
+                                    }
+                                }
+                            },
+                            {
+                                text: 'Suspend',
                                 className: 'btn btn-custome border-0 btn-sm mx-1 mb-0',
+                                action: function(e, dt, node, config) {
+                                    var selected = $("#merchant_list").DataTable().rows('.selected').indexes();
+
+                                    if ( selected.length == 0 ) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Please select a row!',
+                                        })
+                                    } else {
+                                        var data = dt.rows({selected: true}).data();
+                                        var data = dt.rows({selected: true}).data();
+                                        var id   = data[0].merchant_id;
+
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            title: 'Are you sure?',
+                                            text: 'Do you want to suspend '+data[0].name+'?',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#e3c10fe5',
+                                            confirmButtonText: `Suspend`,
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                $.ajax({
+                                                    url: "{{ route('suspend-merchant') }}",
+                                                    type: "POST",
+                                                    data: {
+                                                        _token: "{{ csrf_token() }}",
+                                                        id: id,
+                                                    },
+                                                    success: function (data) {
+                                                        Swal.fire({
+                                                            icon: 'success',
+                                                            title: 'Success',
+                                                            text: data.message,
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                location.reload();
+                                                            }
+                                                        })
+                                                    },
+                                                    error: function (data) {
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Oops...',
+                                                            text: data.message,
+                                                        })
+                                                    }
+                                                })
+                                            } else if ( result.dismiss === Swal.DismissReason.cancel ) {
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Cancelled',
+                                                    text: 'Remove cancelled!',
+                                                })
+                                            }
+                                        })
+                                    }
+                                }
+                            },
+                            {
+                                text: 'Remove',
+                                className: 'btn btn-danger border-0 btn-sm mx-1 mb-0',
                                 action: function(e, dt, node, config) {
                                     var selected = $("#merchant_list").DataTable().rows('.selected').indexes();
 
@@ -367,69 +402,7 @@
 
                                 }
                             },
-                            {
-                                text: 'Suspend',
-                                className: 'btn btn-custome border-0 btn-sm mx-1 mb-0',
-                                action: function(e, dt, node, config) {
-                                    var selected = $("#merchant_list").DataTable().rows('.selected').indexes();
 
-                                    if ( selected.length == 0 ) {
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Oops...',
-                                            text: 'Please select a row!',
-                                        })
-                                    } else {
-                                        var data = dt.rows({selected: true}).data();
-                                        var data = dt.rows({selected: true}).data();
-                                        var id   = data[0].merchant_id;
-
-                                        Swal.fire({
-                                            icon: 'warning',
-                                            title: 'Are you sure?',
-                                            text: 'Do you want to suspend '+data[0].name+'?',
-                                            showCancelButton: true,
-                                            confirmButtonColor: '#e3c10fe5',
-                                            confirmButtonText: `Suspend`,
-                                        }).then((result) => {
-                                            if (result.isConfirmed) {
-                                                $.ajax({
-                                                    url: "{{ route('suspend-merchant') }}",
-                                                    type: "POST",
-                                                    data: {
-                                                        _token: "{{ csrf_token() }}",
-                                                        id: id,
-                                                    },
-                                                    success: function (data) {
-                                                        Swal.fire({
-                                                            icon: 'success',
-                                                            title: 'Success',
-                                                            text: data.message,
-                                                        }).then((result) => {
-                                                            if (result.isConfirmed) {
-                                                                location.reload();
-                                                            }
-                                                        })
-                                                    },
-                                                    error: function (data) {
-                                                        Swal.fire({
-                                                            icon: 'error',
-                                                            title: 'Oops...',
-                                                            text: data.message,
-                                                        })
-                                                    }
-                                                })
-                                            } else if ( result.dismiss === Swal.DismissReason.cancel ) {
-                                                Swal.fire({
-                                                    icon: 'error',
-                                                    title: 'Cancelled',
-                                                    text: 'Remove cancelled!',
-                                                })
-                                            }
-                                        })
-                                    }
-                                }
-                            },
                         ]
                     });
                 }

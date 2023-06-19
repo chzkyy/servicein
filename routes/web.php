@@ -44,6 +44,10 @@ Route::group(['prefix' => 'super-admin'], function () {
         ->name('suspend-merchant')
         ->middleware(['auth', 'verified', 'super_admin']);
 
+    Route::post('/activeMerchant', 'App\Http\Controllers\SuperAdminController@activateAccount')
+        ->name('active-merchant')
+        ->middleware(['auth', 'verified', 'super_admin']);
+
     Route::get('/viewbill/{id}', 'App\Http\Controllers\SuperAdminController@viewBIll')
         ->name('viewBill-merchant')
         ->middleware(['auth', 'verified', 'super_admin']);
@@ -52,12 +56,20 @@ Route::group(['prefix' => 'super-admin'], function () {
         ->name('sendBill-merchant')
         ->middleware(['auth', 'verified', 'super_admin']);
 
+    Route::get('/viewdetail/{id}', 'App\Http\Controllers\SuperAdminController@viewCreateBill')
+        ->name('view-detail-bill-merchant')
+        ->middleware(['auth', 'verified', 'super_admin']);
+
     Route::post('/getListTransaction', 'App\Http\Controllers\SuperAdminController@getListTransaction')
         ->name('getListTransaction-admin')
         ->middleware(['auth', 'verified', 'super_admin']);
 
     Route::post('/createbill', 'App\Http\Controllers\SuperAdminController@createBill')
         ->name('createBill-merchant')
+        ->middleware(['auth', 'verified', 'super_admin']);
+
+    Route::post('/listbill', 'App\Http\Controllers\SuperAdminController@listBill')
+        ->name('listbilltrs-merchant')
         ->middleware(['auth', 'verified', 'super_admin']);
 
     Route::post('/approve', 'App\Http\Controllers\SuperAdminController@approved')
@@ -235,6 +247,14 @@ Route::group(['prefix' => 'chat'], function() {
 
     Route::post('/read', 'App\Http\Controllers\ChatController@readMessage')
         ->name('readChat')
+        ->middleware(['auth', 'verified']);
+
+    Route::post('/sendattachment', 'App\Http\Controllers\ChatController@sendAttachment')
+        ->name('sendAttachment')
+        ->middleware(['auth', 'verified']);
+
+    Route::post('/merchant/sendattachment', 'App\Http\Controllers\ChatController@sendAttachmentMerchant')
+        ->name('sendAttachment-merchant')
         ->middleware(['auth', 'verified']);
 });
 
@@ -496,6 +516,18 @@ Route::group(['prefix' => 'admin'], function() {
 
     Route::get('/list-bills', 'App\Http\Controllers\SuperAdminController@getListBillsMerchant')
         ->name('admin-list-bills')
+        ->middleware(['auth', 'verified', 'merchant']);
+
+    Route::get('/bills/{id}', 'App\Http\Controllers\SuperAdminController@viewBillsMerchant')
+        ->name('admin-detail-bills')
+        ->middleware(['auth', 'verified', 'merchant']);
+
+    Route::post('/bills/getlisttrs', 'App\Http\Controllers\SuperAdminController@getListTransactionBills')
+        ->name('get-trans-list-bills')
+        ->middleware(['auth', 'verified', 'merchant']);
+
+    Route::post('/bills/sendproof', 'App\Http\Controllers\SuperAdminController@sendproof')
+        ->name('send-proof')
         ->middleware(['auth', 'verified', 'merchant']);
 });
 

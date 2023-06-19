@@ -162,20 +162,28 @@
                                 width : "10%",
                                 orderable: false,
                                 className: "text-center",
+                                render : function(data, type, row, meta) {
+                                    if( data == 'UNPAID' )
+                                    {
+                                        return '<span class="badge badge-warning">'+data+'</span>';
+                                    }
+                                    else if( data == 'PAID' || data == 'APPROVED')
+                                    {
+                                        return '<span class="badge badge-success">'+data+'</span>';
+                                    }
+                                    else if( data == 'DECLINE' )
+                                    {
+                                        return '<span class="badge badge-danger">'+data+'</span>';
+                                    }
+                                }
                             },
                             {
                                 "data": "no_bill",
                                 width : "10%",
                                 className: "text-center",
                                 render : function(data, type, row, meta) {
-                                    if( row.status == 'Unpaid' )
-                                    {
-                                        return '<a href="#" class="btn btn-sm btn-custome">Detail</a>';
-                                    }
-                                    else
-                                    {
-                                        return '<a href="#" class="btn btn-sm btn-custome">Detail</a>';
-                                    }
+                                    var url_bill = "{{ url('admin/bills') }}/"+data;
+                                    return '<a href="'+url_bill+'" class="btn btn-sm btn-custome">Detail</a>';
                                 }
                             },
                         ],

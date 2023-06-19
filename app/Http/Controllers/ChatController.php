@@ -168,6 +168,30 @@ class ChatController extends Controller
         ], 200);
     }
 
+    // send attachment from customer to merchant
+    public function sendAttachment(Request $request)
+    {
+        $merchant_id = Crypt::decrypt($request->input('to'));
+        $merchant    = Merchant::where('id', $merchant_id)->first();
+        $input_file  = $request->file('file');
+        $extension   = $input_file->getClientOriginalExtension();
+        $filename    = time() . '.' . $extension;
+        $path        = public_path('assets/img/attachment/customer/');
+        $input_file->move($path, $filename);
+
+        $message = Chat::create([
+            'from'          => $request->input('from'),
+            'to'            => $merchant->user_id,
+            'message'       => $request->input('message'),
+            'attachment'    => 'assets/img/attachment/customer/'.$filename,
+        ]);
+
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'Message sent successfully',
+        ], 200);
+    }
+
 
     /**
      * Show the application chat.
@@ -314,6 +338,32 @@ class ChatController extends Controller
             'to'            => $customer->user_id,
             'message'       => $request->input('message'),
             'attachment'    => $request->input('attachment'),
+        ]);
+
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'Message sent successfully',
+        ], 200);
+    }
+
+    // send attachment from customer to merchant
+    public function sendAttachmentMerchant(Request $request)
+    {
+        $customer_id = Crypt::decrypt($request->input('to'));
+        $customer    = Customer::where('id', $customer_id)->first();
+        $input_file  = $request->file('file');
+
+        $extension   = $input_file->getClientOriginalExtension();
+        $filename    = time() . '.' . $extension;
+
+        $path        = public_path('assets/img/attachment/merchant/');
+        $input_file->move($path, $filename);
+        $attachment = $input_file->get();
+        $message    = Chat::create([
+            'from'          => $request->input('from'),
+            'to'            => $customer->user_id,
+            'message'       => $request->input('message'),
+            'attachment'    => 'assets/img/attachment/merchant/'.$attachment,
         ]);
 
         return response()->json([
