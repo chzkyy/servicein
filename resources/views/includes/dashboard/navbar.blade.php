@@ -75,8 +75,8 @@
                         <span class="d-none badge bg-danger position-absolute top-0 my-3 ms-2 badge-counter badge-pill" id="chat_dstp"></span>
                         <i class="fas fa-envelope fa-fw" style="color: #fff"></i>
                         {{--  badge count in mobile view and hide in desktop --}}
-                        <span class="d-md-none position-absolute badge bg-danger ms-2 fw-semibold text-white start-0 top-0 badge-pill badge-counter" id="chat_mobile"></span>
                         <span class="d-md-none ms-2 fw-semibold text-white">Messages</span>
+                        <span class="d-md-none position-absolute badge bg-danger top-50 start-0 mt-5 fw-semibold text-white badge-pill badge-counter" id="chat_mobile" style="margin-left: 2.2rem !important"></span>
                     </a>
                 </li>
 

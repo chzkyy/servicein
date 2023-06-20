@@ -279,8 +279,8 @@
                         $('#chat_dstp').removeClass('d-md-inline');
                         $('#chat_dstp').addClass('d-none');
                     } else {
-                        $('#chat_dstp').addClass('d-md-inline d-none');
-                        $('#chat_dstp').removeClass('d-none');
+                        $('#chat_dstp').addClass('d-md-inline d-sm-none d-none');
+                        //$('#chat_dstp').removeClass('d-none');
                         $('#chat_mobile').addClass('d-sm-inline')
                     }
                     $('#chat_mobile').html(count);
