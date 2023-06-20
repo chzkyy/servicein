@@ -112,25 +112,25 @@ class TransactionController extends Controller
         $this->send_notification(
             $merchant->user_id,
             'New Transaction • '.$dateNow,
-            'You have a new transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$booking->booking_code.' from '.ucwords($username).' on '.$booking->booking_date.' at '.$booking->booking_time.' Please check your dashboard for more information.'
+            'You have a new transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$booking->booking_code.' from '.ucwords($username).' on '.date('d/m/Y', strtotime($booking->booking_date)).' at '.$booking->booking_time.' Please check your dashboard for more information.'
         );
 
         $this->send_notification(
             auth()->user()->id,
             'Transaction has been booked  • '.$dateNow,
-            'Dear '.ucwords($username).' your transaction has successfully been made with transaction ID : '.$transaction->no_transaction.' and booking code : '.$booking->booking_code.' at '.ucwords($merchant->merchant_name).' on '.$booking->booking_date.' at '.$booking->booking_time.'.'
+            'Dear '.ucwords($username).' your transaction has successfully been made with transaction ID : '.$transaction->no_transaction.' and booking code : '.$booking->booking_code.' at '.ucwords($merchant->merchant_name).' on '.date('d/m/Y', strtotime($booking->booking_date)).' at '.$booking->booking_time.'.'
         );
 
         $this->send_notification_by_email(
             auth()->user()->id,
             'Transaction has been booked  • '.$dateNow,
-            'Dear '.ucwords($username).' your transaction has successfully been made with transaction ID : '.$transaction->no_transaction.' and booking code : '.$booking->booking_code.' at '.ucwords($merchant->merchant_name).' on '.$booking->booking_date.' at '.$booking->booking_time.'.'
+            'Dear '.ucwords($username).' your transaction has successfully been made with transaction ID : '.$transaction->no_transaction.' and booking code : '.$booking->booking_code.' at '.ucwords($merchant->merchant_name).' on '.date('d/m/Y', strtotime($booking->booking_date)).' at '.$booking->booking_time.'.'
         );
 
         $this->send_notification_by_email(
             $merchant->user_id,
             'New Transaction • '.$dateNow,
-            'You have a new transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$booking->booking_code.' from '.ucwords($username).' on '.$booking->booking_date.' at '.$booking->booking_time.' Please check your dashboard for more information.'
+            'You have a new transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$booking->booking_code.' from '.ucwords($username).' on '.date('d/m/Y', strtotime($booking->booking_date)).' at '.$booking->booking_time.' Please check your dashboard for more information.'
         );
 
         return response ()->json ([
@@ -209,25 +209,25 @@ class TransactionController extends Controller
         $this->send_notification(
             $merchant->user_id,
             'Transaction has been cancelled • '.$dateNow,
-            'Your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' from '.ucwords($username).' on '.$transaction->booking->booking_date.' at '.$transaction->booking->booking_time.' has been cancelled. Please check your dashboard for more information.'
+            'Your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' from '.ucwords($username).' on '.date('d/m/Y', strtotime($transaction->booking->booking_date)).' at '.$transaction->booking->booking_time.' has been cancelled. Please check your dashboard for more information.'
         );
 
         $this->send_notification(
             auth()->user()->id,
             'Transaction has been cancelled • '.$dateNow,
-            'Dear '.ucwords($username).' your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' at '.ucwords($merchant->merchant_name).' on '.$transaction->booking->booking_date.' at '.$transaction->booking->booking_time.' has been cancelled.'
+            'Dear '.ucwords($username).' your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' at '.ucwords($merchant->merchant_name).' on '.date('d/m/Y', strtotime($transaction->booking->booking_date)).' at '.$transaction->booking->booking_time.' has been cancelled.'
         );
 
         $this->send_notification_by_email(
             auth()->user()->id,
             'Transaction has been cancelled • '.$dateNow,
-            'Dear '.ucwords($username).' your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' at '.ucwords($merchant->merchant_name).' on '.$transaction->booking->booking_date.' at '.$transaction->booking->booking_time.' has been cancelled.'
+            'Dear '.ucwords($username).' your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' at '.ucwords($merchant->merchant_name).' on '.date('d/m/Y', strtotime($transaction->booking->booking_date)).' at '.$transaction->booking->booking_time.' has been cancelled.'
         );
 
         $this->send_notification_by_email(
             $merchant->user_id,
             'Transaction has been cancelled • '.$dateNow,
-            'Your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' from '.ucwords($username).' on '.$transaction->booking->booking_date.' at '.$transaction->booking->booking_time.' has been cancelled. Please check your dashboard for more information.'
+            'Your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' from '.ucwords($username).' on '.date('d/m/Y', strtotime($transaction->booking->booking_date)).' at '.$transaction->booking->booking_time.' has been cancelled. Please check your dashboard for more information.'
         );
 
         return redirect()->route('show-transaction');
@@ -256,25 +256,25 @@ class TransactionController extends Controller
         $this->send_notification(
             $merchant->user_id,
             'Transaction has been on complaint • '.$dateNow,
-            'Your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' from '.ucwords($username).' on '.$transaction->booking->booking_date.' at '.$transaction->booking->booking_time.' has been on complaint. Please check your dashboard for more information.'
+            'Your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' from '.ucwords($username).' on '.date('d/m/Y', strtotime($transaction->booking->booking_date)).' at '.$transaction->booking->booking_time.' has been on complaint. Please check your dashboard for more information.'
         );
 
         $this->send_notification(
             auth()->user()->id,
             'Transaction has been on complaint • '.$dateNow,
-            'Dear '.ucwords($username).' your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' at '.ucwords($merchant->merchant_name).' on '.$transaction->booking->booking_date.' at '.$transaction->booking->booking_time.' has been on complaint.'
+            'Dear '.ucwords($username).' your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' at '.ucwords($merchant->merchant_name).' on '.date('d/m/Y', strtotime($transaction->booking->booking_date)).' at '.$transaction->booking->booking_time.' has been on complaint.'
         );
 
         $this->send_notification_by_email(
             auth()->user()->id,
             'Transaction has been on complaint • '.$dateNow,
-            'Dear '.ucwords($username).' your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' at '.ucwords($merchant->merchant_name).' on '.$transaction->booking->booking_date.' at '.$transaction->booking->booking_time.' has been on complaint.'
+            'Dear '.ucwords($username).' your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' at '.ucwords($merchant->merchant_name).' on '.date('d/m/Y', strtotime($transaction->booking->booking_date)).' at '.$transaction->booking->booking_time.' has been on complaint.'
         );
 
         $this->send_notification_by_email(
             $merchant->user_id,
             'Transaction has been on complaint • '.$dateNow,
-            'Your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' from '.ucwords($username).' on '.$transaction->booking->booking_date.' at '.$transaction->booking->booking_time.' has been on complaint. Please check your dashboard for more information.'
+            'Your transaction with transaction ID : '.$transaction->no_transaction.' and booking code : '.$transaction->booking->booking_code.' from '.ucwords($username).' on '.date('d/m/Y', strtotime($transaction->booking->booking_date)).' at '.$transaction->booking->booking_time.' has been on complaint. Please check your dashboard for more information.'
         );
 
         return redirect()->route('home');
