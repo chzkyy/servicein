@@ -42,7 +42,7 @@ class SuperAdminController extends Controller
             $data[$key]['name']         = $value->merchant_name;
             $data[$key]['phone_number'] = $value->phone_number;
             $data[$key]['email']        = $value->email;
-            $data[$key]['rating']       = $this->show_rating($value->merchant_id);
+            $data[$key]['rating']       = $this->show_rating($value->id);
             $data[$key]['status_account'] = $value->status_account;
             $data[$key]['created_at']   = $value->created_at;
             $data[$key]['updated_at']   = $value->updated_at;
