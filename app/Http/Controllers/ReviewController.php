@@ -75,23 +75,6 @@ class ReviewController extends Controller
         ], 201);
     }
 
-    public function addImage(Request $request)
-    {
-        // $no_transaction = $request->no_transaction;
-
-
-        //     return response()->json([
-        //         'message' => 'Your images has been successfully upload.'
-        //     ], 200);
-        // }
-        // else
-        // {
-        //     return response()->json([
-        //         'message' => 'Please select at least 1 image to upload.'
-        //     ], 422);
-        // }
-    }
-
     protected function createReview(array $data)
     {
         return ReviewImage::create([

@@ -126,7 +126,7 @@
 
                                                     <div class="row my-2">
                                                         <div class="fw-semibold">{{ __('Date') }}</div>
-                                                        <div>{{ date("l, d m Y", strtotime($transaction->booking_date)) }}</div>
+                                                        <div>{{ date("l, d/m/Y", strtotime($transaction->booking_date)) }}</div>
                                                     </div>
                                                 </div>
 

@@ -40,6 +40,7 @@ class DetailMerchantController extends Controller
             $merchant       = Merchant::find($id_merchant);
             $review         = Review::where('merchant_id', $id_merchant)->first();
             $gallery        = $this->show_gallery($id_merchant);
+            // $reviews        = $this->show_reviews($id_merchant);
             $dataReview     = [];
             $dataImage      = [];
 
@@ -47,11 +48,14 @@ class DetailMerchantController extends Controller
                 return abort(404, 'Data Not Found!');
             }
             else {
+
                 if($review == null) {
                     $dataReview = null;
                 }
                 else {
                     $review = Review::where('merchant_id', $id_merchant)->get();
+                    // get image review
+
                     // dd($review);
                     foreach ($review as $item) {
                         $username = User::where('id', $item->user_id)->first();
@@ -86,6 +90,7 @@ class DetailMerchantController extends Controller
                     }
                 }
 
+                // return response ($dataReview, 200);
                 return view('customer.transaction.detailMerchant', [
                     'id'        => Crypt::encrypt($merchant->id),
                     'gallery'   => $gallery,
@@ -191,6 +196,50 @@ class DetailMerchantController extends Controller
             'data'      => $dataBersih,
         ];
         return response()->json($response, 200, [], JSON_PRETTY_PRINT);
+    }
+
+    public function show_review($id)
+    {
+        $review = Review::where('merchant_id', $id)->get();
+
+        if($review == null) {
+            $dataReview = null;
+        }
+        else {
+            foreach ($review as $item) {
+                $username = User::where('id', $item->user_id)->first();
+                $image_review = ReviewImage::where('review_id', $item->id)->first();
+                if($image_review == null) {
+                    $dataImage = null;
+                }
+                else {
+                    $image_review = ReviewImage::where('review_id', $item->id)->get();
+                    foreach ($image_review as $image) {
+                        $dataImage[] = [
+                            'id'        => $image->id,
+                            'image'     => $image->image,
+                        ];
+                    }
+                }
+                $avatar = $username->avatar;
+
+                if($avatar == null) {
+                    $username->avatar = 'assets/img/profile_picture.png';
+                }
+
+                $dataReview[] = [
+                    'id'                => $item['id'],
+                    'avatar'            => $username->avatar,
+                    'username'          => $username->username,
+                    'rating'            => $item['rating'],
+                    'review'            => $item['review'],
+                    'image_review'      => $dataImage,
+                    'created_at'        => $item['created_at'],
+                ];
+            }
+        }
+
+        return $dataReview;
     }
 
     public function show_rating($id)

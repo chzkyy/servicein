@@ -152,7 +152,14 @@ class TransactionController extends Controller
                                         ->orderBy('transaction.created_at', 'ASC')
                                         ->first();
 
-            $review     = Review::where('transaction_id', $transaction->id)->first();
+            $transaction_id  =Transaction::where('no_transaction', $id)->first();
+            $review     = Review::where('transaction_id', $transaction_id->id)->first();
+
+            if ($review) {
+                $review = $review;
+            } else {
+                $review = null;
+            }
 
             // menghapus password dari array $transaction
             unset($transaction->password);
@@ -161,6 +168,7 @@ class TransactionController extends Controller
                 return abort(404, 'Data Not Found!');
             }
             else {
+                // return response($review, 200);
                 return view('customer.transaction.detail-transaction',[
                     'merchant_id' => crypt::encrypt($transaction->merchant_id),
                     'transaction' => $transaction,
@@ -552,7 +560,7 @@ class TransactionController extends Controller
         $status                 = 'ON PROGRESS';
 
         $customer               = Customer::find($request->input('customer_id'));
-        $merchant_id            = Crypt::encrypt($request->input('merchant_id'));
+        $merchant_id            = Crypt::decrypt($request->input('merchant_id'));
         $user_id                = Merchant::find($merchant_id)->user_id;
 
         Transaction::where('no_transaction', $no_transaction)->update([

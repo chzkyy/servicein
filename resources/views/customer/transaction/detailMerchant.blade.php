@@ -147,7 +147,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -266,6 +266,13 @@
                                                                                     <div class="review mt-4">
                                                                                         {{ ucwords($r['review']) }}
                                                                                     </div>
+
+                                                                                    @if ( $r['image_review'] != null )
+                                                                                        <div class="review-image mt-2 col-md-6">
+                                                                                            <img src="{{ url($r['image_review'][0]['image']) }}"
+                                                                                                class="img-fluid  rounded rounded-5 img-thumbnail" alt="">
+                                                                                        </div>
+                                                                                    @endif
 
                                                                                     <div class="date mt-2 text-muted">
                                                                                         <small>

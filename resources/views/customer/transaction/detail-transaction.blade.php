@@ -307,7 +307,12 @@
         $('.input-images').imageUploader({
             imagesInputName: 'photos',
             maxSize: 2 * 1024 * 1024,
-            maxFiles: 3
+            maxFiles: 1,
+            label: 'Upload your photo',
+            extensions: ['.jpg', '.jpeg', '.png'],
+            mimes: ['image/jpeg', 'image/png'],
+            maxFileSize: 2 * 1024 * 1024,
+            allowedExtensions: ['jpg', 'jpeg', 'png']
         });
 
         $("input[type='file']").on("change", function () {
