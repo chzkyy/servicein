@@ -34,10 +34,11 @@ class NotificationController extends Controller
             return view('notifications.admin.index', [
                 'notif' => $notifications
             ]);
+        } else {
+            return view('notifications.index', [
+                'notif' => $notifications
+            ]);
         }
-        return view('notifications.index', [
-            'notif' => $notifications
-        ]);
     }
 
     public function view_admin()
