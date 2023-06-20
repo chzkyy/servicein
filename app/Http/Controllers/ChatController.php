@@ -358,12 +358,12 @@ class ChatController extends Controller
 
         $path        = public_path('assets/img/attachment/merchant/');
         $input_file->move($path, $filename);
-        $attachment = $input_file->get();
+
         $message    = Chat::create([
             'from'          => $request->input('from'),
             'to'            => $customer->user_id,
             'message'       => $request->input('message'),
-            'attachment'    => 'assets/img/attachment/merchant/'.$attachment,
+            'attachment'    => 'assets/img/attachment/merchant/'.$filename,
         ]);
 
         return response()->json([

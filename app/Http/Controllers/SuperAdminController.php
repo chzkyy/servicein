@@ -409,9 +409,13 @@ class SuperAdminController extends Controller
         $merchant   = Merchant::where('user_id', $user_id)->first();
 
         $data                 = MerchantBill::where('merchant_id', $merchant->id)->get();
-        $total_transaction    = $this->show_transaction($merchant->id);
+
 
         foreach( $data as $key => $value ) {
+            $total_transaction                  = Transaction::where('merchant_id', $merchant->id)
+                                                    ->where('status', 'DONE')
+                                                    ->where('created_at', 'LIKE', "%{$value->bills_date}%")
+                                                    ->count();
             $month                              = substr($value->bills_date, 0, 2);
             $data[$key]['no_bill']              = $value->no_bill;
             $data[$key]['bills_date']           = $month;
