@@ -107,6 +107,8 @@ class SuperAdminController extends Controller
                         'status_account' => 'active',
                     ]);
 
+        $this->send_notification_by_email($user_id, 'Activate Account', 'Your account has been activated by admin');
+
         return response()->json($id, 200);
     }
 
@@ -122,6 +124,8 @@ class SuperAdminController extends Controller
                     ->update([
                         'status_account' => 'suspended',
                     ]);
+
+        $this->send_notification_by_email($user_id, 'Suspend Account', 'Your account has been suspended by admin');
 
         return response()->json($data, 200);
     }
@@ -253,6 +257,8 @@ class SuperAdminController extends Controller
                             ->delete();
         $deleteMerchant = Merchant::where('id', $id)
                             ->delete();
+
+        $this->send_notification_by_email($user_id, 'Delete Account', 'Your account has been deleted by admin');
 
         return response()->json([
             'status'    => 'success',
@@ -580,6 +586,22 @@ class SuperAdminController extends Controller
         else {
             return $bill_no;
         }
+    }
+
+    public function send_notification_by_email($user_id, $title, $content)
+    {
+        $user = User::find($user_id);
+        $email = $user->email;
+
+        $maildata = [
+            'to'        => $email,
+            'subject'   => $title,
+            'body'      => $content,
+        ];
+
+        Mail::to($email)->send(new SendMail($maildata));
+
+        return response()->json(null, 201);
     }
 
 }
