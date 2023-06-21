@@ -158,9 +158,8 @@ class DeviceController extends Controller
     {
         $id = $request->id;
         $device = Device::findOrFail($id);
+        // soft delete
         $device->delete();
-
-        return $device;
-        // return back()->with('success', 'Device deleted successfully');
+        return back()->with('success', 'Device deleted successfully');
     }
 }
