@@ -312,7 +312,7 @@ Route::group(['prefix' => 'device'], function() {
         ->name('add-device')
         ->middleware(['auth','verified']);
 
-    Route::put('/remove/{id}', 'App\Http\Controllers\DeviceController@destroy')
+    Route::get('/remove/{id}', 'App\Http\Controllers\DeviceController@destroy')
         ->name('delete-device')
         ->middleware(['auth','verified']);
 
