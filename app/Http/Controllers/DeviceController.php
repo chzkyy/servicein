@@ -160,8 +160,9 @@ class DeviceController extends Controller
         $id        = $request->input('id');
 
         // delete the device
-        Devce::find($id)->delete();
+        $device = Devce::find($id)->delete();
 
-        return back()->with('success', 'Device deleted successfully');
+        // return back()->with('success', 'Device deleted successfully');
+        return response($device, 200);
     }
 }
