@@ -231,8 +231,12 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/device/remove/' + id,
-                        type: 'GET',
+                        url: '/device/remove/',
+                        type: 'POST',
+                        data: {
+                            '_token': '{{ csrf_token() }}',
+                            'id': id
+                        },
                         success: function() {
                             Swal.fire(
                                 'Deleted!',

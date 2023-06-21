@@ -307,15 +307,14 @@ Route::group(['prefix' => 'device'], function() {
     Route::get('/list', 'App\Http\Controllers\DeviceController@getDevice')
         ->name('get-list-device')
         ->middleware(['auth', 'verified']);
-        
-    Route::get('/remove/{id}', 'App\Http\Controllers\DeviceController@destroy')
+
+    Route::post('/remove', 'App\Http\Controllers\DeviceController@destroy')
         ->name('delete-device')
         ->middleware(['auth','verified']);
 
     Route::post('/add', 'App\Http\Controllers\DeviceController@store')
         ->name('add-device')
         ->middleware(['auth','verified']);
-
 
     Route::post('/update', 'App\Http\Controllers\DeviceController@update')
         ->name('edit-device')
