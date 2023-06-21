@@ -156,13 +156,11 @@ class DeviceController extends Controller
 
     public function destroy(Request $request)
     {
-        $user_id   = auth()->user()->id;
-        // $id        = $request->input('id');
-        $id        = $request->device;
-        $device    = Device::findOrFail($id);
-        // $device->delete();
-        $device->forceDelete();
-        return response()->json($device);
+        $id = $request->id;
+        $device = Device::findOrFail($id);
+        $device->delete();
+
+        return $device;
         // return back()->with('success', 'Device deleted successfully');
     }
 }
