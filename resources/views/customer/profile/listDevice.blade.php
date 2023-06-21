@@ -232,10 +232,11 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         url: '/device/remove/'+id,
-                        type: 'delete',
+                        type: 'post',
                         data: {
                             _token: '{{ csrf_token() }}',
-                            _method: 'DELETE'
+                            _method: 'DELETE',
+                            device : id
                         },
                         success: function() {
                             Swal.fire(
