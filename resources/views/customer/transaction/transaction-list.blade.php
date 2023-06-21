@@ -43,7 +43,7 @@
                                     </label>
 
                                     <label>
-                                        <input type="radio" name="status" id="status" class="card-input-element" value="COMPLETED"/>
+                                        <input type="radio" name="status" id="status" class="card-input-element" value="DONE"/>
                                         <div class="card card-default card-input shadow shadow-md">
                                             <div class="card-header">Completed</div>
                                         </div>
