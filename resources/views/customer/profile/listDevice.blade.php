@@ -232,7 +232,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         url: '/device/remove/'+id,
-                        type: 'post',
+                        type: 'delete',
                         data: {
                             _token: '{{ csrf_token() }}',
                             _method: 'DELETE'
