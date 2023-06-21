@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<section class="mt-5 pt-md-5 min-vh-10087667890-=u90-='2332w]jbv       '>
+<section class="mt-5 pt-md-5 min-vh-100'>
     <div class="container-fluid">
         <div class="container">
             <div class="col-md-12">
