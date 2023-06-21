@@ -300,6 +300,10 @@ Route::group(['prefix' => 'profile'], function() {
 
 
 Route::group(['prefix' => 'device'], function() {
+    Route::get('/remove/{id}', 'App\Http\Controllers\DeviceController@destroy')
+        ->name('delete-device')
+        ->middleware(['auth','verified']);
+        
     Route::get('/', 'App\Http\Controllers\DeviceController@show')
         ->name('list-device')
         ->middleware(['auth', 'verified']);
@@ -307,10 +311,6 @@ Route::group(['prefix' => 'device'], function() {
     Route::get('/list', 'App\Http\Controllers\DeviceController@getDevice')
         ->name('get-list-device')
         ->middleware(['auth', 'verified']);
-
-    Route::get('/remove/{id}', 'App\Http\Controllers\DeviceController@destroy')
-        ->name('delete-device')
-        ->middleware(['auth','verified']);
 
     Route::post('/add', 'App\Http\Controllers\DeviceController@store')
         ->name('add-device')
