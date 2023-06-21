@@ -235,7 +235,7 @@
                         type: 'post',
                         data: {
                             _token: '{{ csrf_token() }}',
-                            _method: 'DELETE',
+                            _method: 'POST',
                             device : id
                         },
                         success: function() {
