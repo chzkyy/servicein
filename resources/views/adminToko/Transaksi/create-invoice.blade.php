@@ -292,48 +292,6 @@
                             action: function(e, dt, node, config) {
 
                                 $('#addInvoice').modal('show');
-                                $('#addItems').click(function() {
-                                    var desc  = $('#item_desc').val();
-                                    var price = $('#item_price').val();
-
-                                    if (desc == "" || price == "") {
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Oops...',
-                                            text: 'Please fill all the fields!',
-                                        })
-                                    } else{
-                                        $.ajax({
-                                            url: "{{ route('add-invoice') }}",
-                                            type: "POST",
-                                            data: {
-                                                "_token": "{{ csrf_token() }}",
-                                                "no_transaction": "{{ $transaction['no_transaction'] }}",
-                                                "transaction_desc": desc,
-                                                "transaction_price": price
-                                            },
-                                            dataType: "JSON",
-                                            success: function(res) {
-                                                RefreshTable('#invoice-list', "{{ route('get-invoice') }}");
-                                                if (res.status == 200) {
-                                                    Swal.fire({
-                                                        icon: 'success',
-                                                        title: 'Success',
-                                                        text: 'Item has been added!',
-                                                    }).then((result) => {
-                                                        if (result.isConfirmed) {
-                                                            $('#addInvoice').modal('hide');
-                                                            // reset values
-                                                            $('#item_desc').val('');
-                                                            $('#item_price').val('');
-                                                            // console.log(desc +' '+ price);
-                                                        }
-                                                    })
-                                                }
-                                            }
-                                        });
-                                    }
-                                });
                             }
                         },
                         {
@@ -492,6 +450,48 @@
             });
 
         }
+
+        $('#addItems').click(function() {
+            var desc  = $('#item_desc').val();
+            var price = $('#item_price').val();
+
+            if (desc == "" || price == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please fill all the fields!',
+                })
+            } else{
+                $.ajax({
+                    url: "{{ route('add-invoice') }}",
+                    type: "POST",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "no_transaction": "{{ $transaction['no_transaction'] }}",
+                        "transaction_desc": desc,
+                        "transaction_price": price
+                    },
+                    dataType: "JSON",
+                    success: function(res) {
+                        if (res.status == 200) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Item has been added!',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $('#addInvoice').modal('hide');
+                                    // reset values
+                                    $('#item_desc').val('');
+                                    $('#item_price').val('');
+                                    // console.log(desc +' '+ price);
+                                }
+                            })
+                        }
+                    }
+                });
+            }
+        });
     </script>
 @endsection
 
