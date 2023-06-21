@@ -241,6 +241,9 @@
                             ).then((result) => {
                                 location.reload();
                             });
+                        },
+                        error : function(err) {
+                            console.log(err);
                         }
                     });
                 }
