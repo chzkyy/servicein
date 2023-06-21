@@ -213,7 +213,7 @@
                                                             <option value=""></option>
                                                             <option value="DONE">{{ __('Done') }}</option>
                                                             <option value="ON PROGRESS">{{ __('On Progress') }}</option>
-                                                            <option value="CANCELLED">{{ __('Cancle') }}</option>
+                                                            <option value="CANCELLED">{{ __('Cancel') }}</option>
                                                         </select>
 
                                                         <div class="btn-sv my-4">

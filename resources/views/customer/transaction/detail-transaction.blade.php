@@ -178,7 +178,7 @@
                                                         <form action="{{ route('cancel-booking') }}" method="POST">
                                                             @csrf
                                                             <input type="hidden" name="no_transaction" value="{{ $transaction->no_transaction }}">
-                                                            <button type="button" id="cancleBtn" class="btn btn-custome text-decoration-none text-white fw-bold">{{ __('Cancle Booking') }}</button>
+                                                            <button type="button" id="cancleBtn" class="btn btn-custome text-decoration-none text-white fw-bold">{{ __('Cancel Booking') }}</button>
                                                         </form>
                                                     </div>
                                                 @elseif ($transaction->status == 'DONE')
