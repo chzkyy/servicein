@@ -231,7 +231,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/device/remove/'+id,
+                        url: '/device/remove',
                         type: 'post',
                         data: {
                             _token: '{{ csrf_token() }}',
