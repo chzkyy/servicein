@@ -308,7 +308,7 @@ Route::group(['prefix' => 'device'], function() {
         ->name('get-list-device')
         ->middleware(['auth', 'verified']);
 
-    Route::post('/remove', 'App\Http\Controllers\DeviceController@destroy')
+    Route::get('/remove/{id}', 'App\Http\Controllers\DeviceController@destroy')
         ->name('delete-device')
         ->middleware(['auth','verified']);
 

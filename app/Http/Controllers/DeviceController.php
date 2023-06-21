@@ -154,14 +154,15 @@ class DeviceController extends Controller
         return back()->with('success', 'Device updated successfully');
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
         $user_id   = auth()->user()->id;
-        $id        = $request->input('id');
+        // $id        = $request->input('id');
+        $device = Device::where('id', $id)->first();
 
-        // delete the device
-        $device = Device::where('user_id', $user_id)->where('id', $id)->delete();
-        
+        // delete data
+        $device->delete();
+
         // return back()->with('success', 'Device deleted successfully');
         return response($device, 200);
     }
