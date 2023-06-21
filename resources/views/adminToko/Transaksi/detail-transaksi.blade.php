@@ -103,13 +103,11 @@
                                                     <div class="row my-2">
                                                         <div class="fw-semibold">{{ __('Birth Date') }}</div>
                                                         {{--  check bod == null atau tidak --}}
-
-
                                                         <div>
-                                                            @if ($transaction->bod == null)
+                                                            @if ($transaction->dob == null)
                                                                 {{ __('-') }}
                                                             @else
-                                                                {{ date("d M Y", strtotime($transaction->bod)) }}
+                                                                {{ date("d M Y", strtotime($transaction->dob)) }}
                                                             @endif
                                                         </div>
                                                     </div>
