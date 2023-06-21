@@ -359,67 +359,79 @@
 
             // console.log(file);
             // if file tidak ditemukan
-            if(file != undefined) {
-                if(file.size > 2000000) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'File size must be less than 2 MB!',
-                    })
-
-                    return false;
-                }
-
-                $.ajax({
-                    url : "{{ route('add-review') }}",
-                    type : "POST",
-                    data : formData,
-                    contentType: false,
-                    processData: false,
-                    success : function(response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: 'Your review has been added!',
-                        }).then((result) => {
-                            // reload the page
-                            location.reload();
-                        });
-                    },
-                    error : function(xhr) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Something went wrong!',
-                        })
-                    }
+            if ( reting == '' || review == '' ) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please fill all the fields!',
                 })
+
+                return false;
             }
             else {
-                $.ajax({
-                    url : "{{ route('add-review') }}",
-                    type : "POST",
-                    data : formData,
-                    contentType: false,
-                    processData: false,
-                    success : function(response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: 'Your review has been added!',
-                        }).then((result) => {
-                            // reload the page
-                            location.reload();
-                        });
-                    },
-                    error : function(xhr) {
+
+                if(file != undefined) {
+                    if(file.size > 2000000) {
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Something went wrong!',
+                            text: 'File size must be less than 2 MB!',
                         })
+
+                        return false;
                     }
-                })
+
+                    $.ajax({
+                        url : "{{ route('add-review') }}",
+                        type : "POST",
+                        data : formData,
+                        contentType: false,
+                        processData: false,
+                        success : function(response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Your review has been added!',
+                            }).then((result) => {
+                                // reload the page
+                                location.reload();
+                            });
+                        },
+                        error : function(xhr) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!',
+                            })
+                        }
+                    })
+                }
+                else {
+                    $.ajax({
+                        url : "{{ route('add-review') }}",
+                        type : "POST",
+                        data : formData,
+                        contentType: false,
+                        processData: false,
+                        success : function(response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Your review has been added!',
+                            }).then((result) => {
+                                // reload the page
+                                location.reload();
+                            });
+                        },
+                        error : function(xhr) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!',
+                            })
+                        }
+                    })
+                }
             }
         });
     </script>

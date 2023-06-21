@@ -357,17 +357,18 @@ class TransactionController extends Controller
 
         $data        = [];
 
-        if ( $status == 'ALL' )
+        if ( $status != "ALL" )
         {
             $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
                                         ->join('device', 'device.id', '=', 'booking.device_id')
                                         ->join('merchant', 'merchant.id', '=', 'booking.merchant_id')
                                         ->join('customer', 'customer.user_id', '=', 'transaction.user_id')
                                         ->where('merchant.id', $merchant_id->id)
+                                        ->where('transaction.status', 'LIKE', '%'.$status.'%')
                                         ->orderBy('transaction.created_at', 'DESC')
                                         ->get();
-
-        } elseif ( $status == 'ON PROGRESS' )
+        }
+        elseif ( $status == "ON PROGRESS" )
         {
             $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
                                         ->join('device', 'device.id', '=', 'booking.device_id')
@@ -379,13 +380,13 @@ class TransactionController extends Controller
                                         ->orderBy('transaction.created_at', 'DESC')
                                         ->get();
 
-        } else {
+        } else
+        {
             $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
                                         ->join('device', 'device.id', '=', 'booking.device_id')
                                         ->join('merchant', 'merchant.id', '=', 'booking.merchant_id')
                                         ->join('customer', 'customer.user_id', '=', 'transaction.user_id')
                                         ->where('merchant.id', $merchant_id->id)
-                                        ->where('transaction.status', $status)
                                         ->orderBy('transaction.created_at', 'DESC')
                                         ->get();
         }
