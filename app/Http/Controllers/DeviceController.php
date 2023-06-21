@@ -158,9 +158,10 @@ class DeviceController extends Controller
     {
         $user_id   = auth()->user()->id;
         $id        = $request->input('id');
-        $device    = Device::where('user_id', $user_id)->where('id', $id)->first();
-        // delete device
-        $device->delete();
+
+        // delete the device
+        Devce::where('user_id', $user_id)->where('id', $id)->delete();
+
         return back()->with('success', 'Device deleted successfully');
     }
 }
