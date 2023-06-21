@@ -158,9 +158,7 @@ class DeviceController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->id;
-        $device = Device::findOrFail($id);
-        // soft delete
-        $device->softDeletes();
+        $device = Device::destroy($id);
         return back()->with('success', 'Device deleted successfully');
     }
 }
