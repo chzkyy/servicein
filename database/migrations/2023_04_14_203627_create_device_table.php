@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('serial_number');
             $table->string('device_picture')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

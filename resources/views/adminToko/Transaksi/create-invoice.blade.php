@@ -474,6 +474,7 @@
                     dataType: "JSON",
                     success: function(res) {
                         if (res.status == 200) {
+                            RefreshTable('#invoice-list', "{{ route('get-invoice') }}");
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Success',
