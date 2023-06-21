@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DeviceController extends Controller
 {
@@ -159,7 +160,7 @@ class DeviceController extends Controller
         $id = $request->id;
         $device = Device::findOrFail($id);
         // soft delete
-        $device->delete();
+        $device->softDeletes();
         return back()->with('success', 'Device deleted successfully');
     }
 }

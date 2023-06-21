@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Device extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'device';
 
@@ -24,7 +26,7 @@ class Device extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
+
     public function booking()
     {
         return $this->hasMany(Booking::class, 'device_id');
