@@ -160,7 +160,8 @@ class DeviceController extends Controller
         // $id        = $request->input('id');
         $id        = $request->device;
         $device    = Device::findOrFail($id);
-        $device->delete();
-        return back()->with('success', 'Device deleted successfully');
+        // $device->delete();
+        return response()->json($device);
+        // return back()->with('success', 'Device deleted successfully');
     }
 }
