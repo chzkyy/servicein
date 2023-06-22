@@ -89,7 +89,11 @@
                                                 {{ ucwords($transaction->merchant_name) }}
                                             </div>
                                             <div class="col-md-4 txt-gold fs-6 mt-1">
-                                                {{ date('d M Y',strtotime($transaction->waranty)) }}
+                                                @if ( $transaction->waranty == null )
+                                                    {{ __('-') }}
+                                                @else
+                                                    {{ date('d M Y',strtotime($transaction->waranty)) }}
+                                                @endif
                                             </div>
                                         @endif
 
@@ -100,7 +104,9 @@
                                             </div>
                                         @elseif ($transaction->status == 'DONE')
                                             <div class="col-md-12 mt-3 mb-4">
-                                                <a href="{{ route('view-invoice-customer', ['id' => $transaction->no_transaction]) }}" class="btn btn-custome text-decoration-none text-white fw-bold">{{ __('View Invoice') }}</a>
+                                                @if ( $transaction->waranty != null )
+                                                    <a href="{{ route('view-invoice-customer', ['id' => $transaction->no_transaction]) }}" class="btn btn-custome text-decoration-none text-white fw-bold">{{ __('View Invoice') }}</a>
+                                                @endif
                                             </div>
                                         @endif
 

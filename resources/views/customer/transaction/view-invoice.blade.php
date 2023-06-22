@@ -48,7 +48,11 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="txt-gold fw-semibold fs-6">{{ __('Warranty') }}</div>
-                                                        <div class="txt-black">{{ date("d M Y", strtotime($transaction->waranty)) }}</div>
+                                                        @if ( $transaction->waranty == null)
+                                                            {{ __('-') }}
+                                                        @else
+                                                            <div class="txt-black">{{ date("d M Y", strtotime($transaction->waranty)) }}</div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
