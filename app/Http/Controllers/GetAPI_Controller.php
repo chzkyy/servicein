@@ -114,7 +114,7 @@ class GetAPI_Controller extends Controller
                 'latitude'          => $item['latitude'],
                 'longitude'         => $item['longitude'],
                 'email'             => $item['email'],
-                'jarak'             => $jarak[$i],
+                'jarak'             => $jarak[$i]['rows'][0]['elements'][0]['distance']['text'],
                 'percentage'        => $percentage,
                 'rating'            => $rating,
                 'gallery'           => $gallery,
