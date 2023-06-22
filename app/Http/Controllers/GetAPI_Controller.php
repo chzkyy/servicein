@@ -72,16 +72,16 @@ class GetAPI_Controller extends Controller
                 $destination = $lat . "," . $lng;
                 $dataJarak   = GetAPI::getMatrix($destination, $origin);
                 // $dataJarak = json_decode($data, true);
-                $jarak[]    = $dataJarak;
+                // $jarak[]    = $dataJarak;
 
-                // if ( $dataJarak['rows'][0]['elements'][0]['status'] == 'OK' )
-                // {
-                //     $jarak[] = $dataJarak['rows'][0]['elements'][0]['distance']['text'];
-                // }
-                // else
-                // {
-                //     $jarak[] = "- KM";
-                // }
+                if ( $dataJarak['rows'][0]['elements'][0]['status'] == 'OK' )
+                {
+                    $jarak[] = $dataJarak['rows'][0]['elements'][0]['distance']['text'];
+                }
+                else
+                {
+                    $jarak[] = "- KM";
+                }
             }
         }
         else {
@@ -89,7 +89,6 @@ class GetAPI_Controller extends Controller
         }
 
         // mapping data merchant
-
         $dataBersih = [];
         $i = 0;
 
@@ -101,38 +100,32 @@ class GetAPI_Controller extends Controller
             // get gallery
             $gallery = $this->show_gallery($item['id']);
 
-            if ( $percentage <= 100 )
-            {
-                $dataBersih[] = [
-                    // encrypt id dengan panjang data 10 characters
-                    'status_account'    => $item['status_account'],
-                    'id'                => Crypt::encrypt($item['id']),
-                    'user_id'           => Crypt::encrypt($item['user_id']),
-                    'merchant_name'     => ucwords($item['merchant_name']),
-                    'merchant_desc'     => ucfirst($item['merchant_desc']),
-                    'merchant_address'  => $item['merchant_address'],
-                    'open_hour'         => $item['open_hour'],
-                    'close_hour'        => $item['close_hour'],
-                    'phone_number'      => $item['phone_number'],
-                    'latitude'          => $item['latitude'],
-                    'longitude'         => $item['longitude'],
-                    'email'             => $item['email'],
-                    'jarak'             => $jarak[$i],
-                    'percentage'        => $percentage,
-                    'rating'            => $rating,
-                    'gallery'           => $gallery,
-                ];
-                $i++;
-
-            }
-
-
+            $dataBersih[] = [
+                // encrypt id dengan panjang data 10 characters
+                'status_account'    => $item['status_account'],
+                'id'                => Crypt::encrypt($item['id']),
+                'user_id'           => Crypt::encrypt($item['user_id']),
+                'merchant_name'     => ucwords($item['merchant_name']),
+                'merchant_desc'     => ucfirst($item['merchant_desc']),
+                'merchant_address'  => $item['merchant_address'],
+                'open_hour'         => $item['open_hour'],
+                'close_hour'        => $item['close_hour'],
+                'phone_number'      => $item['phone_number'],
+                'latitude'          => $item['latitude'],
+                'longitude'         => $item['longitude'],
+                'email'             => $item['email'],
+                'jarak'             => strtoupper($jarak[$i]),
+                'percentage'        => $percentage,
+                'rating'            => $rating,
+                'gallery'           => $gallery,
+            ];
+            $i++;
         }
 
         // mengurutkan data berdasarkan jarak terdekat
-        // $jarak = array_map(function($v){
-        //     return floatval(str_replace(',', '', $v));
-        // }, $jarak);
+        $jarak = array_map(function($v){
+            return floatval(str_replace(',', '', $v));
+        }, $jarak);
 
         //create response
         $response = [
