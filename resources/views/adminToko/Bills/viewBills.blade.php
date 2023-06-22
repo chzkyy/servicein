@@ -177,7 +177,8 @@
         $(document).ready(function() {
 
             $('#send_proof').on('click', function() {
-                if ( $("input[type='file']")[0].file[0] == '') {
+                // file upload kosong
+                if ( $('#file').val() == '') {
                     Swal.alert({
                         title: 'Error!',
                         text: 'Please upload your proof.',
