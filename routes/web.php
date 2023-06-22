@@ -97,6 +97,10 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')
     ->name('home');
 
 
+Route::get('/faq', 'App\Http\Controllers\HomeController@faq')
+    ->name('faq');
+
+
 Route::get('/admin', 'App\Http\Controllers\TransactionController@show_transaction_merchant')
     ->name('dashboard-merchant')
     ->middleware(['auth', 'verified', 'merchant']);

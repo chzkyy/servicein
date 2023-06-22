@@ -61,4 +61,8 @@ class HomeController extends Controller
             }
         }
     }
+
+    public function faq() {
+        return view('policy.faq');
+    }
 }

@@ -116,6 +116,9 @@
                                     <a class="dropdown-item" href="{{ route('show-transaction') }}">Transaction List</a>
                                 @endif
                             </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('faq') }}">FAQ</a>
+                            </li>
                             <hr>
                             <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
