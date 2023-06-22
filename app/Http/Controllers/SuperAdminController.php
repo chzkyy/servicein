@@ -164,6 +164,7 @@ class SuperAdminController extends Controller
             $data['email']              = $value->email;
             $data['status']             = $merchant_bill['status'];
             $data['bill_date']          = $bill_date;
+            $data['no_bill']            = $merchant_bill['no_bill'];
             $data['proof_of_payment']   = $merchant_bill['proof_of_payment'];
 
         }
