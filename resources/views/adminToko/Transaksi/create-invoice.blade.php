@@ -23,7 +23,7 @@
                                 <h4 class="card-title fw-bold text-center">{{ __('Invoice') }}</h4>
                             </div>
                             <div class="card-body navbar-bg">
-                                <img class="img-fluid ml-5" src="{{ url('assets/img/logo.png') }}" alt="">
+                                <img class="img-fluid ml-5" src="{{ url('assets/img/Logo.png') }}" alt="">
                             </div>
                             <div class="card-body">
                                 <div class="container">

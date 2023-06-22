@@ -22,7 +22,7 @@
                                 <h4 class="card-title fw-bold text-center">{{ __('Monthly Bill') }}</h4>
                             </div>
                             <div class="card-body navbar-bg">
-                                <img class="img-fluid ml-5" src="{{ url('assets/img/logo.png') }}" alt="">
+                                <img class="img-fluid ml-5" src="{{ url('assets/img/Logo.png') }}" alt="">
                             </div>
                             <div class="card-body">
                                 <div class="container">
@@ -179,7 +179,7 @@
             $('#send_proof').on('click', function() {
                 // file upload kosong
                 if ( $('#file').val() == '') {
-                    Swal.alert({
+                    Swal.fire({
                         title: 'Error!',
                         text: 'Please upload your proof.',
                         icon: 'error',
