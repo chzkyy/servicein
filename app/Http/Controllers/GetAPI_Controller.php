@@ -130,9 +130,9 @@ class GetAPI_Controller extends Controller
         }
 
         // mengurutkan data berdasarkan jarak terdekat
-        $jarak = array_map(function($v){
-            return floatval(str_replace(',', '', $v));
-        }, $jarak);
+        // $jarak = array_map(function($v){
+        //     return floatval(str_replace(',', '', $v));
+        // }, $jarak);
 
         //create response
         $response = [
