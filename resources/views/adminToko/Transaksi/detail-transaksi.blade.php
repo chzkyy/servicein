@@ -194,11 +194,20 @@
                                                 </div>
 
                                                 <div class="col-md-3 my-4">
-                                                    <p class="fw-semibold txt-gold">{{ __('Status Confirmation') }}</p>
+                                                    <p class="fw-semibold txt-gold">{{ __('Detail Transaction') }}</p>
 
                                                     <div class="row my-2">
-                                                        <div class="fw-semibold">{{ __('Status') }}</div>
+                                                        <div class="fw-semibold">{{ __('Status Confirmation') }}</div>
                                                         <div>{{ $status_confirmation }}</div>
+                                                    </div>
+
+                                                    <div class="row my-2">
+                                                        <div class="fw-semibold">{{ __('Warranty') }}</div>
+                                                        @if ($transaction->warranty == null)
+                                                            <div>{{ __('-') }}</div>
+                                                        @else
+                                                            <div>{{ $warranty }}</div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
