@@ -72,16 +72,15 @@ class GetAPI_Controller extends Controller
                 $destination = $lat . "," . $lng;
                 $dataJarak   = GetAPI::getMatrix($destination, $origin);
                 // $dataJarak = json_decode($data, true);
-                $jarak[]    = $dataJarak;
-
-                // if ( $dataJarak['rows'][0]['elements'][0]['status'] == 'OK' )
-                // {
-                //     $jarak[] = $dataJarak['rows'][0]['elements'][0]['distance']['text'];
-                // }
-                // else
-                // {
-                //     $jarak[] = "- KM";
-                // }
+                // $jarak[]    = $dataJarak;
+                if ( $dataJarak['rows'][0]['elements'][0]['status'] == 'OK' )
+                {
+                    $jarak[] = $dataJarak['rows'][0]['elements'][0]['distance']['text'];
+                }
+                else
+                {
+                    $jarak[] = "- KM";
+                }
             }
         }
         else {
@@ -114,7 +113,7 @@ class GetAPI_Controller extends Controller
                 'latitude'          => $item['latitude'],
                 'longitude'         => $item['longitude'],
                 'email'             => $item['email'],
-                'jarak'             => print_r($jarak[$i]),
+                'jarak'             => strtoupper($jarak[$i]),
                 'percentage'        => $percentage,
                 'rating'            => $rating,
                 'gallery'           => $gallery,
