@@ -109,29 +109,28 @@ class DetailMerchantController extends Controller
         // get data from getJarak
         $data         = GetAPI::merchant();
         //send request to model
-        $dataInput    = $request->input('origin');
+        // $dataInput    = $request->input('origin');
+        $origin       = $request->input('origin');
         $id_merchant  = $request->input('merchant_id');
         $id_merchant  = Crypt::decrypt($id_merchant);
 
-        $origin       = explode(",", $dataInput);
+        // $origin       = explode(",", $dataInput);
         $jarak        = [];
 
         // hitung panjang karakter dari titik
-        $pGeoOrigin = strlen($origin[0]) - strlen(substr($origin[0], 0, -7));
+        // $pGeoOrigin = strlen($origin[0]) - strlen(substr($origin[0], 0, -7));
 
-        if ( $pGeoOrigin != 6 )
-        {
-            // membatasi panjang karakter di belakang titik (6 karakter)
-            $origin = substr($origin[0], 0, -7) . "," . substr($origin[1], 0, -7);
-        }
+        // if ( $pGeoOrigin != 6 )
+        // {
+        //     // membatasi panjang karakter di belakang titik (6 karakter)
+        //     $origin = substr($origin[0], 0, -7) . "," . substr($origin[1], 0, -7);
+        // }
 
         if( $origin != null )
         {
             foreach ($data as $key) {
-                $lat = $key['latitude'];
-                $lng = $key['longitude'];
-                $destination = $lat . "," . $lng;
-                $dataJarak = GetAPI::getMatrix($destination, $origin);
+                $destination = $key['latitude'] . "," . $key['longitude'];
+                $dataJarak   = GetAPI::getMatrix($destination, $origin);
                 // $dataJarak = json_decode($data, true);
 
                 if ( $dataJarak['rows'][0]['elements'][0]['status'] == 'OK' )
