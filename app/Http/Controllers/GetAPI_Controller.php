@@ -53,7 +53,7 @@ class GetAPI_Controller extends Controller
         $dataInput  = $request->input('origin');
         $origin     = explode(",", $dataInput);
         $jarak      = [];
-
+        $i          = 0;
 
         // hitung panjang karakter dari titik
         $pGeoOrigin = strlen($origin[0]) - strlen(substr($origin[0], 0, -7));
@@ -70,8 +70,9 @@ class GetAPI_Controller extends Controller
                 $lat = $key['latitude'];
                 $lng = $key['longitude'];
                 $destination = $lat . "," . $lng;
-                $dataJarak = GetAPI::getMatrix($destination, $origin);
+                $dataJarak   = GetAPI::getMatrix($destination, $origin);
                 // $dataJarak = json_decode($data, true);
+                // $jarak[]    = $dataJarak;
 
                 if ( $dataJarak['rows'][0]['elements'][0]['status'] == 'OK' )
                 {
@@ -81,7 +82,6 @@ class GetAPI_Controller extends Controller
                 {
                     $jarak[] = "- KM";
                 }
-                // $jarak[] = $dataJarak;
             }
         }
         else {
@@ -96,33 +96,37 @@ class GetAPI_Controller extends Controller
         foreach ($data as $item) {
             // get percentage
             $percentage = $this->show_percentage($item['user_id']);
-
             // get rating
             $rating = $this->show_rating($item['id']);
-
             // get gallery
             $gallery = $this->show_gallery($item['id']);
 
-            $dataBersih[] = [
-                // encrypt id dengan panjang data 10 characters
-                'status_account'    => $item['status_account'],
-                'id'                => Crypt::encrypt($item['id']),
-                'user_id'           => Crypt::encrypt($item['user_id']),
-                'merchant_name'     => ucwords($item['merchant_name']),
-                'merchant_desc'     => ucfirst($item['merchant_desc']),
-                'merchant_address'  => $item['merchant_address'],
-                'open_hour'         => $item['open_hour'],
-                'close_hour'        => $item['close_hour'],
-                'phone_number'      => $item['phone_number'],
-                'latitude'          => $item['latitude'],
-                'longitude'         => $item['longitude'],
-                'email'             => $item['email'],
-                'jarak'             => strtoupper($jarak[$i]),
-                'percentage'        => $percentage,
-                'rating'            => $rating,
-                'gallery'           => $gallery,
-            ];
-            $i++;
+            if ( $percentage <= 100 )
+            {
+                $dataBersih[] = [
+                    // encrypt id dengan panjang data 10 characters
+                    'status_account'    => $item['status_account'],
+                    'id'                => Crypt::encrypt($item['id']),
+                    'user_id'           => Crypt::encrypt($item['user_id']),
+                    'merchant_name'     => ucwords($item['merchant_name']),
+                    'merchant_desc'     => ucfirst($item['merchant_desc']),
+                    'merchant_address'  => $item['merchant_address'],
+                    'open_hour'         => $item['open_hour'],
+                    'close_hour'        => $item['close_hour'],
+                    'phone_number'      => $item['phone_number'],
+                    'latitude'          => $item['latitude'],
+                    'longitude'         => $item['longitude'],
+                    'email'             => $item['email'],
+                    'jarak'             => strtoupper($jarak[$i]),
+                    'percentage'        => $percentage,
+                    'rating'            => $rating,
+                    'gallery'           => $gallery,
+                ];
+                $i++;
+
+            }
+
+
         }
 
         // mengurutkan data berdasarkan jarak terdekat

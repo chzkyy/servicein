@@ -43,44 +43,39 @@ class GetAPI extends Model
             $item->geo_location = $geo;
         }
 
-        // mapping data to array
+        // check status account active
         foreach ($data as $item) {
-
-            // check status account active
-            if ($item->status_account == 'active') {
-                if ( $item->geo_location[0] != '-' ) {
-                    $dataBersih[] = [
-                        'status_account'    => $item->status_account,
-                        'id'                => $item->id,
-                        'user_id'           => $item->user_id,
-                        'merchant_name'     => $item->merchant_name,
-                        'merchant_desc'     => $item->merchant_desc,
-                        'merchant_address'  => $item->merchant_address,
-                        'open_hour'         => $item->open_hour,
-                        'close_hour'        => $item->close_hour,
-                        'phone_number'      => $item->phone_number,
-                        'latitude'          => $item->geo_location[0],
-                        'longitude'         => $item->geo_location[1],
-                        'email'             => $item->email,
-                    ];
-                }
-                else {
-                    $dataBersih[] = [
-                        'status_account'    => $item->status_account,
-                        'id'                => $item->id,
-                        'user_id'           => $item->user_id,
-                        'merchant_name'     => $item->merchant_name,
-                        'merchant_desc'     => $item->merchant_desc,
-                        'merchant_address'  => $item->merchant_address,
-                        'open_hour'         => $item->open_hour,
-                        'close_hour'        => $item->close_hour,
-                        'phone_number'      => $item->phone_number,
-                        'latitude'          => null,
-                        'longitude'         => null,
-                        'email'             => $item->email,
-                    ];
-                }
-
+            if ( $item->geo_location[0] != '-' ) {
+                $dataBersih[] = [
+                    'status_account'    => $item->status_account,
+                    'id'                => $item->id,
+                    'user_id'           => $item->user_id,
+                    'merchant_name'     => $item->merchant_name,
+                    'merchant_desc'     => $item->merchant_desc,
+                    'merchant_address'  => $item->merchant_address,
+                    'open_hour'         => $item->open_hour,
+                    'close_hour'        => $item->close_hour,
+                    'phone_number'      => $item->phone_number,
+                    'latitude'          => $item->geo_location[0],
+                    'longitude'         => $item->geo_location[1],
+                    'email'             => $item->email,
+                ];
+            }
+            else {
+                $dataBersih[] = [
+                    'status_account'    => $item->status_account,
+                    'id'                => $item->id,
+                    'user_id'           => $item->user_id,
+                    'merchant_name'     => $item->merchant_name,
+                    'merchant_desc'     => $item->merchant_desc,
+                    'merchant_address'  => $item->merchant_address,
+                    'open_hour'         => $item->open_hour,
+                    'close_hour'        => $item->close_hour,
+                    'phone_number'      => $item->phone_number,
+                    'latitude'          => null,
+                    'longitude'         => null,
+                    'email'             => $item->email,
+                ];
             }
 
         }
