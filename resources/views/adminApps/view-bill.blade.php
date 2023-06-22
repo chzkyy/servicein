@@ -120,6 +120,7 @@
                             _token: "{{ csrf_token() }}",
                             merchant_id: "{{ $merchant['merchant_id'] }}",
                             approved_by: "{{ Auth::user()->username }}",
+                            no_bill: "{{ $merchant['no_bill'] }}",
                             reason: $('#reason').val(),
                         },
                         success: function(data){
@@ -158,6 +159,7 @@
                             merchant_id: "{{ $merchant['merchant_id'] }}",
                             approved_by: "{{ Auth::user()->username }}",
                             reason: $('#reason').val(),
+                            no_bill: "{{ $merchant['no_bill'] }}",
                         },
                         success: function(data){
                             Swal.fire(

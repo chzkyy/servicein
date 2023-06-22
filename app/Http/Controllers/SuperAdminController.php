@@ -348,7 +348,8 @@ class SuperAdminController extends Controller
     public function approved(Request $request)
     {
         $merchant_id        = Crypt::decrypt($request->input('merchant_id'));
-        $data               = MerchantBill::where('merchant_id', $merchant_id)
+        $no_bill            = $request->input('no_bill');
+        $data               = MerchantBill::where('no_bill', $no_bill)
                                 ->update([
                                     'status'        => 'APPROVED',
                                     'reason'        => $request->input('reason'),
@@ -361,7 +362,8 @@ class SuperAdminController extends Controller
     public function decline(Request $request)
     {
         $merchant_id        = Crypt::decrypt($request->input('merchant_id'));
-        $data               = MerchantBill::where('merchant_id', $merchant_id)
+        $no_bill            = $request->input('no_bill');
+        $data               = MerchantBill::where('no_bill', $no_bill)
                                 ->update([
                                     'status'        => 'DECLINE',
                                     'reason'        => $request->input('reason'),
