@@ -206,7 +206,7 @@
                                                         @if ($transaction->warranty == null)
                                                             <div>{{ __('-') }}</div>
                                                         @else
-                                                            <div>{{ $warranty }}</div>
+                                                            <div>{{ $transaction->warranty }}</div>
                                                         @endif
                                                     </div>
                                                 </div>
