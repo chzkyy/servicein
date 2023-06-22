@@ -72,7 +72,7 @@
                                         @if ( $merchant['status'] == 'UNPAID' )
                                             <div class="col-md-12">
                                                 <div class="row">
-                                                    <div class="col-md-3 text-wrap fw-semibold txt-gold">{{ __("Upload Proof") }}</div>
+                                                    <div class="col-md-3 text-wrap fw-semibold txt-gold">{{ __("Upload Proof") }} <span class="text-danger">*</span></div>
                                                     <div class="col-md-9">
                                                         <form action="" id="proof" method="post" enctype="multipart/form-data">
                                                             @csrf
@@ -177,41 +177,50 @@
         $(document).ready(function() {
 
             $('#send_proof').on('click', function() {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You want to send this proof?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#ffc107',
-                    confirmButtonText: 'Yes, send it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        let form = $('#proof')[0];
-                        let formData = new FormData(form);
-                        let file = $("input[type='file']")[0].files[0];
-                        formData.append('file', file);
-                        $.ajax({
-                            url: "{{ route('send-proof') }}",
-                            type: "POST",
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            cache: false,
-                            success: function(res) {
-                                Swal.fire({
-                                    title: 'Success!',
-                                    text: 'Proof has been sent.',
-                                    icon: 'success',
-                                    confirmButtonColor: '#ffc107',
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        window.location.href = "{{ route('admin-bills') }}";
-                                    }
-                                })
-                            }
-                        })
-                    }
-                })
+                if ( $("input[type='file']")[0].file[0] == '') {
+                    Swal.alert({
+                        title: 'Error!',
+                        text: 'Please upload your proof.',
+                        icon: 'error',
+                        confirmButtonColor: '#ffc107',
+                    })
+                } else {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You want to send this proof?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#ffc107',
+                        confirmButtonText: 'Yes, send it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            let form = $('#proof')[0];
+                            let formData = new FormData(form);
+                            let file = $("input[type='file']")[0].files[0];
+                            formData.append('file', file);
+                            $.ajax({
+                                url: "{{ route('send-proof') }}",
+                                type: "POST",
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                cache: false,
+                                success: function(res) {
+                                    Swal.fire({
+                                        title: 'Success!',
+                                        text: 'Proof has been sent.',
+                                        icon: 'success',
+                                        confirmButtonColor: '#ffc107',
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = "{{ route('admin-bills') }}";
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
             })
 
             $.ajax({
