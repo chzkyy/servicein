@@ -198,7 +198,7 @@
                                             '<div class="card border-2">'+
                                                 '<div class="card-body">'+
                                                     '<div class="d-flex justify-content-center">'+
-                                                        '<img src="'+url+'/'+img_url+'" class="card-img-top object-fit-cover img-thumbnail" style="width:350px;  height:130px;" alt="image_toko">'+
+                                                        '<img src="'+url+'/'+img_url+'" class="card-img-top object-fit-cover img-thumbnail" style="width:200px;  height:150px;" alt="image_toko">'+
                                                     '</div>'+
                                                     '<div class="title text-center fw-semibold my-2" id="Merchant_name">'+merchant_name+'</div>'+
 
