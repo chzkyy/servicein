@@ -503,7 +503,8 @@ class SuperAdminController extends Controller
 
         $data_transaction = Transaction::where('merchant_id', $merchant_id)
                             ->where('status', 'DONE')
-                            ->whereMonth('created_at', '=', $month)
+                            ->whereMonth('created_at', '=', date('m', strtotime('-1 month')))
+                            // ->where('created_at', 'LIKE', "%{$month}%")
                             ->get();
 
         $dataBersih = [];
