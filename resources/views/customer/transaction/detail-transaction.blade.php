@@ -365,7 +365,7 @@
 
             // console.log(file);
             // if file tidak ditemukan
-            if ( reting == '' || review == '' ) {
+            if ( rating == '' || review == '' ) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
