@@ -129,19 +129,23 @@ class DetailMerchantController extends Controller
         if( $origin != null )
         {
             foreach ($data as $key) {
-                $destination = $key['latitude'] . "," . $key['longitude'];
-                $dataJarak   = GetAPI::getMatrix($destination, $origin);
-                // $dataJarak = json_decode($data, true);
 
-                if ( $dataJarak['rows'][0]['elements'][0]['status'] == 'OK' )
+                if ( $key['id'] == $id_merchant )
                 {
-                    $jarak[] = $dataJarak['rows'][0]['elements'][0]['distance']['text'];
+                    $destination = $key['latitude'] . "," . $key['longitude'];
+                    $dataJarak   = GetAPI::getMatrix($destination, $origin);
+                    // $dataJarak = json_decode($data, true);
+
+                    if ( $dataJarak['rows'][0]['elements'][0]['status'] == 'OK' )
+                    {
+                        $jarak[] = $dataJarak['rows'][0]['elements'][0]['distance']['text'];
+                    }
+                    else
+                    {
+                        $jarak[] = "- KM";
+                    }
+                    // $jarak[] = $dataJarak;
                 }
-                else
-                {
-                    $jarak[] = "- KM";
-                }
-                // $jarak[] = $dataJarak;
             }
         }
         else {
@@ -185,7 +189,6 @@ class DetailMerchantController extends Controller
                     'rating'            => $rating,
                     'gallery'           => $gallery,
                 ];
-                $i++;
             }
         }
 
