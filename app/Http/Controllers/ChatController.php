@@ -47,7 +47,7 @@ class ChatController extends Controller
 
         // base url
         $base_url = url('/');
-        if ( auth()->user()->avatar != null ) {
+        if ( $avatar != null ) {
             $avatar = auth()->user()->avatar;
         }
         else {
