@@ -48,7 +48,7 @@ class ChatController extends Controller
         // base url
         $base_url = url('/');
         if ( $avatar != null ) {
-            $avatar = auth()->user()->avatar;
+            $avatar = $avatar;
         }
         else {
             $avatar = $base_url.'/assets/img/profile_picture.png';
@@ -130,7 +130,7 @@ class ChatController extends Controller
             // base url
             $base_url = url('/');
             if ( $user->avatar != null ) {
-                $user->avatar = auth()->user()->avatar;
+                $user->avatar = $user->avatar;
             }
             else {
                 $user->avatar = $base_url.'/assets/img/profile_picture.png';
