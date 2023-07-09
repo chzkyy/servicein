@@ -54,6 +54,7 @@
                     $.each(res, function(index, value){
                         // console.log(value);
                         var avatar = value.avatar;
+                        
                         let time   = value.time;
 
                         if ( value.message == null  && value.attachment != null) {

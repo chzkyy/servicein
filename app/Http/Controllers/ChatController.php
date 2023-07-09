@@ -257,9 +257,14 @@ class ChatController extends Controller
             $user = User::where('id', $value->from)->first();
             $customer = Customer::where('user_id', $value->from)->first();
 
-            if($user->avatar == null) {
-                $user->avatar = 'assets/img/profile_picture.png';
+            $base_url = url('/');
+            if ( $user->avatar != null ) {
+                $avatar = auth()->user()->avatar;
             }
+            else if ( $user->avatar == null ) {
+                $avatar = $base_url.'/assets/img/profile_picture.png';
+            }
+
 
             if ($customer->fullname == '-') {
                 $customer->fullname = $user->username;
