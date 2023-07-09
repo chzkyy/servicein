@@ -132,7 +132,7 @@ class ChatController extends Controller
             if ( $user->avatar != null ) {
                 $avatar = auth()->user()->avatar;
             }
-            else {
+            else if ( $user->avatar == null ) {
                 $avatar = $base_url.'assets/img/profile_picture.png';
             }
 
