@@ -53,7 +53,12 @@
                     var html = '';
                     $.each(res, function(index, value){
                         // console.log(value);
-                        var avatar = value.avatar;
+                        if(value.avatar.includes('https') == false) {
+                            var avatar = url+'/'+value.avatar;
+                        }
+                        else {
+                            var avatar = value.avatar;
+                        }
                         
                         let time   = value.time;
 
