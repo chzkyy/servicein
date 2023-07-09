@@ -330,8 +330,8 @@ class TransactionController extends Controller
                         ->where('merchant_id', $merchant->id)
                         ->count();
         $status_process = Transaction::where('status', 'ON PROGRESS')
-                        ->orWhere('status', 'ON PROGRESS - Need Confirmation')
                         ->where('merchant_id', $merchant->id)
+                        ->orWhere('status', 'ON PROGRESS - Need Confirmation')
                         ->count();
         $status_done = Transaction::where('status', 'DONE')
                         ->where('merchant_id', $merchant->id)

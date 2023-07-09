@@ -99,6 +99,7 @@ class GetAPI_Controller extends Controller
             $gallery = $this->show_gallery($item['id']);
 
             $dataBersih[] = [
+
                 // encrypt id dengan panjang data 10 characters
                 'status_account'    => $item['status_account'],
                 'id'                => Crypt::encrypt($item['id']),
@@ -120,10 +121,10 @@ class GetAPI_Controller extends Controller
             $i++;
         }
 
-        // mengurutkan data berdasarkan jarak terdekat
-        $jarak = array_map(function($v){
-            return floatval(str_replace(',', '', $v));
-        }, $jarak);
+        // sort data bersih berdasarkan jarak
+        usort($dataBersih, function($a, $b) {
+            return $a['jarak'] <=> $b['jarak'];
+        });
 
         //create response
         $response = [

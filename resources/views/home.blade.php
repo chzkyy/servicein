@@ -188,11 +188,14 @@
                                             var img_url = data[i]['gallery'][0];
                                         }
 
-
                                         var merchant_name = data[i]['merchant_name'];
                                         var merchant_id = data[i]['id'];
                                         var rating = data[i]['rating'];
                                         var jarak = data[i]['jarak'];
+
+                                        // sorting jarak
+                                        
+
 
                                         html += '<div class="col-md-3 my-3">'+
                                             '<div class="card border-2">'+
