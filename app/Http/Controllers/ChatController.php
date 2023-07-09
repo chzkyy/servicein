@@ -130,10 +130,10 @@ class ChatController extends Controller
             // base url
             $base_url = url('/');
             if ( $user->avatar != null ) {
-                $avatar = auth()->user()->avatar;
+                $user->avatar = auth()->user()->avatar;
             }
-            else if ( $user->avatar == null ) {
-                $avatar = $base_url.'/assets/img/profile_picture.png';
+            else {
+                $user->avatar = $base_url.'/assets/img/profile_picture.png';
             }
 
             if ($value->status == 0) {
@@ -257,12 +257,16 @@ class ChatController extends Controller
             $user = User::where('id', $value->from)->first();
             $customer = Customer::where('user_id', $value->from)->first();
 
+            // if($user->avatar == null) {
+            //     $user->avatar = 'assets/img/profile_picture.png';
+            // }
+
             $base_url = url('/');
             if ( $user->avatar != null ) {
-                $avatar = auth()->user()->avatar;
+                $user->avatar = auth()->user()->avatar;
             }
-            else if ( $user->avatar == null ) {
-                $avatar = $base_url.'/assets/img/profile_picture.png';
+            else {
+                $user->avatar = $base_url.'/assets/img/profile_picture.png';
             }
 
 
@@ -293,13 +297,12 @@ class ChatController extends Controller
             ];
         }
 
-        // menghapus array data from yang sama
-
         // sort by data terbaru
         usort($list_message_from, function ($a, $b) {
             return $b['created_at'] <=> $a['created_at'];
         });
 
+        // menghapus array data from yang sama
         $list_message_from = $this->unique_multidim_array($list_message_from,'from');
 
         return response()->json($list_message_from, 200);
