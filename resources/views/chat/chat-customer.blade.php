@@ -56,12 +56,7 @@
                         let time   = value.time;
 
                         // jika avatar tidak dari https
-                        if(value.avatar.includes('https') == false) {
-                            var avatar = url+'/'+value.avatar;
-                        }
-                        else {
-                            var avatar = value.avatar;
-                        }
+                        var avatar = value.avatar;
 
                         if ( value.message == null  && value.attachment != null) {
                             value.message = '<i class="fas fa-image"></i> Image';

@@ -41,9 +41,19 @@ class ChatController extends Controller
         // return $merchant;
         $avatar     = $profileChat->avatar;
 
-        if($avatar == null) {
-            $avatar = 'assets/img/profile_picture.png';
+        // if($avatar == null) {
+        //     $avatar = 'assets/img/profile_picture.png';
+        // }
+
+        // base url
+        $base_url = url('/');
+        if ( auth()->user()->avatar != null ) {
+            $avatar = auth()->user()->avatar;
         }
+        else {
+            $avatar = $base_url.'assets/img/profile_picture.png';
+        }
+
 
         return view('chat.room-cust',[
             'merchant_id' => Crypt::encrypt($merchant_id),
@@ -113,8 +123,17 @@ class ChatController extends Controller
             $user = User::where('id', $value->from)->first();
             $merchant = Merchant::where('user_id', $value->from)->first();
 
-            if($user->avatar == null) {
-                $user->avatar = 'assets/img/profile_picture.png';
+            // if($user->avatar == null) {
+            //     $user->avatar = 'assets/img/profile_picture.png';
+            // }
+
+            // base url
+            $base_url = url('/');
+            if ( auth()->user()->avatar != null ) {
+                $avatar = auth()->user()->avatar;
+            }
+            else {
+                $avatar = $base_url.'assets/img/profile_picture.png';
             }
 
             if ($value->status == 0) {

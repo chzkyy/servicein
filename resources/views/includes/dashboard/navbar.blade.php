@@ -97,7 +97,6 @@
                             {{--  if avatar != null  --}}
                             @if ( Auth::user()->avatar != null )
                                 <img class="img-profile" src="{{ url(Auth::user()->avatar) }}" alt="Avatar" class="img-fluid">
-
                             @else
                                 <img src="{{ url('assets/img/Avatar.png') }}" alt="Avatar" class="img-fluid">
                             @endif

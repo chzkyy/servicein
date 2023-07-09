@@ -53,7 +53,7 @@
                     var html = '';
                     $.each(res, function(index, value){
                         // console.log(value);
-                        var avatar = url+'/'+value.avatar;
+                        var avatar = value.avatar;
                         let time   = value.time;
 
                         if ( value.message == null  && value.attachment != null) {
