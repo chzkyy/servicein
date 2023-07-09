@@ -263,12 +263,11 @@ class ChatController extends Controller
 
             $base_url = url('/');
             if ( $user->avatar != null ) {
-                $user->avatar = auth()->user()->avatar;
+                $user->avatar = $user->avatar;
             }
             else {
                 $user->avatar = $base_url.'/assets/img/profile_picture.png';
             }
-
 
             if ($customer->fullname == '-') {
                 $customer->fullname = $user->username;
