@@ -18,7 +18,7 @@
             setInterval(function() {
                 get_notif();
                 getChat();
-            }, 5000); //5 seconds
+            }, 30000); // 30 seconds
         });
 
         function read (id) {
@@ -51,10 +51,10 @@
 
                     $('#notif_count').html(notif_count);
                     $.each(res['data'], function(key, value) {
-                        html += '<a class="dropdown-item d-flex align-items-center" onClick="read('+value.id+');" id="notif_url">'+
+                        html += '<a class="dropdown-item d-flex align-items-start" onClick="read('+value.id+');" id="notif_url">'+
                                     '<div>'+
                                         '<div class="small text-gray-500 fw-bold" id="notif_title">'+value.title+'</div>'+
-                                        '<div class="text-truncate" style="max-width: 250px;" id="notif_content">'+value.content+'</div>'+
+                                        '<div class="text-truncate" style="max-width: 270px;" id="notif_content">'+value.content+'</div>'+
                                     '</div>'+
                                 '</a>';
 

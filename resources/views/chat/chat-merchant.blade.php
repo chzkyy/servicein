@@ -59,7 +59,7 @@
                         else {
                             var avatar = value.avatar;
                         }
-                        
+
                         let time   = value.time;
 
                         if ( value.message == null  && value.attachment != null) {

@@ -12,6 +12,7 @@ use App\Models\GetAPI;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
+use Hashids\Hashids;
 
 
 class DetailMerchantController extends Controller
@@ -35,84 +36,91 @@ class DetailMerchantController extends Controller
      */
     public function index($id)
     {
-        try {
-            $id_merchant    = Crypt::decrypt($id);
-            $merchant       = Merchant::find($id_merchant);
-            $review         = Review::where('merchant_id', $id_merchant)->first();
-            $gallery        = $this->show_gallery($id_merchant);
-            // $reviews        = $this->show_reviews($id_merchant);
-            $dataReview     = [];
-            $dataImage      = [];
+        $hashids        = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
 
-            if(!$merchant){
-                return abort(404, 'Data Not Found!');
-            }
-            else {
+        $id_merchant    = $hashids->decode($id); //Crypt::decrypt($id);
+        $id_merchant = implode($id_merchant);
 
-                if($review == null) {
-                    $dataReview = null;
-                }
-                else {
-                    $review = Review::where('merchant_id', $id_merchant)->get();
-                    // get image review
+        $merchant       = Merchant::find($id_merchant);
+        $review         = Review::where('merchant_id', $id_merchant)->first();
+        $gallery        = $this->show_gallery($id_merchant);
+        // $reviews        = $this->show_reviews($id_merchant);
+        $dataReview     = [];
+        $dataImage      = [];
 
-                    // dd($review);
-                    foreach ($review as $item) {
-                        $username = User::where('id', $item->user_id)->first();
-                        $image_review = ReviewImage::where('review_id', $item->id)->first();
-                        if($image_review == null) {
-                            $dataImage = null;
-                        }
-                        else {
-                            $image_review = ReviewImage::where('review_id', $item->id)->get();
-                            foreach ($image_review as $image) {
-                                $dataImage[] = [
-                                    'id'        => $image->id,
-                                    'image'     => $image->image,
-                                ];
-                            }
-                        }
-                        $avatar = $username->avatar;
-
-                        if($avatar == null) {
-                            $username->avatar = 'assets/img/profile_picture.png';
-                        }
-
-                        $dataReview[] = [
-                            'id'                => $item['id'],
-                            'avatar'            => $username->avatar,
-                            'username'          => $username->username,
-                            'rating'            => $item['rating'],
-                            'review'            => $item['review'],
-                            'image_review'      => $dataImage,
-                            'created_at'        => $item['created_at'],
-                        ];
-                    }
-                }
-
-                // return response ($dataReview, 200);
-                return view('customer.transaction.detailMerchant', [
-                    'id'        => Crypt::encrypt($merchant->id),
-                    'gallery'   => $gallery,
-                    'review'    => $dataReview,
-                ]);
-            }
-        } catch (DecryptException $e) {
-            $id_merchant = null;
-            $e->getMessage();
+        if(!$merchant){
             return abort(404, 'Data Not Found!');
         }
+        else {
+
+            if($review == null) {
+                $dataReview = null;
+            }
+            else {
+                $review = Review::where('merchant_id', $id_merchant)->get();
+                // get image review
+
+                // dd($review);
+                foreach ($review as $item) {
+                    $username = User::where('id', $item->user_id)->first();
+                    $image_review = ReviewImage::where('review_id', $item->id)->first();
+                    if($image_review == null) {
+                        $dataImage = null;
+                    }
+                    else {
+                        $image_review = ReviewImage::where('review_id', $item->id)->get();
+                        foreach ($image_review as $image) {
+                            $dataImage[] = [
+                                'id'        => $image->id,
+                                'image'     => $image->image,
+                            ];
+                        }
+                    }
+                    $avatar = $username->avatar;
+
+                    if($avatar == null) {
+                        $username->avatar = 'assets/img/profile_picture.png';
+                    }
+
+                    $dataReview[] = [
+                        'id'                => $item['id'],
+                        'avatar'            => $username->avatar,
+                        'username'          => $username->username,
+                        'rating'            => $item['rating'],
+                        'review'            => $item['review'],
+                        'image_review'      => $dataImage,
+                        'created_at'        => $item['created_at'],
+                    ];
+                }
+            }
+
+            // return response ([
+            //     $merchant[0]->id,
+            // ], 200);
+            return view('customer.transaction.detailMerchant', [
+                'id'        => $hashids->encode($merchant[0]->id),//Crypt::encrypt($merchant->id),
+                'gallery'   => $gallery,
+                'review'    => $dataReview,
+            ]);
+        }
+
     }
 
     public function getDetail(Request $request)
     {
+        $hashids      = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+
         // get data from getJarak
         $data         = GetAPI::merchant();
         //send request to model
         // $dataInput    = $request->input('origin');
         $origin       = $request->input('origin');
         $id_merchant  = $request->input('merchant_id');
-        $id_merchant  = Crypt::decrypt($id_merchant);
+        $id_merchant  = $hashids->decode($id_merchant);  //Crypt::decrypt($id_merchant);
+        $id_merchant  = implode($id_merchant);
+
+        // array id merchant to string
+        $id_merchant  = implode($id_merchant);
 
         // $origin       = explode(",", $dataInput);
         $jarak        = [];
@@ -173,8 +181,8 @@ class DetailMerchantController extends Controller
 
                 $dataBersih[] = [
                     // encrypt id dengan panjang data 10 characters
-                    'id'                => Crypt::encrypt($key['id']),
-                    'user_id'           => Crypt::encrypt($key['user_id']),
+                    'id'                => $hashids->encode($key['id']), // Crypt::encrypt($key['id']),
+                    'user_id'           => $hashids->encode($key['user_id']), //Crypt::encrypt($key['user_id']),
                     'merchant_name'     => ucwords($key['merchant_name']),
                     'merchant_desc'     => ucfirst($key['merchant_desc']),
                     'merchant_address'  => $key['merchant_address'],

@@ -16,6 +16,8 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Hashids\Hashids;
+
 
 class GetAPI_Controller extends Controller
 {
@@ -47,6 +49,7 @@ class GetAPI_Controller extends Controller
 
     public function getMatrix(Request $request)
     {
+        $hashids    = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
         // get data from getJarak
         $data       = GetAPI::merchant();
         //send request to model
@@ -102,8 +105,8 @@ class GetAPI_Controller extends Controller
 
                 // encrypt id dengan panjang data 10 characters
                 'status_account'    => $item['status_account'],
-                'id'                => Crypt::encrypt($item['id']),
-                'user_id'           => Crypt::encrypt($item['user_id']),
+                'id'                => $hashids->encode($item['id']), //Crypt::encrypt($item['id']),
+                'user_id'           => $hashids->encode($item['user_id']), //Crypt::encrypt($item['user_id']),
                 'merchant_name'     => ucwords($item['merchant_name']),
                 'merchant_desc'     => ucfirst($item['merchant_desc']),
                 'merchant_address'  => $item['merchant_address'],

@@ -16,6 +16,7 @@ use App\Models\Device;
 use App\Models\Chat;
 use App\Mail\SendMail;
 use Mail;
+use Hashids\Hashids;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -33,9 +34,13 @@ class ChatController extends Controller
      *
      * For Customer
      */
+
     public function viewChatCust($merchant_id)
     {
-        $merchant_id = Crypt::decrypt($merchant_id);
+        $hashids = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+        $merchant_id = $hashids->decode($merchant_id); //Crypt::decrypt($merchant_id);
+        $merchant_id = implode($merchant_id);
+
         $merchant    = Merchant::where('id', $merchant_id)->first();
         $profileChat = User::where('id', $merchant->user_id)->first();
         // return $merchant;
@@ -45,18 +50,16 @@ class ChatController extends Controller
         //     $avatar = 'assets/img/profile_picture.png';
         // }
 
-        // base url
-        $base_url = url('/');
         if ( $avatar != null ) {
             $avatar = $avatar;
         }
         else {
-            $avatar = $base_url.'/assets/img/profile_picture.png';
+            $avatar = 'assets/img/profile_picture.png';
         }
 
 
         return view('chat.room-cust',[
-            'merchant_id' => Crypt::encrypt($merchant_id),
+            'merchant_id' => $hashids->encode($merchant_id), //Crypt::encrypt($merchant_id),
             'avatar'      => $avatar,
             'name'        => $merchant->merchant_name,
         ]);
@@ -64,7 +67,10 @@ class ChatController extends Controller
 
     public function getMessageCust(Request $request)
     {
-        $merchant_id = Crypt::decrypt($request->input('merchant_id'));
+        $hashids      = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+        $merchant_id  = $hashids->decode($request->input('merchant_id')); //Crypt::decrypt($request->input('merchant_id'));
+        $merchant_id  = implode($merchant_id);
+
         $user         = auth()->user()->id;
         $merchant     = Merchant::where('id', $merchant_id)->first();
         $chat         = Chat::where('from', $user)->where('to', $merchant->user_id)->get(); // chat dari customer ke merchant
@@ -115,6 +121,7 @@ class ChatController extends Controller
 
     public function getlistCust()
     {
+        $hashids = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
         $customer = auth()->user()->id;
         $chat     = Chat::where('to', $customer)->get();
         $list_message_from= [];
@@ -127,13 +134,11 @@ class ChatController extends Controller
             //     $user->avatar = 'assets/img/profile_picture.png';
             // }
 
-            // base url
-            $base_url = url('/');
             if ( $user->avatar != null ) {
                 $user->avatar = $user->avatar;
             }
             else {
-                $user->avatar = $base_url.'/assets/img/profile_picture.png';
+                $user->avatar = 'assets/img/profile_picture.png';
             }
 
             if ($value->status == 0) {
@@ -153,7 +158,7 @@ class ChatController extends Controller
                 'status'        => $value->status,
                 'created_at'    => $value->created_at,
                 'time'          => $time,
-                'merchant_id'   => Crypt::encrypt($merchant->id),
+                'merchant_id'   => $hashids->encode($merchant->id), //Crypt::encrypt($merchant->id),
                 'avatar'        => $user->avatar,
                 'merchant_name' => $merchant->merchant_name,
             ];
@@ -172,7 +177,10 @@ class ChatController extends Controller
     // send message from customer to merchant
     public function sendMessage(Request $request)
     {
-        $merchant_id = Crypt::decrypt($request->input('to'));
+        $hashids     = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+        $merchant_id = $hashids->decode($request->input('to')); //Crypt::decrypt($request->input('to'));
+        $merchant_id = implode($merchant_id);
+
         $merchant    = Merchant::where('id', $merchant_id)->first();
         $message = Chat::create([
             'from'          => $request->input('from'),
@@ -190,7 +198,10 @@ class ChatController extends Controller
     // send attachment from customer to merchant
     public function sendAttachment(Request $request)
     {
-        $merchant_id = Crypt::decrypt($request->input('to'));
+        $hashids     = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+        $merchant_id = $hashids->decode($request->input('to')); //Crypt::decrypt($request->input('to'));
+        $merchant_id = implode($merchant_id);
+
         $merchant    = Merchant::where('id', $merchant_id)->first();
         $input_file  = $request->file('file');
         $extension   = $input_file->getClientOriginalExtension();
@@ -220,7 +231,11 @@ class ChatController extends Controller
 
     public function viewChatMerch($customer_id)
     {
-        $customer_id = Crypt::decrypt($customer_id);
+        $hashids      = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+
+        $customer_id = $hashids->decode($customer_id); //Crypt::decrypt($customer_id);
+        $customer_id = implode($customer_id);
+
         $customer    = Customer::where('id', $customer_id)->first();
         $user        = User::where('id', $customer->user_id)->first();
         // return $customer;
@@ -235,7 +250,7 @@ class ChatController extends Controller
         }
 
         return view('chat.room-merchant',[
-            'customer_id' => Crypt::encrypt($customer_id),
+            'customer_id' => $hashids->encode($customer_id), //Crypt::encrypt($customer_id),
             'avatar'      => $avatar,
             'name'        => $customer->fullname,
         ]);
@@ -249,6 +264,7 @@ class ChatController extends Controller
 
     public function getlist()
     {
+        $hashids = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
         $merchant = auth()->user()->id;
         $chat     = Chat::where('to', $merchant)->get();
         $list_message_from= [];
@@ -261,12 +277,11 @@ class ChatController extends Controller
             //     $user->avatar = 'assets/img/profile_picture.png';
             // }
 
-            $base_url = url('/');
             if ( $user->avatar != null ) {
                 $user->avatar = $user->avatar;
             }
             else {
-                $user->avatar = $base_url.'/assets/img/profile_picture.png';
+                $user->avatar = 'assets/img/profile_picture.png';
             }
 
             if ($customer->fullname == '-') {
@@ -289,7 +304,7 @@ class ChatController extends Controller
                 'attachment'    => $value->attachment,
                 'status'        => $value->status,
                 'customer_name' => $customer->fullname,
-                'customer_id'   => Crypt::encrypt($customer->id),
+                'customer_id'   => $hashids->encode($customer->id), //Crypt::encrypt($customer->id),
                 'avatar'        => $user->avatar,
                 'time'          => $time,
                 'created_at'    => $value->created_at,
@@ -310,7 +325,11 @@ class ChatController extends Controller
 
     public function getMessageMerch(Request $request)
     {
-        $customer_id  = Crypt::decrypt($request->input('customer_id'));
+        $hashids      = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+
+        $customer_id  = $hashids->decode($request->input('customer_id')); //Crypt::decrypt($request->input('customer_id'));
+        $customer_id  = implode($customer_id);
+
         $user         = auth()->user()->id;
         $customer     = Customer::where('id', $customer_id)->first();
         $chatCust     = Chat::where('from', $customer->user_id)->where('to', $user)->get();
@@ -357,7 +376,11 @@ class ChatController extends Controller
     // send message from merchant to customer
     public function sendMessageMerch(Request $request)
     {
-        $customer_id = Crypt::decrypt($request->input('to'));
+        $hashids     = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+        $customer_id = $hashids->decode($request->input('to')); //Crypt::decrypt($request->input('to'));
+        $customer_id = implode($customer_id);
+
+        // $customer_id = Crypt::decrypt($request->input('to'));
         $customer    = Customer::where('id', $customer_id)->first();
         $message = Chat::create([
             'from'          => $request->input('from'),
@@ -375,7 +398,10 @@ class ChatController extends Controller
     // send attachment from customer to merchant
     public function sendAttachmentMerchant(Request $request)
     {
-        $customer_id = Crypt::decrypt($request->input('to'));
+        $hashids     = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+        $customer_id = $hashids->decode($request->input('to')); //Crypt::decrypt($request->input('to'));
+        $customer_id = implode($customer_id);
+
         $customer    = Customer::where('id', $customer_id)->first();
         $input_file  = $request->file('file');
 

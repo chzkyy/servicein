@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    {{ __('Detail Merchant') }}
+    {{ __('FAQ - Servicein') }}
 @endsection
 
 @section('content')
@@ -405,43 +405,25 @@
 
                         if (data.message == "Success") {
                             var html = '';
-                            // get id from url
-                            // object to array
-                            var arr = $.map(data.data, function(el) {
-                                // if persentase is <70 then remove the data
-                                // console.log(el['id']);
-                                if (el['id'] == id) {
-                                    return null;
-                                }
-
-                                //console.log(el);
-                                return el
-                            });
 
                             var i;
-                            if (arr.length != '0') {
-                                // mapping data to html
-                                for (i = 0; i < arr.length; i++) {
-                                    // find merchant by id
-                                    var merchant = data.data.find(x => x.id == arr[i]['id']);
-                                    // console.log(merchant);
+                            if (data.data.length != '0') {
+                                var merchant = data.data[0];
+                                // append to html
 
-                                    // append to html
-                                    $(".title-merchant").append(merchant['merchant_name']);
-                                    $(".desc-merchant").append(merchant['merchant_desc']);
-                                    // if open hour is 9:00 then show 09:00
-                                    var open = merchant['open_hour'].length == 4 ? '0' + merchant['open_hour'] :
-                                        merchant['open_hour'];
-                                    var close = merchant['close_hour'].length == 4 ? '0' + merchant['close_hour'] :
-                                        merchant['close_hour'];
-                                    $(".open-house").append(open + ' - ' + close);
+                                $(".title-merchant").append(merchant['merchant_name']);
+                                $(".desc-merchant").append(merchant['merchant_desc']);
+                                // if open hour is 9:00 then show 09:00
+                                var open = merchant['open_hour'].length == 4 ? '0' + merchant['open_hour'] :
+                                    merchant['open_hour'];
+                                var close = merchant['close_hour'].length == 4 ? '0' + merchant['close_hour'] :
+                                    merchant['close_hour'];
+                                $(".open-house").append(open + ' - ' + close);
 
-                                    $(".email-merchant").append(merchant['email']);
-                                    $(".address-merchant").append(merchant['merchant_address']);
-                                    $(".destination-desc").html('<small class="text-muted" id="distance">'+merchant['jarak']+'<span> From your location</span></small>');
-                                    $(".star-desc").html('<small id="rate" class="text-muted">'+merchant['rating']+'/5 <span>Reviews</span></small>');
-                                }
-
+                                $(".email-merchant").append(merchant['email']);
+                                $(".address-merchant").append(merchant['merchant_address']);
+                                $(".destination-desc").html('<small class="text-muted" id="distance">'+merchant['jarak']+'<span> From your location</span></small>');
+                                $(".star-desc").html('<small id="rate" class="text-muted">'+merchant['rating']+'/5 <span>Reviews</span></small>');
                             } else {
                                 var html = '';
                                 html += '<div class="alert alert-secondary" role="alert">';

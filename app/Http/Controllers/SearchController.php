@@ -11,6 +11,7 @@ use App\Models\GetAPI;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
+use Hashids\Hashids;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -20,22 +21,24 @@ class SearchController extends Controller
 {
     public function searchMerchant(Request $request)
     {
+        $hashids        = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
         //send request to model
-        $dataInput      = $request->origin;
+        $origin         = $request->origin;
+        // $dataInput      = $request->origin;
         $searchMerchant = $request->search;
         $data           = GetAPI::searchMerchant($searchMerchant);
 
-        $origin       = explode(",", $dataInput);
+        // $origin       = explode(",", $dataInput);
         $jarak        = [];
 
-        // hitung panjang karakter dari titik
-        $pGeoOrigin = strlen($origin[0]) - strlen(substr($origin[0], 0, -7));
+        // // hitung panjang karakter dari titik
+        // $pGeoOrigin = strlen($origin[0]) - strlen(substr($origin[0], 0, -7));
 
-        if ( $pGeoOrigin != 6 )
-        {
-            // membatasi panjang karakter di belakang titik (6 karakter)
-            $origin = substr($origin[0], 0, -7) . "," . substr($origin[1], 0, -7);
-        }
+        // if ( $pGeoOrigin != 6 )
+        // {
+        //     // membatasi panjang karakter di belakang titik (6 karakter)
+        //     $origin = substr($origin[0], 0, -7) . "," . substr($origin[1], 0, -7);
+        // }
 
         if( $origin != null )
         {
@@ -80,8 +83,8 @@ class SearchController extends Controller
             {
                 $dataBersih[] = [
                     // encrypt id dengan panjang data 10 characters
-                    'id'                => Crypt::encrypt($key['id']),
-                    'user_id'           => Crypt::encrypt($key['user_id']),
+                    'id'                => $hashids->encode($key['id']), //Crypt::encrypt($key['id']),
+                    'user_id'           => $hashids->encode($key['user_id']), //Crypt::encrypt($key['user_id']),
                     // 'merchant_id'       => Crypt::encrypt($key['merchant_id']),
                     'merchant_name'     => ucwords($key['merchant_name']),
                     'jarak'             => strtoupper($jarak[$i]),
@@ -103,7 +106,7 @@ class SearchController extends Controller
 
 
         $dataBersih = $this->paginate($dataBersih, 10);
-        $dataBersih->withPath('/search?search=' . $searchMerchant . '&origin=' . $dataInput);
+        $dataBersih->withPath('/search?search=' . $searchMerchant . '&origin=' . $origin);
         return view('customer.search', [
             // 'jarak' => $jarak,
             'transaction' => $dataBersih,

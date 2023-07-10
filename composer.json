@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
+        "hashids/hashids": "^5.0",
         "larabug/larabug": "^2.5",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",

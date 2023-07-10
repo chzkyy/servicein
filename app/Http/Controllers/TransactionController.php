@@ -18,6 +18,8 @@ use Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
+use Hashids\Hashids;
+
 
 
 class TransactionController extends Controller
@@ -39,24 +41,23 @@ class TransactionController extends Controller
      */
     public function index($id)
     {
-        try {
-            $id_merchant    = Crypt::decrypt($id);
-            $merchant       = Merchant::find($id_merchant);
+        $hashids        = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+        $id_merchant    = $hashids->decode($id); //Crypt::decrypt($id);
+        $id_merchant    = implode($id_merchant);
 
-            // dd($booking);
+        $merchant       = Merchant::find($id_merchant);
 
-            if(!$merchant){
-                return abort(404, 'Data Not Found!');
-            }
-            else {
-                return view('customer.transaction.booking',[
-                    'merchant' => $merchant,
-                ]);
-            }
-        } catch (DecryptException $e) {
-            $id_merchant = null;
-            $e->getMessage();
+
+        // dd($booking);
+
+        if(!$merchant){
             return abort(404, 'Data Not Found!');
+        }
+        else {
+            // return response($merchant, 200);
+            return view('customer.transaction.booking',[
+                'merchant' => $merchant,
+            ]);
         }
     }
 
@@ -141,45 +142,42 @@ class TransactionController extends Controller
 
     public function detail_transaction($id)
     {
-        try {
-            $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
-                                        ->join('device', 'device.id', '=', 'booking.device_id')
-                                        ->join('merchant', 'merchant.id', '=', 'booking.merchant_id')
-                                        ->join('users', 'users.id', '=', 'merchant.user_id')
-                                        ->join('customer', 'customer.user_id', '=', 'transaction.user_id')
-                                        // where no_transaction = $id
-                                        ->where('transaction.no_transaction', $id)
-                                        ->orderBy('transaction.created_at', 'ASC')
-                                        ->first();
+        $hashids     = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
 
-            $transaction_id  =Transaction::where('no_transaction', $id)->first();
-            $review     = Review::where('transaction_id', $transaction_id->id)->first();
+        $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
+                                    ->join('device', 'device.id', '=', 'booking.device_id')
+                                    ->join('merchant', 'merchant.id', '=', 'booking.merchant_id')
+                                    ->join('users', 'users.id', '=', 'merchant.user_id')
+                                    ->join('customer', 'customer.user_id', '=', 'transaction.user_id')
+                                    // where no_transaction = $id
+                                    ->where('transaction.no_transaction', $id)
+                                    ->orderBy('transaction.created_at', 'ASC')
+                                    ->first();
 
-            if ($review) {
-                $review = $review;
-            } else {
-                $review = null;
-            }
+        $transaction_id  =Transaction::where('no_transaction', $id)->first();
+        $review     = Review::where('transaction_id', $transaction_id->id)->first();
 
-            // menghapus password dari array $transaction
-            unset($transaction->password);
+        if ($review) {
+            $review = $review;
+        } else {
+            $review = null;
+        }
 
-            if(!$transaction){
-                return abort(404, 'Data Not Found!');
-            }
-            else {
-                // return response($review, 200);
-                return view('customer.transaction.detail-transaction',[
-                    'merchant_id' => crypt::encrypt($transaction->merchant_id),
-                    'transaction' => $transaction,
-                    'review'      => $review,
-                ]);
-            }
-        } catch (DecryptException $e) {
-            $id_transaction = null;
-            $e->getMessage();
+        // menghapus password dari array $transaction
+        unset($transaction->password);
+
+        if(!$transaction){
             return abort(404, 'Data Not Found!');
         }
+        else {
+            // return response($review, 200);
+            return view('customer.transaction.detail-transaction',[
+                'merchant_id' => $hashids->encode($transaction->merchant_id), //crypt::encrypt($transaction->merchant_id),
+                'transaction' => $transaction,
+                'review'      => $review,
+            ]);
+        }
+
     }
 
     public function show_transaction()
@@ -396,41 +394,35 @@ class TransactionController extends Controller
 
     public function getTransactionDetailMerchant($id)
     {
-        try {
-             $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
-                                        ->join('device', 'device.id', '=', 'booking.device_id')
-                                        ->join('merchant', 'merchant.id', '=', 'booking.merchant_id')
-                                        ->join('customer', 'customer.user_id', '=', 'transaction.user_id')
-                                        ->where('transaction.no_transaction', $id)
-                                        ->orderBy('transaction.created_at', 'ASC')
-                                        ->first();
+        $transaction = Transaction::join('booking', 'booking.id', '=', 'transaction.booking_id')
+                                    ->join('device', 'device.id', '=', 'booking.device_id')
+                                    ->join('merchant', 'merchant.id', '=', 'booking.merchant_id')
+                                    ->join('customer', 'customer.user_id', '=', 'transaction.user_id')
+                                    ->where('transaction.no_transaction', $id)
+                                    ->orderBy('transaction.created_at', 'ASC')
+                                    ->first();
 
-            $service_confirmation = Transaction::where('no_transaction', $id)
-                                                ->first();
+        $service_confirmation = Transaction::where('no_transaction', $id)
+                                            ->first();
 
-            if(!$transaction){
-                return abort(404, 'Data Not Found!');
-            }
-            else {
-                if($service_confirmation->status_confirmation == '0'){
-                    $status_confirmation = 'Waiting Confirmation';
-                } else if($service_confirmation->status_confirmation == 1){
-                    $status_confirmation = 'Confirmed';
-                } else if($service_confirmation->status_confirmation == 2){
-                    $status_confirmation = 'Rejected';
-                } else if ($service_confirmation->status_confirmation == null){
-                    $status_confirmation = '-';
-                }
-
-                return view('adminToko.Transaksi.detail-transaksi',[
-                    'transaction' => $transaction,
-                    'status_confirmation' => $status_confirmation,
-                ]);
-            }
-        } catch (DecryptException $e) {
-            $id_transaction = null;
-            $e->getMessage();
+        if(!$transaction){
             return abort(404, 'Data Not Found!');
+        }
+        else {
+            if($service_confirmation->status_confirmation == '0'){
+                $status_confirmation = 'Waiting Confirmation';
+            } else if($service_confirmation->status_confirmation == 1){
+                $status_confirmation = 'Confirmed';
+            } else if($service_confirmation->status_confirmation == 2){
+                $status_confirmation = 'Rejected';
+            } else if ($service_confirmation->status_confirmation == null){
+                $status_confirmation = '-';
+            }
+
+            return view('adminToko.Transaksi.detail-transaksi',[
+                'transaction' => $transaction,
+                'status_confirmation' => $status_confirmation,
+            ]);
         }
     }
 
@@ -536,6 +528,7 @@ class TransactionController extends Controller
 
     public function getServiceConfirmation(Request $request)
     {
+        $hashids = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
         $user_id = auth()->user()->id;
         $no_transaction = $request->input('no_transaction');
 
@@ -547,7 +540,7 @@ class TransactionController extends Controller
                                     ->first();
 
         // mengambil data merchant_id and encrypt merchant_id dari $transaction
-        $merchant_id = Crypt::encrypt($transaction->merchant_id);
+        $merchant_id = $hashids->encode($transaction->merchant_id);// Crypt::encrypt($transaction->merchant_id);
         $transaction->merchant_id = $merchant_id;
 
 
@@ -556,12 +549,16 @@ class TransactionController extends Controller
 
     public function sendServiceConfirmation(Request $request)
     {
+        $hashids                = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+
         $no_transaction         = $request->input('no_transaction');
         $status_confirmation    = $request->input('status_confirmation');
         $status                 = 'ON PROGRESS';
 
         $customer               = Customer::find($request->input('customer_id'));
-        $merchant_id            = Crypt::decrypt($request->input('merchant_id'));
+        $merchant_id            = $hashids->decode($request->input('merchant_id')); //Crypt::decrypt($request->input('merchant_id'));
+
+        $merchant_id            = implode($merchant_id);
         $user_id                = Merchant::find($merchant_id)->user_id;
 
         Transaction::where('no_transaction', $no_transaction)->update([
@@ -833,6 +830,7 @@ class TransactionController extends Controller
 
     public function get_transaction(Request $request)
     {
+        $hashids     = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
         $user_id     = auth()->user()->id;
         $device      = Device::all();
 
@@ -869,7 +867,7 @@ class TransactionController extends Controller
         foreach($transaction as $t){
             $data[] = [
                 'id'                => $t->id,
-                'merchant_id'       => Crypt::encrypt($t->merchant_id),
+                'merchant_id'       => $hashids->encode($t->merchant_id),// Crypt::encrypt($t->merchant_id),
                 'no_transaction'    => $t->no_transaction,
                 'booking_code'      => $t->booking_code,
                 'booking_date'      => $t->booking_date,

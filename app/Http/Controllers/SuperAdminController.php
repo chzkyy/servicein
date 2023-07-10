@@ -16,6 +16,7 @@ use App\Models\MerchantBill;
 use App\Models\Device;
 use App\Mail\SendMail;
 use Mail;
+use Hashids\Hashids;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -29,6 +30,8 @@ class SuperAdminController extends Controller
 
     public function getDataMerchant(Request $request)
     {
+        $hashids       = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+
         $data_merchant = Merchant::join('users', 'users.id', '=', 'merchant.user_id')
                                 ->select('merchant.*', 'users.status_account', 'users.email')
                                 ->get();
@@ -38,7 +41,7 @@ class SuperAdminController extends Controller
 
             $data[$key]['id']           = $value->id;
             // $data[$key]['merchant_id']  = $value->merchant_id;
-            $data[$key]['merchant_id']  = Crypt::encrypt($value->id);
+            $data[$key]['merchant_id']  = $hashids->encode($value->id); // Crypt::encrypt($value->id);
             $data[$key]['name']         = $value->merchant_name;
             $data[$key]['phone_number'] = $value->phone_number;
             $data[$key]['email']        = $value->email;
@@ -62,15 +65,14 @@ class SuperAdminController extends Controller
 
     public function listBill(Request $request)
     {
+        $hashids     = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+
         $input      = $request->input('id');
-        $id         = Crypt::decrypt($input);
+        $id         = $hashids->decode($input); //Crypt::decrypt($input);
+        $id         = implode($id);
+
         $viewBill   = MerchantBill::where('merchant_id', $id)
                         ->get();
-
-        $jumlah_quantity  = Transaction::where('merchant_id', $id)
-                        ->where('status', 'DONE')
-                        ->whereMonth('created_at', '=', date('m', strtotime('-1 month')))
-                        ->count();
 
         $data = [];
         foreach ($viewBill as $key => $value) {
@@ -79,10 +81,15 @@ class SuperAdminController extends Controller
             $month  = substr($value->bills_date, 0, 2);
             $year   = substr($value->bills_date, 2, 4);
             $bill_date = date("F Y", strtotime($year.'-'.$month.'-01'));
+            $jumlah_quantity  = Transaction::where('merchant_id', $id)
+                            ->where('status', 'DONE')
+                            // ->whereMonth('created_at', '=', date('m', strtotime('-1 month')))
+                            ->whereMonth('created_at', '=', $month)
+                            ->count();
 
             $data[$key]['id']           = $value->id;
             $data[$key]['no_bill']      = $value->no_bill;
-            $data[$key]['merchant_id']  = Crypt::encrypt($value->merchant_id);
+            $data[$key]['merchant_id']  = $hashids->encode($value->merchant_id); //Crypt::encrypt($value->merchant_id);
             $data[$key]['bill_date']    = $bill_date;
             $data[$key]['quantity']     = $jumlah_quantity;
             $data[$key]['status']       = $value->status;
@@ -96,8 +103,12 @@ class SuperAdminController extends Controller
 
     public function activateAccount(Request $request)
     {
+        $hashids = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+
         $input   = $request->input('id');
-        $id      = Crypt::decrypt($input);
+        $id      = $hashids->decode($input); //Crypt::decrypt($input);
+        $id      = implode($id);
+
         $user_id = Merchant::where('id', $id)
                     ->first()
                     ->user_id;
@@ -114,8 +125,11 @@ class SuperAdminController extends Controller
 
     public function suspendAccount(Request $request)
     {
+        $hashids = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
         $input   = $request->input('id');
-        $id      = Crypt::decrypt($input);
+        $id      = $hashids->decode($input);  //Crypt::decrypt($input);
+        $id      = implode($id);
+
         $user_id = Merchant::where('id', $id)
                     ->first()
                     ->user_id;
@@ -132,6 +146,8 @@ class SuperAdminController extends Controller
 
     public function viewBIll($id)
     {
+        $hashids          = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+
         $merchant_id      = MerchantBill::where('no_bill', $id)
                                 ->first()
                                 ->merchant_id;
@@ -158,7 +174,7 @@ class SuperAdminController extends Controller
         foreach( $merchant as $value )
         {
             $data['id']                 = $value->id;
-            $data['merchant_id']        = Crypt::encrypt($value->id);
+            $data['merchant_id']        = $hashids->encode($value->id); //Crypt::encrypt($value->id);
             $data['merchant_name']      = $value->merchant_name;
             $data['merchant_desc']      = $value->merchant_desc;
             $data['email']              = $value->email;
@@ -178,7 +194,10 @@ class SuperAdminController extends Controller
 
     public function sendBIll($id)
     {
-        $id               = Crypt::decrypt($id);
+        $hashids          = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+        $id               = $hashids->decode($id); //Crypt::decrypt($id);
+        $id               = implode($id);
+
         $user_id          = Merchant::where('id', $id)
                                 ->first()
                                 ->user_id;
@@ -203,7 +222,7 @@ class SuperAdminController extends Controller
         foreach( $merchant as $value )
         {
             $data['id']             = $value->id;
-            $data['merchant_id']    = Crypt::encrypt($value->id);
+            $data['merchant_id']    = $hashids->encode($value->id); //Crypt::encrypt($value->id);
             $data['merchant_name']  = $value->merchant_name;
             $data['merchant_desc']  = $value->merchant_desc;
             $data['total']          = $jumlah_quantity;
@@ -219,8 +238,11 @@ class SuperAdminController extends Controller
 
     public function getListTransaction(Request $request)
     {
+        $hashids          = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
         $merchant_id      = $request->input('merchant_id');
-        $merchant_id      = Crypt::decrypt($merchant_id);
+        $merchant_id      = $hashids->decode($merchant_id); //Crypt::decrypt($merchant_id);
+        $merchant_id      = implode($merchant_id);
+
         $data_transaction = Transaction::where('merchant_id', $merchant_id)
                             ->where('status', 'DONE')
                             ->whereMonth('created_at', '=', date('m', strtotime('-1 month')))
@@ -247,8 +269,11 @@ class SuperAdminController extends Controller
 
     public function deleteAccount(Request $request)
     {
+        $hashids        = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
         $input          = $request->input('id');
-        $id             = Crypt::decrypt($input);
+        $id             = $hashids->decode($input); //Crypt::decrypt($input);
+        $id             = implode($id);
+
         $user_id        = Merchant::where('id', $id)
                             ->first()
                             ->user_id;
@@ -327,8 +352,11 @@ class SuperAdminController extends Controller
 
     public function createBill(Request $request)
     {
+        $hashids            = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
 
-        $merchant_id        = Crypt::decrypt($request->input('merchant_id'));
+        $merchant_id        =  $hashids->decode($request->input('merchant_id')); //Crypt::decrypt($request->input('merchant_id'));
+        $merchant_id        = implode($merchant_id);
+
         $jmlh_transaksi     = $request->input('jmlh_transaksi');
         $amount             = $jmlh_transaksi * 5000;
 
@@ -348,7 +376,10 @@ class SuperAdminController extends Controller
 
     public function approved(Request $request)
     {
-        $merchant_id        = Crypt::decrypt($request->input('merchant_id'));
+        $hashids            = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+        $merchant_id        = $hashids->decode($request->input('merchant_id'));  //Crypt::decrypt($request->input('merchant_id'));
+        $merchant_id        = implode($merchant_id);
+
         $no_bill            = $request->input('no_bill');
         $data               = MerchantBill::where('no_bill', $no_bill)
                                 ->update([
@@ -362,7 +393,10 @@ class SuperAdminController extends Controller
 
     public function decline(Request $request)
     {
-        $merchant_id        = Crypt::decrypt($request->input('merchant_id'));
+        $hashids            = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+        $merchant_id        = $hashids->decode($request->input('merchant_id')); //Crypt::decrypt($request->input('merchant_id'));
+        $merchant_id        = implode($merchant_id);
+
         $no_bill            = $request->input('no_bill');
         $data               = MerchantBill::where('no_bill', $no_bill)
                                 ->update([
@@ -423,8 +457,9 @@ class SuperAdminController extends Controller
             $month                              = substr($value->bills_date, 0, 2);
             $total_transaction                  = Transaction::where('merchant_id', $merchant->id)
                                                     ->where('status', 'DONE')
-                                                    ->where('created_at', 'LIKE', "%{$month}%")
+                                                    ->whereMonth('created_at', $month)
                                                     ->count();
+
             $data[$key]['no_bill']              = $value->no_bill;
             $data[$key]['bills_date']           = $month;
             $data[$key]['total_transaction']    = $total_transaction;
@@ -439,6 +474,8 @@ class SuperAdminController extends Controller
 
     public function viewBillsMerchant($id)
     {
+        $hashids          = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
+
         $merchant_id      = MerchantBill::where('no_bill', $id)
                                 ->first()
                                 ->merchant_id;
@@ -469,12 +506,12 @@ class SuperAdminController extends Controller
         {
             $total_transaction          = Transaction::where('merchant_id', $merchant_id)
                                                 ->where('status', 'DONE')
-                                                ->where('created_at', 'LIKE', "%{$month}%")
+                                                ->whereMonth('created_at', '=', $month)
                                                 ->count();
 
 
             $data['id']                 = $value->id;
-            $data['merchant_id']        = Crypt::encrypt($value->id);
+            $data['merchant_id']        = $hashids->encode($value->id); //Crypt::encrypt($value->id);
             $data['merchant_name']      = $value->merchant_name;
             $data['merchant_desc']      = $value->merchant_desc;
             $data['email']              = $value->email;
@@ -495,16 +532,19 @@ class SuperAdminController extends Controller
 
     public function getListTransactionBills(Request $request)
     {
-        $merchant_id      = $request->input('merchant_id');
-        $merchant_id      = Crypt::decrypt($merchant_id);
-        $month            = $request->input('month');
+        $hashids           = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
 
+        $merchant_id      = $request->input('merchant_id');
+        $merchant_id      = $hashids->decode($merchant_id); //Crypt::decrypt($merchant_id);
+        $merchant_id      = implode($merchant_id);
+
+        $month            = $request->input('bill_date');
 
 
         $data_transaction = Transaction::where('merchant_id', $merchant_id)
                             ->where('status', 'DONE')
-                            ->whereMonth('created_at', '=', date('m', strtotime('-1 month')))
-                            // ->where('created_at', 'LIKE', "%{$month}%")
+                            // ambil bulan berdasarkan variable month
+                            ->whereMonth('created_at', '=', $month)
                             ->get();
 
         $dataBersih = [];
