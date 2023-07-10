@@ -98,7 +98,7 @@ class DetailMerchantController extends Controller
             //     $merchant[0]->id,
             // ], 200);
             return view('customer.transaction.detailMerchant', [
-                'id'        => $hashids->encode($merchant[0]->id),//Crypt::encrypt($merchant->id),
+                'id'        => $hashids->encode($merchant->id),//Crypt::encrypt($merchant->id),
                 'gallery'   => $gallery,
                 'review'    => $dataReview,
             ]);
