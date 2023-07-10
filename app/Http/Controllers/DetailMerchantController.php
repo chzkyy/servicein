@@ -39,7 +39,7 @@ class DetailMerchantController extends Controller
         $hashids        = new Hashids('servicein', 5, 'abcdefghijklmnopqrstuvwxyz');
 
         $id_merchant    = $hashids->decode($id); //Crypt::decrypt($id);
-        $id_merchant = implode($id_merchant);
+        // $id_merchant = implode($id_merchant);
 
         $merchant       = Merchant::find($id_merchant);
         $review         = Review::where('merchant_id', $id_merchant)->first();
@@ -98,7 +98,7 @@ class DetailMerchantController extends Controller
             //     $merchant[0]->id,
             // ], 200);
             return view('customer.transaction.detailMerchant', [
-                'id'        => $hashids->encode($merchant->id),//Crypt::encrypt($merchant->id),
+                'id'        => $hashids->encode($merchant[0]->id),//Crypt::encrypt($merchant->id),
                 'gallery'   => $gallery,
                 'review'    => $dataReview,
             ]);
