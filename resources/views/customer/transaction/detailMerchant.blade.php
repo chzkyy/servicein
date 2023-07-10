@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    {{ __('FAQ - Servicein') }}
+    {{ __('Detail Merchant') }}
 @endsection
 
 @section('content')

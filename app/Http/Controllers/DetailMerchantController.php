@@ -117,7 +117,6 @@ class DetailMerchantController extends Controller
         $origin       = $request->input('origin');
         $id_merchant  = $request->input('merchant_id');
         $id_merchant  = $hashids->decode($id_merchant);  //Crypt::decrypt($id_merchant);
-        $id_merchant  = implode($id_merchant);
 
         // array id merchant to string
         $id_merchant  = implode($id_merchant);
