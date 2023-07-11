@@ -136,7 +136,7 @@ class GetAPI_Controller extends Controller
         }, $dataBersih);
 
         // sorting data jarak
-        usort($dataBersih, function($a, $b) {
+        sort($dataBersih, function($a, $b) {
             return $a['jarak'] <=> $b['jarak'];
         });
 
