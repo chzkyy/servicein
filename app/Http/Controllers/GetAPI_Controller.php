@@ -136,11 +136,7 @@ class GetAPI_Controller extends Controller
         }, $dataBersih);
 
         // sorting databersih berdasarkan jarak
-        // sort dengan natcasesort
-        $dataBersih = array_map(function($item) {
-            natcasesort($item['jarak']);
-            return $item;
-        }, $dataBersih);
+        natcasesort($dataBersih[0]['jarak']);
 
 
 
