@@ -129,22 +129,25 @@ class GetAPI_Controller extends Controller
             return $item['jarak'] != '- KM';
         });
 
+        // multisort data jarak
+        array_multisort(array_column($dataBersih, 'jarak'), SORT_ASC, $dataBersih);
+
         // hapus KM dari jarak
-        $dataBersih = array_map(function($item) {
-            $item['jarak'] = str_replace(' KM', '', $item['jarak']);
-            return $item;
-        }, $dataBersih);
+        // $dataBersih = array_map(function($item) {
+        //     $item['jarak'] = str_replace(' KM', '', $item['jarak']);
+        //     return $item;
+        // }, $dataBersih);
 
-        // sorting data jarak
-        sort($dataBersih, function($a, $b) {
-            return $a['jarak'] <=> $b['jarak'];
-        });
+        // // sorting data jarak
+        // sort($dataBersih, function($a, $b) {
+        //     return $a['jarak'] <=> $b['jarak'];
+        // });
 
-        // tambahkan KM di jarak
-        $dataBersih = array_map(function($item) {
-            $item['jarak'] = $item['jarak'] . ' KM';
-            return $item;
-        }, $dataBersih);
+        // // tambahkan KM di jarak
+        // $dataBersih = array_map(function($item) {
+        //     $item['jarak'] = $item['jarak'] . ' KM';
+        //     return $item;
+        // }, $dataBersih);
 
 
         //create response
