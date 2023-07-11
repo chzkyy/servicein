@@ -129,10 +129,16 @@ class GetAPI_Controller extends Controller
             return $item['jarak'] != '- KM';
         });
 
-        // sorting data jarak
-        uasort($dataBersih, function($a, $b) {
-            return strnatcmp($a['jarak'], $b['jarak']);
-        });
+        // menghilangkan angka desimal
+        $dataBersih = array_map(function($item) {
+            $item['jarak'] = str_replace(',', '', $item['jarak']);
+            return $item;
+        }, $dataBersih);
+
+
+        // sorting jarak terdekat ke terjauh dengan array_multisort
+        $jarak = array_column($dataBersih, 'jarak');
+        array_multisort($jarak, SORT_NATURAL, $dataBersih);
 
         //create response
         $response = [
