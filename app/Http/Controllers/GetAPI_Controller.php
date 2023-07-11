@@ -124,10 +124,10 @@ class GetAPI_Controller extends Controller
             $i++;
         }
 
-        // // hapus data yang jaraknya -KM
-        // $dataBersih = array_filter($dataBersih, function($item) {
-        //     return $item['jarak'] != '- KM';
-        // });
+        // hapus data yang jaraknya -KM
+        $dataBersih = array_filter($dataBersih, function($item) {
+            return $item['jarak'] != '- KM';
+        });
 
         // // hapus KM dari jarak
         // $dataBersih = array_map(function($item) {
