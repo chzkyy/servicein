@@ -124,6 +124,11 @@ class GetAPI_Controller extends Controller
             $i++;
         }
 
+        // hapus data yang jaraknya -KM
+        $dataBersih = array_filter($dataBersih, function($item) {
+            return $item['jarak'] != '- KM';
+        });
+        
         // sort data bersih berdasarkan jarak
         usort($dataBersih, function($a, $b) {
             return $a['jarak'] <=> $b['jarak'];
