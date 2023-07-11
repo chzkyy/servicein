@@ -129,8 +129,8 @@ class GetAPI_Controller extends Controller
             return $item['jarak'] != '- KM';
         });
 
-        // sort data bersih berdasarkan jarak
-        sort($dataBersih, function($a, $b) {
+        // sort data bersih berdasarkan jarak KM terdekat
+        asort($dataBersih, function($a, $b) {
             return $a['jarak'] <=> $b['jarak'];
         });
 
