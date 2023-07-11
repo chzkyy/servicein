@@ -159,17 +159,13 @@ class GetAPI_Controller extends Controller
         return response()->json($response, 200, [], JSON_PRETTY_PRINT);
     }
 
-    // natcasesort function untuk sorting data jarak terdekat
+    // natcasesort function untuk sorting data jarak terdekat\
     public function natcasesort(&$array)
     {
-        $keys = array_keys($array);
-        natcasesort($keys);
-        $new = [];
-        foreach ($keys as $k) {
-            $new[$k] = $array[$k];
-        }
-        $array = $new;
-        return true;
+        $array = array_values($array);
+        usort($array, function($a, $b) {
+            return strnatcasecmp($a['jarak'], $b['jarak']);
+        });
     }
 
 
