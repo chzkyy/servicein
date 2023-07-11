@@ -93,6 +93,11 @@ class GetAPI_Controller extends Controller
         $dataBersih = [];
         $i = 0;
 
+        // menghilangkan bilangan desimal
+        $jarak = str_replace(',', '', $jarak[$i]);
+        // sorting data jarak
+        $jarak = natcasesort($jarak);
+
         foreach ($data as $item) {
             // get percentage
             $percentage = $this->show_percentage($item['user_id']);
@@ -100,6 +105,7 @@ class GetAPI_Controller extends Controller
             $rating = $this->show_rating($item['id']);
             // get gallery
             $gallery = $this->show_gallery($item['id']);
+
 
             $dataBersih[] = [
 
@@ -128,17 +134,6 @@ class GetAPI_Controller extends Controller
         $dataBersih = array_filter($dataBersih, function($item) {
             return $item['jarak'] != '- KM';
         });
-
-        // menghilangkan bilangan desimal
-        $dataBersih = array_map(function($item) {
-            $item['jarak'] = str_replace(',', '', $item['jarak']);
-            return $item;
-        }, $dataBersih);
-
-        // sorting databersih berdasarkan jarak
-        natcasesort($dataBersih[0]['jarak']);
-
-
 
         //create response
         $response = [
