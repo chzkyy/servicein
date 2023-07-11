@@ -94,7 +94,9 @@ class GetAPI_Controller extends Controller
         $i = 0;
 
         // menghilangkan bilangan desimal
-        $jarak = str_replace(',', '', $jarak[$i]);
+        $jarak = array_map(function($value) {
+            return (int) $value;
+        }, $jarak);
         // sorting data jarak
         $jarak = natcasesort($jarak);
 
