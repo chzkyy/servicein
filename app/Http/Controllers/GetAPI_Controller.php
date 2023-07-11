@@ -124,27 +124,30 @@ class GetAPI_Controller extends Controller
             $i++;
         }
 
-        // hapus data yang jaraknya -KM
-        $dataBersih = array_filter($dataBersih, function($item) {
-            return $item['jarak'] != '- KM';
-        });
+        // // hapus data yang jaraknya -KM
+        // $dataBersih = array_filter($dataBersih, function($item) {
+        //     return $item['jarak'] != '- KM';
+        // });
 
-        // hapus KM dari jarak
-        $dataBersih = array_map(function($item) {
-            $item['jarak'] = str_replace(' KM', '', $item['jarak']);
-            return $item;
-        }, $dataBersih);
+        // // hapus KM dari jarak
+        // $dataBersih = array_map(function($item) {
+        //     $item['jarak'] = str_replace(' KM', '', $item['jarak']);
+        //     return $item;
+        // }, $dataBersih);
 
-        // sorting data jarak terdekat
-        usort($dataBersih, function($a, $b) {
-            return $a['jarak'] <=> $b['jarak'];
-        });
+        // // sorting data jarak terdekat
+        // usort($dataBersih, function($a, $b) {
+        //     return $a['jarak'] <=> $b['jarak'];
+        // });
 
-        // tambahkan KM di jarak
-        $dataBersih = array_map(function($item) {
-            $item['jarak'] = $item['jarak'] . ' KM';
-            return $item;
-        }, $dataBersih);
+        // natsort data jarak terdekat
+        natsort($dataBersih);
+
+        // // tambahkan KM di jarak
+        // $dataBersih = array_map(function($item) {
+        //     $item['jarak'] = $item['jarak'] . ' KM';
+        //     return $item;
+        // }, $dataBersih);
 
 
         //create response
