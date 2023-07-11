@@ -141,9 +141,7 @@ class GetAPI_Controller extends Controller
         // });
 
         // sorting data jarak terdekat dengan menggunakan natcasesort
-        natcasesort($dataBersih, function($a, $b) {
-            return $a['jarak'] <=> $b['jarak'];
-        });
+        natcasesort($dataBersih['jarak']);
 
 
         // // tambahkan KM di jarak
