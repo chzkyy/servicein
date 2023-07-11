@@ -135,8 +135,10 @@ class GetAPI_Controller extends Controller
             return $item;
         }, $dataBersih);
 
-        // sorting data jarak terdekat
-        natcasesort($dataBersih);
+        // sorting databersih berdasarkan jarak
+        natcasesort($dataBersih, function($a, $b) {
+            return $a['jarak'] <=> $b['jarak'];
+        });
 
 
         //create response
