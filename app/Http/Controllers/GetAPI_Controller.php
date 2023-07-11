@@ -129,26 +129,14 @@ class GetAPI_Controller extends Controller
             return $item['jarak'] != '- KM';
         });
 
-        // // hapus KM dari jarak
-        // $dataBersih = array_map(function($item) {
-        //     $item['jarak'] = str_replace(' KM', '', $item['jarak']);
-        //     return $item;
-        // }, $dataBersih);
-
-        // // sorting data jarak terdekat
-        // usort($dataBersih, function($a, $b) {
-        //     return $a['jarak'] <=> $b['jarak'];
-        // });
+        // menghilangkan bilangan desimal
+        $dataBersih = array_map(function($item) {
+            $item['jarak'] = str_replace(',', '', $item['jarak']);
+            return $item;
+        }, $dataBersih);
 
         // sorting data jarak terdekat
-        $this->natcasesort($dataBersih);
-
-
-        // // tambahkan KM di jarak
-        // $dataBersih = array_map(function($item) {
-        //     $item['jarak'] = $item['jarak'] . ' KM';
-        //     return $item;
-        // }, $dataBersih);
+        natcasesort($dataBersih);
 
 
         //create response
@@ -159,14 +147,6 @@ class GetAPI_Controller extends Controller
         return response()->json($response, 200, [], JSON_PRETTY_PRINT);
     }
 
-    // natcasesort function untuk sorting data jarak terdekat\
-    public function natcasesort(&$array)
-    {
-        $array = array_values($array);
-        usort($array, function($a, $b) {
-            return strnatcasecmp($a['jarak'], $b['jarak']);
-        });
-    }
 
 
     public function show_rating($id)
