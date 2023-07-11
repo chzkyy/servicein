@@ -140,8 +140,19 @@ class GetAPI_Controller extends Controller
         //     return $a['jarak'] <=> $b['jarak'];
         // });
 
-        // natsort data jarak terdekat
-        natsort($dataBersih);
+        // sorting data jarak terdekat dengan menggunakan bubble sort
+        $n = count($dataBersih);
+        for ($i = 0; $i < $n; $i++) {
+            for ($j = $n - 1; $j > $i; $j--) {
+                if ($dataBersih[$j]['jarak'] < $dataBersih[$j - 1]['jarak']) {
+                    $temp = $dataBersih[$j];
+                    $dataBersih[$j] = $dataBersih[$j - 1];
+                    $dataBersih[$j - 1] = $temp;
+                }
+            }
+        }
+
+        
 
         // // tambahkan KM di jarak
         // $dataBersih = array_map(function($item) {
