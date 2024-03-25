@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('merchant_note')->nullable();
             $table->string('service_confirmation')->nullable();
             $table->date('waranty')->nullable();
-            $table->int('status_confirmation')->nullable();
+            $table->string('status_confirmation')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
